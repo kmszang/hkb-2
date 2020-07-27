@@ -2,7 +2,7 @@
 name: Feature request
 about: feature issue template
 title: ''
-labels: ''
+labels: feature
 assignees: ''
 
 ---
