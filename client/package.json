@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --config=jest.config.js",
-    "test:watch": "jest --config=jest.config.js --watch",
-    "dev": "webpack-dev-server --config webpack.dev.js --watch",
-    "dev_build": "webpack --config webpack.dev.js --watch",
-    "postbuild": "cp -av ./public ../server/src",
+    "test": "jest --config=jest.config.js --watch",
+    "dev": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
   },
   "keywords": [],
