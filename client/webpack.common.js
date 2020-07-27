@@ -1,5 +1,4 @@
 const path = require('path')
-const babelConfig = require('./babel.config')
 
 /** @type {import('webpack').Configuration} */
 module.exports = {
@@ -13,7 +12,6 @@ module.exports = {
         test: /\.ts?$/,
         use: {
           loader: 'babel-loader',
-          // options: { ...babelConfig() },
         },
         exclude: /node_modules/,
       },
