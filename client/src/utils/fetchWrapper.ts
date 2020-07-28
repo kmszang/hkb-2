@@ -2,7 +2,7 @@ import { promiseHandler } from './promiseHandler'
 
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT'
 
-const baseUrl = 'http://localhost:3000/api';
+const baseUrl = 'http://localhost:3000/api'
 
 export const fetchWrapper = async <T, B>(
   method: MethodType,
