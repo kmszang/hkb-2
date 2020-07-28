@@ -1,7 +1,8 @@
 # hkb-2
 남현우, 박지환 가계부 프로젝트
 
-위키 [링크](https://github.com/woowa-techcamp-2020/hkb-2.wiki.git)
+#### 위키 [링크](https://github.com/woowa-techcamp-2020/hkb-2.wiki.git)
+#### 요구 사항 [링크](https://lucas.codesquad.kr/%EC%9A%B0%EC%95%84%ED%95%9C%ED%85%8C%ED%81%AC%EC%BA%A0%ED%94%842020/course/%EC%9B%B9%ED%92%80%EC%8A%A4%ED%83%9D/WEEK-5-%EA%B0%80%EA%B3%84%EB%B6%80(1-2)/%EB%AF%B8%EC%85%98-%EA%B0%80%EA%B3%84%EB%B6%80%EC%84%9C%EB%B9%84%EC%8A%A4)
 <hr>
 
 
