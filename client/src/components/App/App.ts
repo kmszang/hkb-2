@@ -1,6 +1,6 @@
 import { Component } from '../../utils/wooact'
 import { div } from '../../utils/wooact/defaultElements'
-
+import User from '../User/User'
 interface IProps {}
 interface IState {}
 
@@ -13,7 +13,7 @@ class App extends Component<IProps, IState> {
   }
 
   render() {
-    return div({ className: 'container' })
+    return div({ className: 'container' }, new User())
   }
 }
 
