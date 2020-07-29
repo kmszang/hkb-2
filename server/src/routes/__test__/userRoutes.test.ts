@@ -1,6 +1,6 @@
 import app from "../../app";
 import request from "supertest";
-import { ISignUpBody } from "../../repository/user-repository";
+import { ISignUpBody, User } from "../../repository/user-repository";
 
 test("Sign up with all valid information", async (done) => {
 	// given
@@ -15,7 +15,29 @@ test("Sign up with all valid information", async (done) => {
 		.send(validUserInfo);
 
 	// expect(response.body).toEqual(expectedResult)
-	console.log(response.body);
+	const createUserId = response.body;
+	console.log(createUserId);
+
+	User.deleteWithId(createUserId);
+	done();
+});
+
+test("Sign will fail with insufficient", async (done) => {
+	// given
+	const validUserInfo: Partial<ISignUpBody> = {
+		userId: "wrong id",
+		password: "12345678",
+	};
+
+	const response = await request(app)
+		.post("/api/sign-up")
+		.send(validUserInfo);
+
+	// expect(response.body).toEqual(expectedResult)
+	const createUserId = response.body;
+	console.log(createUserId);
+
+	User.deleteWithId(createUserId);
 	done();
 });
 
