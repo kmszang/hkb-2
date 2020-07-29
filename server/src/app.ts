@@ -4,10 +4,12 @@ import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import router from "./routes";
 import path from "path";
+import cors from "cors";
 import { CustomError } from "./errors/customError";
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
 // Serve static files at `public` directory

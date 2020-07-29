@@ -1,3 +1,2 @@
-const LOGIN = '/login'
-
-export { LOGIN }
+export const LOGIN = '/login'
+export const SIGN_UP = '/sign-up'

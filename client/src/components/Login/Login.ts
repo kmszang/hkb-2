@@ -7,7 +7,7 @@ import {
   input,
   h1,
 } from '../../utils/wooact/defaultElements'
-import { logIn } from '../../api/user'
+import { logIn, signUp } from '../../api/user'
 import { errorHandler } from '../../utils/errorHandler'
 interface IProps {}
 interface IState {}
@@ -49,13 +49,19 @@ class Login extends Component<IProps, IState> {
     }
     return true
   }
+
   async loginHandler(e: Event) {
+    console.log('login requested')
     e.preventDefault()
+    const $name = this.element.querySelector(
+      'input[placeholder="이름"]'
+    ) as HTMLInputElement
     const $userId = this.element.querySelector('input') as HTMLInputElement
     const $password = this.element.querySelector(
       'input[type="password"]'
     ) as HTMLInputElement
 
+    const name = $name.value
     const userId = $userId.value
     const password = $password.value
 
@@ -66,8 +72,11 @@ class Login extends Component<IProps, IState> {
       return alert('비밀번호를 입력해주세요')
     }
 
-    const [logInResponse, logInError] = await logIn({ userId, password })
-
+    const [signUpResponse, logInError] = await signUp({
+      name,
+      userId,
+      password,
+    })
     if (logInError) {
       return errorHandler(logInError)
     }
@@ -80,6 +89,7 @@ class Login extends Component<IProps, IState> {
         { textContent: '로그인' },
         form(
           { id: 'login-form' },
+          input({ className: 'login-input', placeholder: '이름' }),
           input({ className: 'login-input', placeholder: '아이디' }),
           input({
             type: 'password',
