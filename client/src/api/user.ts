@@ -1,15 +1,14 @@
 import { fetchWrapper } from '../utils/fetchWrapper'
+import { LOGIN } from './apiRoutes'
+export interface ILogInResponse {}
 
-export interface ISignUpResponse {}
-
-export interface ISignUpBody {
+export interface ILogInBody {
   userId: string
   password: string
 }
 
-const signup = async (body: ISignUpBody) => {
-  const [signUpResponse, signUpError] = await fetchWrapper<
-    ISignUpResponse,
-    ISignUpBody
-  >('POST', '/sign-up', body)
+const logIn = async (body: ILogInBody) => {
+  return await fetchWrapper<ILogInResponse, ILogInBody>('POST', LOGIN, body)
 }
+
+export { logIn }

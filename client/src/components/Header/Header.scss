@@ -1,9 +1,13 @@
 @import '../../styles/_variables.scss'; 
 header{
-    text-align: center;
     background-color: $primary-color;
     color: $white;
     height: 70px;
+    h1{
+        text-align: center;
+        margin : 0;
+        padding-top: 16px;
+    }
     p{
         margin: 0;
         font-size: 25px;
