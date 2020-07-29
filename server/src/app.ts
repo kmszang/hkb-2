@@ -1,9 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import bodyParser from "body-parser";
 import router from "./routes";
 import path from "path";
+import { CustomError } from "./errors/customError";
 
 const app = express();
 
@@ -13,5 +14,16 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use(router);
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+	if (err instanceof CustomError) {
+		res.status(err.statusCode);
+		res.json(err.message);
+		return;
+	}
+
+	console.error("invalid error type : ", err);
+	res.json("");
+});
 
 export default app;

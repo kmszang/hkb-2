@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { ERROR } from "../const";
+import { InsufficientBodyError } from "../errors/Insufficient-body";
 
 export const validateBody = <T>(keys: (keyof T)[]) => (
 	req: Request,
@@ -13,7 +14,7 @@ export const validateBody = <T>(keys: (keyof T)[]) => (
 			continue;
 		}
 
-		next(new Error(ERROR.INSUFFICIENT_BODY));
+		next(new InsufficientBodyError(key as string));
 	}
 
 	next();

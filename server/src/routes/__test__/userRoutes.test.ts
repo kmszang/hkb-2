@@ -1,6 +1,7 @@
 import app from "../../app";
 import request from "supertest";
 import { ISignUpBody, User } from "../../repository/user-repository";
+import { InsufficientBodyError } from "../../errors/Insufficient-body";
 
 test("Sign up with all valid information", async (done) => {
 	// given
@@ -24,20 +25,22 @@ test("Sign up with all valid information", async (done) => {
 
 test("Sign will fail with insufficient", async (done) => {
 	// given
-	const validUserInfo: Partial<ISignUpBody> = {
+	const invalidUserInfo: Partial<ISignUpBody> = {
 		userId: "wrong id",
 		password: "12345678",
 	};
 
 	const response = await request(app)
 		.post("/api/sign-up")
-		.send(validUserInfo);
+		.send(invalidUserInfo);
 
 	// expect(response.body).toEqual(expectedResult)
-	const createUserId = response.body;
-	console.log(createUserId);
+	const insufficiendError = new InsufficientBodyError("name");
+	expect(response.status).toBe(insufficiendError.statusCode);
+	// const createUserId = response.body;
+	// console.log(createUserId);
 
-	User.deleteWithId(createUserId);
+	// User.deleteWithId(createUserId);
 	done();
 });
 
