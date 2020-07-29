@@ -39,6 +39,22 @@ hkb-2
 │       └── src
 ```
 
+#### Set-up
+
+1. `$ git clone https://github.com/woowa-techcamp-2020/hkb-2`
+2. `$ cd ./client`
+3. `$ npm i`
+4. `$ cd ../server`
+5. `$ npm i`
+
+### Client
+
+##### 컴포넌트 만들기
+```bash
+$ create-wooact-component.sh 컴포넌트 이름
+```
+
+ex) create-wooact-component.sh `App`
 
 
 
