@@ -9,6 +9,7 @@ import {
 } from '../../utils/wooact/defaultElements'
 import { logIn } from '../../api/user'
 import { errorHandler } from '../../utils/errorHandler'
+import { InputIdPassword } from '../InputIdPassword/index'
 interface IProps {}
 interface IState {}
 
@@ -49,6 +50,7 @@ class Login extends Component<IProps, IState> {
     }
     return true
   }
+
   async loginHandler(e: Event) {
     e.preventDefault()
     const $userId = this.element.querySelector('input') as HTMLInputElement
@@ -80,17 +82,8 @@ class Login extends Component<IProps, IState> {
         { textContent: '로그인' },
         form(
           { id: 'login-form' },
-          input({ className: 'login-input', placeholder: '아이디' }),
-          input({
-            type: 'password',
-            className: 'login-input',
-            placeholder: '비밀번호',
-          }),
-          input({
-            type: 'submit',
-            value: '로그인',
-            className: 'login-btn',
-            onclick: (e) => this.loginHandler(e),
+          new InputIdPassword({
+            loginHandler: (e) => this.loginHandler(e),
           })
         )
       )
