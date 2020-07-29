@@ -25,7 +25,7 @@ export interface ISocialLoginBody {
 export class User {
 	static async createWithId(args: ISignUpBody) {
 		const { name, userId, password } = args;
-		const userCreateQuery = `INSERT INTO User(name, user_id, password) VALUES("${name}", "${userId})", "${password}")`;
+		const userCreateQuery = `INSERT INTO User(name, user_id, password) VALUES("${name}", "${userId}", "${password}")`;
 
 		return await insertQueryExecuter(userCreateQuery);
 	}
