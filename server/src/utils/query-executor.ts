@@ -30,7 +30,7 @@ export const insertQueryExecuter = async (
 	return [insertId, error];
 };
 
-export const updateQueryExecuter = async (
+export const updateOrDeleteQueryExecuter = async (
 	query: string
 ): Promise<[number, any]> => {
 	const conn = await pool.getConnection();
@@ -40,6 +40,17 @@ export const updateQueryExecuter = async (
 	conn.release();
 	return [affectedRows, error];
 };
+
+// export const deleteQueryExecuter = async (
+// 	query: string
+// ): Promise<[number, any]> => {
+// 	const conn = await pool.getConnection();
+// 	const [[{ affectedRows }, _], error] = await promiseHandler(
+// 		conn.query(query)
+// 	);
+// 	conn.release();
+// 	return [affectedRows, error];
+// };
 
 export const transactionQueryExecuter = async (...queries: Promise<any>[]) => {
 	const conn = await pool.getConnection();

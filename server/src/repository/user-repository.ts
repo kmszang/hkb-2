@@ -1,6 +1,7 @@
 import {
 	insertQueryExecuter,
 	selectQueryExecuter,
+	updateOrDeleteQueryExecuter,
 } from "../utils/query-executor";
 
 export interface IUser {
@@ -32,5 +33,10 @@ export class User {
 	static async createWithSocial() {
 		const selecteAllUserQuery = ``;
 		return await selectQueryExecuter<IUser>(selecteAllUserQuery);
+	}
+
+	static async deleteWithId(id: number) {
+		const deleteUserQuery = `DELETE FROM User WHERE id=${id};`;
+		return await updateOrDeleteQueryExecuter(deleteUserQuery);
 	}
 }
