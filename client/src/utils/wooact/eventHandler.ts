@@ -17,7 +17,7 @@ class EventHandler {
     }
     this.eventStore.add(eventAndTargetKey)
 
-    document.addEventListener(eventName, (e: Event) => {
+    window.addEventListener(eventName, (e: Event) => {
       const target = (e.target as HTMLElement).closest(targetName)
       if (!target) {
         return

@@ -7,73 +7,39 @@ import {
   input,
   h1,
 } from '../../utils/wooact/defaultElements'
-import { logIn } from '../../api/user'
+import { logIn, signUp } from '../../api/user'
 import { errorHandler } from '../../utils/errorHandler'
-import { Input } from '../Input/index'
+import { BoxInput } from '../BoxInput'
+import { Button } from '../Button'
+import {
+  validateId,
+  validatePassword,
+  checkAndmakeInputData,
+} from '../../utils/authorization'
 
 interface IProps {}
 interface IState {}
 
 class Login extends Component<IProps, IState> {
-  // constructor(props: IProps) {
-  // super(props)
-  // constructor(props: IProps) {
-  //   super(props, state)
   constructor() {
     super()
-
     Object.setPrototypeOf(this, Login.prototype)
     this.init()
   }
 
-  validateId(userId) {
-    if (typeof userId !== 'string') {
-      return false
-    }
-    if (!userId) {
-      return false
-    }
-    if (!userId.length) {
-      return false
-    }
-    return true
-  }
-
-  validatePassword(password) {
-    if (typeof password !== 'string') {
-      return false
-    }
-    if (!password) {
-      return false
-    }
-    if (!password.length) {
-      return false
-    }
-    return true
-  }
-
-  async loginHandler(e: Event) {
+  loginHandler = (e: Event) => {
     e.preventDefault()
-    const $userId = this.element.querySelector('input') as HTMLInputElement
-    const $password = this.element.querySelector(
-      'input[type="password"]'
-    ) as HTMLInputElement
 
-    const userId = $userId.value
-    const password = $password.value
+    const inputs = Array.from(
+      this.element.querySelectorAll('input')
+    ) as HTMLInputElement[]
 
-    if (!this.validateId(userId)) {
-      return alert('아이디를 입력해주세요')
+    const loginBody = checkAndmakeInputData(inputs)
+
+    if (!loginBody) {
+      return
     }
-    if (!this.validateId(password)) {
-      return alert('비밀번호를 입력해주세요')
-    }
-
-    const [logInResponse, logInError] = await logIn({ userId, password })
-
-    if (logInError) {
-      return errorHandler(logInError)
-    }
+    console.log(loginBody)
   }
 
   render() {
@@ -83,8 +49,26 @@ class Login extends Component<IProps, IState> {
         { textContent: '로그인' },
         form(
           { id: 'login-form' },
-          new Input({ placeholder: '아이디' }),
-          new Input({ placeholder: '비밀번호' })
+          new BoxInput({
+            placeholder: '아이디',
+            name: 'username',
+            type: 'text',
+            validateHandler: validateId,
+            iconName: '아이디',
+            errMessage: '아이디를 입력해주세요',
+          }),
+          new BoxInput({
+            placeholder: '비밀번호',
+            name: 'password',
+            type: 'password',
+            validateHandler: validatePassword,
+            iconName: '비밀번호',
+            errMessage: '비밀번호를 입력해주세요',
+          }),
+          new Button({
+            value: '로그인',
+            onClickHandler: this.loginHandler,
+          })
         )
       )
     )

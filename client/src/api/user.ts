@@ -1,5 +1,5 @@
 import { fetchWrapper } from '../utils/fetchWrapper'
-import { LOGIN } from './apiRoutes'
+import { LOGIN, SIGN_UP } from './apiRoutes'
 export interface ILogInResponse {}
 
 export interface ILogInBody {
@@ -7,8 +7,17 @@ export interface ILogInBody {
   password: string
 }
 
-const logIn = async (body: ILogInBody) => {
+export interface ISignUpBody {
+  name: string
+  userId: string
+  password: string
+}
+
+export const logIn = async (body: ILogInBody) => {
   return await fetchWrapper<ILogInResponse, ILogInBody>('POST', LOGIN, body)
 }
 
-export { logIn }
+export const signUp = async (body: ISignUpBody) => {
+  console.log('signup requesete')
+  return await fetchWrapper<ILogInResponse, ILogInBody>('POST', SIGN_UP, body)
+}
