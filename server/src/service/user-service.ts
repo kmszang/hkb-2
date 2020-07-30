@@ -1,8 +1,17 @@
 import { Request, Response } from "express";
 import { User, ISignUpBody } from "../repository/user-repository";
-
+import encrypt from "../utils/encryption";
 export const signUpWithId = async (req: Request, res: Response) => {
-	const { userId, password, name } = req.body as ISignUpBody;
+  const { userId, password, name } = req.body as ISignUpBody;
+  const encryptedPassword = encrypt(password);
+  const [insertedUser, error] = await User.createWithId({
+    userId,
+    name,
+    password: encryptedPassword,
+  });
+  if (error) {
+    throw new Error(error);
+  }
 
 	const [insertedUser, error] = await User.createWithId({
 		userId,

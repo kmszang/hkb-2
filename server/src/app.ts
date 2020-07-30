@@ -23,14 +23,14 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-	if (err instanceof CustomError) {
-		res.status(err.statusCode);
-		res.json(err.message);
-		return;
-	}
+  if (err instanceof CustomError) {
+    res.status(err.statusCode);
+    res.json(err.message);
+    return;
+  }
 
-	console.error("invalid error type : ", err);
-	res.json("");
+  console.error("invalid error type : ", err);
+  res.json("");
 });
 
 export default app;
