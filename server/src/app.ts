@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import router from "./routes";
 import path from "path";
 import cors from "cors";
-import { CustomError } from "./errors/customError";
+import { CustomError } from "./errors/custom-error";
 
 const app = express();
 
