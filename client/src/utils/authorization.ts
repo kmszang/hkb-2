@@ -6,9 +6,23 @@ export function validateId(target: HTMLInputElement) {
 }
 
 export function validatePassword(target: HTMLInputElement) {
-  if (!target.value.length) {
+  const firstPassword = target.value
+  if (!firstPassword.length) {
     return false
   }
+  const $secondPassword = target
+    .closest('div')
+    .nextElementSibling.querySelector('input')
+
+  const secondPassword = $secondPassword.value
+  const $validatePasswordError = $secondPassword.nextElementSibling
+
+  if (firstPassword !== secondPassword) {
+    $validatePasswordError.classList.add('visible')
+  } else {
+    $validatePasswordError.classList.remove('visible')
+  }
+
   return true
 }
 
