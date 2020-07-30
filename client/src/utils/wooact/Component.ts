@@ -17,20 +17,19 @@ abstract class Component<P, S> {
   }
 
   private reRender() {
+    const originElement = this.element
     const diffUpdatedElement = Diffing.getNewlyRendered(
-      this.element,
+      originElement,
       this.render()
     )
 
     if (this.element === diffUpdatedElement) {
       return
     }
-    console.log(diffUpdatedElement)
 
-    console.log('ㅟ딪ㄴ당')
-    // const oldElement = this.element
+    originElement.replaceWith(diffUpdatedElement)
     this.element = diffUpdatedElement
-    // oldElement.remove()
+    originElement.remove()
   }
 
   // need to update value's type
@@ -77,10 +76,10 @@ abstract class Component<P, S> {
   protected componentDidMount() {}
   protected comopnentWillUnmount() {}
   // private replaceWithNewElement() {
-  // 	const oldElement = this.element;
-  // 	const newElement = this.render();
-  // 	this.element = newElement;
-  // 	oldElement.remove();
+  // const oldElement = this.element;
+  // const newElement = this.render();
+  // this.element = newElement;
+  // oldElement.remove();
   // }
 
   // private updateTextValue() {}
