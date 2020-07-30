@@ -1,4 +1,3 @@
-import { isBuffer } from "util";
 import { Request, Response } from "express";
 import { User, ISignUpBody } from "../repository/user-repository";
 
