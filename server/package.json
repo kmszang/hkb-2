@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll",
+    "test": "jest --watchAll --runInBand --detectOpenHandles",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "connect:server" : "ssh -i ~/Downloads/aws_pem/hkb-2.pem ubuntu@52.78.221.38 \"bash /home/ubuntu/scripts/deploy.sh\""
   },
