@@ -14,5 +14,6 @@ module.exports = function (api) {
     '@babel/preset-typescript',
   ]
 
-  return { presets }
+  const plugins = ['transform-class-properties']
+  return { presets, plugins }
 }
