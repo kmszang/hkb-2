@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "connect:server": "ssh -i ~/Downloads/aws_pem/hkb-2.pem ubuntu@52.78.221.38 \"bash /home/ubuntu/scripts/deploy.sh\""
   },
   "keywords": [],
   "author": "박지환, 남현우",
@@ -23,8 +24,12 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mysql2": "^2.1.0"
+    "express-session": "^1.17.1",
+    "mysql2": "^2.1.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   }
 }
