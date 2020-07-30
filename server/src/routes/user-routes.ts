@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateBody } from "../middlewares/validate-body";
-import { signUpWithId } from "../service/userService";
+import { signUpWithId } from "../service/user-service";
 import { ISignUpBody } from "../repository/user-repository";
 
 const userRouter = Router();
