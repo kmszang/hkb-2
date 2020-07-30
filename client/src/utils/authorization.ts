@@ -30,13 +30,12 @@ export function checkAndmakeInputData(inputs) {
   const body = {}
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].value.length) {
-      inputs[i].nextElementSibling.classList.add('visible')
+      const $errorElement = inputs[i].nextElementSibling
+      $errorElement.classList.add('visible')
       return inputs[i].focus()
     }
 
-    inputs.forEach((input) => {
-      body[input.name] = input.value
-    })
+    body[inputs[i].name] = inputs[i].value
   }
   return body
 }
