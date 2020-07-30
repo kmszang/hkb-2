@@ -1,4 +1,4 @@
-import { CustomError } from "./customError";
+import { CustomError } from "./custom-error";
 
 export class InsufficientBodyError extends CustomError {
 	public statusCode = 400;

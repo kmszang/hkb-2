@@ -17,7 +17,6 @@ test("Sign up with all valid information", async (done) => {
 
 	// expect(response.body).toEqual(expectedResult)
 	const createUserId = response.body;
-	console.log(createUserId);
 
 	User.deleteWithId(createUserId);
 	done();
