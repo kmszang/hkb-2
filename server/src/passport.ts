@@ -1,6 +1,7 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import { User } from "./repository/user-repository";
+import encrypt from "./utils/encryption";
 passport.use(
   new LocalStrategy({ usernameField: "userId" }, async function (
     username: string,
@@ -15,7 +16,7 @@ passport.use(
     if (!user) {
       return done(null, false, { message: "Incorrect username." });
     }
-    if (user.password !== password) {
+    if (user.password !== encrypt(password)) {
       return done(null, false, { message: "Incorrect password." });
     }
     return done(null, user);
