@@ -28,11 +28,20 @@ export function validatePasswordOverlap(target: HTMLInputElement) {
 
 export function checkAndmakeInputData(inputs) {
   const body = {}
+
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].value.length) {
       const $errorElement = inputs[i].nextElementSibling
       $errorElement.classList.add('visible')
       return inputs[i].focus()
+    }
+
+    if (inputs[i].name === 'passwordCheck') {
+      const firstPassword = inputs[i - 1].value
+      const secondPassword = inputs[i].value
+      if (firstPassword !== secondPassword) {
+        return inputs[i].select()
+      }
     }
 
     body[inputs[i].name] = inputs[i].value

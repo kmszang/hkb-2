@@ -26,6 +26,7 @@ class Signup extends Component<IProps, IState> {
     ) as HTMLInputElement[]
 
     const signupBody = checkAndmakeInputData(inputs)
+    console.log(signupBody)
     if (!signupBody) return
 
     const [signUpResponse, signUpError] = await signUp(signupBody)
