@@ -9,7 +9,8 @@ import {
 } from '../../utils/wooact/defaultElements'
 import { logIn } from '../../api/user'
 import { errorHandler } from '../../utils/errorHandler'
-import { InputIdPassword } from '../InputIdPassword/index'
+import { Input } from '../Input/index'
+
 interface IProps {}
 interface IState {}
 
@@ -82,9 +83,8 @@ class Login extends Component<IProps, IState> {
         { textContent: '로그인' },
         form(
           { id: 'login-form' },
-          new InputIdPassword({
-            loginHandler: (e) => this.loginHandler(e),
-          })
+          new Input({ placeholder: '아이디' }),
+          new Input({ placeholder: '비밀번호' })
         )
       )
     )
