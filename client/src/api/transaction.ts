@@ -26,7 +26,7 @@ export const fetchAllTransaction = async () => {
 }
 
 export const createNewTransaction = async (args: ICreateTransaction) => {
-  return await fetchWrapper<ITransactionResponse[], ICreateTransaction>(
+  return await fetchWrapper<ITransactionResponse, ICreateTransaction>(
     'POST',
     TRANSACTION,
     args
