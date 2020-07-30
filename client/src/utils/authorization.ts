@@ -6,9 +6,23 @@ export function validateId(target: HTMLInputElement) {
 }
 
 export function validatePassword(target: HTMLInputElement) {
-  if (!target.value.length) {
+  const firstPassword = target.value
+  if (!firstPassword.length) {
     return false
   }
+  const $secondPassword = target
+    .closest('div')
+    .nextElementSibling.querySelector('input')
+
+  const secondPassword = $secondPassword.value
+  const $validatePasswordError = $secondPassword.nextElementSibling
+
+  if (firstPassword !== secondPassword) {
+    $validatePasswordError.classList.add('visible')
+  } else {
+    $validatePasswordError.classList.remove('visible')
+  }
+
   return true
 }
 
@@ -28,15 +42,23 @@ export function validatePasswordOverlap(target: HTMLInputElement) {
 
 export function checkAndmakeInputData(inputs) {
   const body = {}
+
   for (let i = 0; i < inputs.length; i++) {
     if (!inputs[i].value.length) {
-      inputs[i].nextElementSibling.classList.add('visible')
+      const $errorElement = inputs[i].nextElementSibling
+      $errorElement.classList.add('visible')
       return inputs[i].focus()
     }
 
-    inputs.forEach((input) => {
-      body[input.name] = input.value
-    })
+    if (inputs[i].name === 'passwordCheck') {
+      const firstPassword = inputs[i - 1].value
+      const secondPassword = inputs[i].value
+      if (firstPassword !== secondPassword) {
+        return inputs[i].select()
+      }
+    }
+
+    body[inputs[i].name] = inputs[i].value
   }
   return body
 }
