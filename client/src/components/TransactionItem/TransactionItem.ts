@@ -1,6 +1,7 @@
 import { Component } from '../../utils/wooact'
-import { div, p } from '../../utils/wooact/defaultElements'
+import { div, p, i } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
+import { getCSVNumber } from '../../utils/getCSVNumber'
 
 interface IProps {
   transaction: ITransactionResponse
@@ -15,6 +16,15 @@ class TransactionItem extends Component<IProps, IState> {
     this.init()
   }
 
+  renderPrice() {
+    const { price: priceNum, isIncome } = this.props.transaction
+
+    return div({
+      className: `price ${isIncome ? 'income' : 'outcome'}`,
+      textContent: getCSVNumber(priceNum),
+    })
+  }
+
   render() {
     const {
       id,
@@ -23,15 +33,26 @@ class TransactionItem extends Component<IProps, IState> {
       categoryName,
       paymentName,
       createdAt,
+      isIncome,
     } = this.props.transaction
 
     return div(
       { className: 'item-container', id: `item-${id}` },
-      p({ textContent: content }),
-      p({ textContent: price.toString() }),
-      p({ textContent: categoryName }),
-      p({ textContent: paymentName }),
-      p({ textContent: createdAt.toString() })
+      i({
+        className: 'f7-icons item-icon',
+        textContent: 'ant',
+        // style: { backgroundColor: '#4FED93' },
+      }),
+      div(
+        { className: 'info-container' },
+        div({
+          className: 'info-payment',
+          textContent: paymentName + '/' + categoryName,
+        }),
+        div({ className: 'info-content', textContent: content })
+      ),
+      this.renderPrice()
+      // div({ textContent: createdAt.toString().split('T')[0] })
     )
   }
 }

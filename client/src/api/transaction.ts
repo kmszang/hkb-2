@@ -16,6 +16,7 @@ export interface ITransactionResponse {
   paymentName: string
   categoryName: string
   createdAt: Date
+  isIncome: boolean
 }
 
 export const fetchAllTransaction = async () => {

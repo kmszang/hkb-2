@@ -1,1 +1,43 @@
-@import '../../styles/_variables.scss'
+@import '../../styles/_variables.scss';
+
+.transaction-container{
+	justify-content: center;
+	width: 100%;
+
+	.date-grouped-container{
+		width: 100%;
+		min-height: 80px;
+
+		padding: 5px 10px;
+		margin: 20px auto;
+
+	}
+
+	// .date-info{
+	// 	color: darkgray
+	// }
+}
+
+
+.income {
+	color: $hkb-blue;
+}
+
+.outcome {
+	color: $hkb-red;
+}
+
+.date-info-container{
+	width: 60%;
+	min-height: 80px;
+
+	display: flex;
+	align-content: center;
+	margin: 0 auto;
+	margin-bottom: -50px;
+}
+
+.right {
+	margin-left: auto;
+}
+

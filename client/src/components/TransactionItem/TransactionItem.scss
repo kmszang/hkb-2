@@ -1,5 +1,51 @@
 @import '../../styles/_variables.scss';
 
 .item-container{
-	width: 100px;
+	width: 60%;
+	min-height: 80px;
+
+	padding: 5px 10px;
+	margin: 20px auto;
+
+	display: flex;
+	align-items: center;
+	background-color: $hkb-white;
+	box-shadow: 1px 1px 2px $hkb-white;
+	border: none;
+	border-radius: 6px;
+
+	i{
+		width: 36px;
+		height: 36px;
+		background: $hkb-light-blue;
+		border-radius: 5px;
+		color: $hkb-blue;
+		opacity: 0.7;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin: 0 5px;
+
+		transition: opacity 400ms ease;;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	.info-container{
+		display: block;
+		margin-left: 10px;
+
+		.info-payment {
+			font-size: 10px;
+			color: darkgray;
+			margin-bottom: 2px;
+		}
+	}
+
+	.price {
+		margin-left: auto;
+	}
 }
