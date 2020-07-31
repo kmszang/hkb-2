@@ -45,10 +45,12 @@ export class Diffing {
     newElement: HTMLElement
   ): HTMLElement {
     if (this.isParentHasDiffTag(originElement, newElement)) {
+      console.log('parent has diff tag')
       return newElement
     }
 
     if (this.isParentClassUpdated(originElement, newElement)) {
+      console.log('parent has diff class')
       return originElement
     }
 
@@ -56,11 +58,14 @@ export class Diffing {
     const newEleArr = this.transformToArr(newElement)
 
     // only one tag case
-    if (originEleArr.length === 0) {
-      return newElement
-    }
+    // if (originEleArr.length === 0) {
+    //   console.log('으앙')
+    //   return originElement
+    // }
     // has different length
     if (originEleArr.length !== newEleArr.length) {
+      console.log('has diff length')
+      console.log(newElement)
       return newElement
     }
 
