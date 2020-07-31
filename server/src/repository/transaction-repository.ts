@@ -19,6 +19,7 @@ export interface ITransaction {
 	paymentName: string;
 	categoryName: string;
 	createdAt: Date;
+	isIncome: boolean;
 }
 
 export class Transaction {
@@ -31,14 +32,19 @@ export class Transaction {
 
 	static async getOne(id: number) {
 		const selectOneTransaction = `
-			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName, C.name as categoryName from Transaction as T JOIN Payment as P ON P.id = T.payment_id JOIN Category as C ON C.id = T.category_id WHERE T.id=${id} and T.is_active=true;
+			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName, C.name as categoryName, C.is_income as isIncome from Transaction as T JOIN Payment as P ON P.id = T.payment_id JOIN Category as C ON C.id = T.category_id WHERE T.id=${id} and T.is_active=true;
 			`;
 		return await selectQueryExecuter<ITransaction>(selectOneTransaction);
 	}
-
+	// 카테고리, 내용, 결제수단, 금액순
 	static async getAll() {
 		const selectAllTransaction = `
-			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName, C.name as categoryName from Transaction as T JOIN Payment as P ON P.id = T.payment_id JOIN Category as C ON C.id = T.category_id WHERE T.is_active=true;
+			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
+			C.name as categoryName, C.is_income as isIncome from Transaction as T
+			JOIN Payment as P ON P.id = T.payment_id
+			JOIN Category as C ON C.id = T.category_id
+			WHERE T.is_active=true
+			ORDER BY createdAT DESC, categoryName, T.content, PaymentName, T.price;
 			`;
 		return await selectQueryExecuter<ITransaction>(selectAllTransaction);
 	}

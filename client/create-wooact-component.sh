@@ -13,7 +13,7 @@ LOWER="$(tr '[:upper:]' '[:lower:]' <<< ${FILE_NAME:0})"
 
 echo `mkdir src/${FOLDER}/${FILE_NAME}`
 
-echo `echo "@import '../../styles/_variables.scss'" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}.scss`
+echo `echo "@import '../../styles/_variables.scss';" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}.scss`
 
 echo `echo "import './${FILE_NAME}.scss'
 export { default as ${FILE_NAME} } from './${FILE_NAME}'" > src/${FOLDER}/${FILE_NAME}/index.ts`
