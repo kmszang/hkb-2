@@ -13,21 +13,13 @@ export const signUpWithId = async (req: Request, res: Response) => {
     throw new Error(error);
   }
 
-	const [insertedUser, error] = await User.createWithId({
-		userId,
-		name,
-		password,
-	});
-	if (error) {
-		throw new Error(error);
-	}
-
-	res.json(insertedUser);
+  res.json(insertedUser);
 };
 
 export const loginController = async (req: Request, res: Response) => {
-	if (!req.user) {
-		return res.send("로그인을 다시 해주세요");
-	}
-	return res.send("welcome");
+  //   console.log(req.session.cookie);
+  if (!req.user) {
+    return res.json("로그인을 다시 해주세요");
+  }
+  return res.json("welcome");
 };
