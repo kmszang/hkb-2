@@ -7,7 +7,7 @@ import {
   input,
   h1,
 } from '../../utils/wooact/defaultElements'
-import { logIn, signUp } from '../../api/user'
+import { logIn, githubLogIn } from '../../api/user'
 import { errorHandler } from '../../utils/errorHandler'
 import { BoxInput } from '../BoxInput'
 import { Button } from '../Button'
@@ -16,7 +16,7 @@ import {
   validatePassword,
   checkAndmakeInputData,
 } from '../../utils/authorization'
-
+import githubLoginuUrl from './github.config'
 interface IProps {}
 interface IState {}
 
@@ -27,7 +27,15 @@ class Login extends Component<IProps, IState> {
     this.init()
   }
 
-  loginHandler = (e: Event) => {
+  githubLoginHandler = (e: Event) => {
+    e.preventDefault()
+
+    window.location.href = githubLoginuUrl
+    // const [result, err] = await logIn(loginBody)
+    // console.log(result, err)
+  }
+
+  loginHandler = async (e: Event) => {
     e.preventDefault()
 
     const inputs = Array.from(
@@ -39,7 +47,9 @@ class Login extends Component<IProps, IState> {
     if (!loginBody) {
       return
     }
-    console.log(loginBody)
+
+    const [result, err] = await githubLogIn(loginBody)
+    console.log(result, err)
   }
 
   render() {
@@ -51,7 +61,7 @@ class Login extends Component<IProps, IState> {
           { id: 'login-form' },
           new BoxInput({
             placeholder: '아이디',
-            name: 'username',
+            name: 'userId',
             type: 'text',
             validateHandler: validateId,
             iconName: '아이디',
@@ -68,6 +78,10 @@ class Login extends Component<IProps, IState> {
           new Button({
             value: '로그인',
             onClickHandler: this.loginHandler,
+          }),
+          new Button({
+            value: 'github 로그인',
+            onClickHandler: this.githubLoginHandler,
           })
         )
       )
