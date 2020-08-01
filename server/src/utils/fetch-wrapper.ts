@@ -28,27 +28,3 @@ export const nodeGetFetchWrapper = async <T, B>(
   const res = await response.json();
   return [res, null];
 };
-
-export const nodePopstFetchWrapper = async <T, B>(
-  method: MethodType,
-  url: string,
-  body?: B
-): Promise<[T | null, any?]> => {
-  const [response, err] = await promiseHandler(
-    fetch(url, {
-      method,
-      headers: {
-        ...headers,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(body),
-    })
-  );
-
-  if (err) {
-    return [null, err];
-  }
-  const res = await response.json();
-  return [res, null];
-};
