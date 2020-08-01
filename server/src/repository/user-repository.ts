@@ -49,6 +49,11 @@ export class User {
     const getUserWithSocialIdQuery = `SELECT user_id as userId, name, password, id FROM User WHERE social_id=${socialId};`;
     return await selectQueryExecuter<IUser>(getUserWithSocialIdQuery);
   }
+
+  static async createWithSocial(args: IUser) {
+    const { name, social_id } = args;
+    const createUserWithSocialIdQuery = `INSERT INTO User(name, social_id) VALUES("${name}", "${social_id}")`;
+    return await insertQueryExecuter(createUserWithSocialIdQuery);
   }
 
   static async deleteWithId(id: number) {
