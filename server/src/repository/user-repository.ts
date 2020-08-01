@@ -45,9 +45,10 @@ export class User {
     return await selectQueryExecuter<IUser>(getUserWithIdQuery);
   }
 
-  static async createWithSocial() {
-    const selecteAllUserQuery = ``;
-    return await selectQueryExecuter<IUser>(selecteAllUserQuery);
+  static async getWithSocialId(socialId: number) {
+    const getUserWithSocialIdQuery = `SELECT user_id as userId, name, password, id FROM User WHERE social_id=${socialId};`;
+    return await selectQueryExecuter<IUser>(getUserWithSocialIdQuery);
+  }
   }
 
   static async deleteWithId(id: number) {
