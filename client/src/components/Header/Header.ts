@@ -4,7 +4,7 @@ import { div, header, p, h1 } from '../../utils/wooact/defaultElements'
 interface IProps {}
 interface IState {}
 
-class Header extends Component<IProps, IState> {
+class Header extends Component<IProps, IState, undefined> {
   // constructor(props: IProps) {
   // super(props)
   // const initialState: IState = {

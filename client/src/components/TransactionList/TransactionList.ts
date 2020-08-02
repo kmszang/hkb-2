@@ -1,5 +1,5 @@
 import { Component } from '../../utils/wooact'
-import { div, p } from '../../utils/wooact/defaultElements'
+import { div, p, data } from '../../utils/wooact/defaultElements'
 import {
   ITransactionResponse,
   fetchAllTransaction,
@@ -20,7 +20,7 @@ interface IFilteredByDayTransactions {
   }
 }
 
-class TransactionList extends Component<IProps, IState> {
+class TransactionList extends Component<IProps, IState, undefined> {
   private totalIncome: number
   private totalOutcome: number
 
@@ -28,20 +28,30 @@ class TransactionList extends Component<IProps, IState> {
     const initialState: IState = {
       transactions: [],
     }
-    super({}, initialState)
+    super({ state: initialState })
 
     Object.setPrototypeOf(this, TransactionList.prototype)
     this.init()
     this.totalIncome = 0
     this.totalOutcome = 0
+    // window.addEventListener('fetch_list', async () => await this.fetch())
+    window.addEventListener('fetch_list', async () => await this.fetch())
   }
 
   async componentDidMount() {
-    const [fetchedTransactions, fetchError] = await fetchAllTransaction()
+    await this.fetch()
+  }
 
+  addNew() {
+    // this.setState('transactions', [this.getState('transactions')])
+  }
+
+  async fetch() {
+    const [fetchedTransactions, fetchError] = await fetchAllTransaction()
     if (fetchError) {
       return console.error(fetchError)
     }
+
     this.setState('transactions', fetchedTransactions)
   }
 
@@ -90,7 +100,7 @@ class TransactionList extends Component<IProps, IState> {
       transactions
     )
 
-    return recordedDates.map((date) => {
+    return recordedDates.map((date, id) => {
       const {
         transactions,
         sumOfIncome,

@@ -1,11 +1,11 @@
 import { Component } from '.'
 import { eventHandler } from './eventHandler'
 
-export type CreateElement = (
-  tagName: string,
-  attributes: IAttribute,
-  ...childNodes: (HTMLElement | Component<any, any> | null)[]
-) => HTMLElement
+declare global {
+  interface HTMLElement {
+    key?: string
+  }
+}
 
 export type HTMLELementTagName = keyof Omit<
   HTMLElementTagNameMap,
@@ -15,10 +15,10 @@ type HTMLElementTagType = HTMLElementTagNameMap[HTMLELementTagName]
 
 export type IAttribute = Partial<HTMLElementTagType>
 
-export const createElement: CreateElement = (
-  tagName: HTMLELementTagName,
+export const createElement = (
+  tagName: string,
   attributes: IAttribute,
-  ...childNodes: (HTMLElement | Component<any, any> | null)[]
+  ...childNodes: (HTMLElement | Component<any, any, any> | null)[]
 ): HTMLElement => {
   const newElement = document.createElement(tagName)
 
