@@ -13,6 +13,9 @@ export function validatePassword(target: HTMLInputElement) {
   const $secondPassword = target
     .closest('div')
     .nextElementSibling.querySelector('input')
+  if (!$secondPassword) {
+    return true
+  }
 
   const secondPassword = $secondPassword.value
   const $validatePasswordError = $secondPassword.nextElementSibling
