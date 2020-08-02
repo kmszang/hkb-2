@@ -29,7 +29,7 @@ class TransactionItem extends Component<IProps, IState, undefined> {
       price,
       categoryName,
       paymentName,
-      createdAt,
+      iconName,
       isIncome,
     } = this.props.transaction
 
@@ -40,8 +40,8 @@ class TransactionItem extends Component<IProps, IState, undefined> {
         accessKey: 'transaction-item',
       },
       i({
-        className: 'f7-icons item-icon',
-        textContent: 'ant',
+        className: `f7-icons item-icon ${isIncome ? 'income' : 'outcome'}`,
+        textContent: iconName,
       }),
       div(
         { className: 'info-container' },
