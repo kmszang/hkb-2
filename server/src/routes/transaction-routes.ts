@@ -9,7 +9,7 @@ import { ICreateTransaction } from "../repository/transaction-repository";
 const transactionRouter = Router();
 
 transactionRouter.post(
-	"/transaction",
+	"/",
 	validateBody<ICreateTransaction>([
 		"content",
 		"price",
@@ -20,6 +20,6 @@ transactionRouter.post(
 	createNewTransaction
 );
 
-transactionRouter.get("/transaction", getAllTransactions);
+transactionRouter.get("/", getAllTransactions);
 
 export default transactionRouter;
