@@ -1,20 +1,16 @@
 import { Component } from '../../utils/wooact'
-import { div, input, button } from '../../utils/wooact/defaultElements'
+import { div, input, button, i } from '../../utils/wooact/defaultElements'
 import { createNewTransaction } from '../../api/transaction'
+import { ICategoryResponse } from '../../api/category'
 
-interface IProps {}
+interface IProps {
+  categories: ICategoryResponse[]
+}
 interface IState {}
 
 class AddNewTransaction extends Component<IProps, IState, undefined> {
-  // constructor(props: IProps) {
-  // super(props)
-  // const initialState: IState = {
-  //
-  // }
-  // constructor(props: IProps) {
-  //   super(props, state)
-  constructor() {
-    super()
+  constructor(args: { props: IProps }) {
+    super(args)
 
     Object.setPrototypeOf(this, AddNewTransaction.prototype)
     this.init()
@@ -61,7 +57,13 @@ class AddNewTransaction extends Component<IProps, IState, undefined> {
         className: 'add-new-btn',
         textContent: 'add',
         onclick: async () => await this.onAddHandler(),
-      })
+      }),
+      ...(this.props.categories || []).map((category) =>
+        div(
+          { textContent: category.name },
+          i({ className: 'f7-icons', textContent: category.iconName })
+        )
+      )
     )
   }
 }
