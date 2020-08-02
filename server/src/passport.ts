@@ -38,18 +38,22 @@ const githubOption = {
   callbackURL: githubCallbackUrl,
 };
 
+interface IProfile {
+  id: number;
+  name: string;
+}
 const githubCallback = async (accessToken, refreshToken, profile, done) => {
   console.log(accessToken, refreshToken, profile);
   [profile] = await accessGithubApi({ token: accessToken });
-  let [[user, _], err] = await User.getWithSocialId(profile.id);
+  const [[user, _], err] = await User.getWithSocialId(profile.id);
   if (!user) {
-    let [[userId, _], err] = await User.createWithSocial({
+    const [userId, err] = await User.createWithSocial({
       social_id: profile.id,
       name: profile.login,
     });
-    [[user, _], err] = await User.getWithId(userId);
+    const [[newUser, _], err] = await User.getWithId(userId);
   }
-  return done(err, user);
+  return done(err, newUser);
 };
 
 passport.use("provider", new OAuth2Strategy(githubOption, githubCallback));
