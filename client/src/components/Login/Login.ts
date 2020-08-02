@@ -16,7 +16,9 @@ import {
   validatePassword,
   checkAndmakeInputData,
 } from '../../utils/authorization'
-import githubLoginuUrl from './github.config'
+
+const githubLoginuUrl = 'http://localhost:3000/api/github-login'
+
 interface IProps {}
 interface IState {}
 
@@ -27,12 +29,9 @@ class Login extends Component<IProps, IState> {
     this.init()
   }
 
-  githubLoginHandler = (e: Event) => {
+  githubLoginHandler = async (e: Event) => {
     e.preventDefault()
-
     window.location.href = githubLoginuUrl
-    // const [result, err] = await logIn(loginBody)
-    // console.log(result, err)
   }
 
   loginHandler = async (e: Event) => {

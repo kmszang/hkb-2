@@ -1,7 +1,9 @@
 import passport from "passport";
 import LocalStrategy from "passport-local";
+import OAuth2Strategy from "passport-oauth2";
 import { User } from "./repository/user-repository";
 import encrypt from "./utils/encryption";
+import { accessGithubApi } from "./api/user";
 passport.use(
   new LocalStrategy({ usernameField: "userId" }, async function (
     username: string,
@@ -22,6 +24,35 @@ passport.use(
     return done(null, user);
   })
 );
+
+const baseUrl = "http://localhost:3000";
+const githubLoginUrl = "https://github.com/login/oauth/authorize";
+const githubTokenUrl = "https://github.com/login/oauth/access_token";
+const githubCallbackUrl = `${baseUrl}/api/github-login/callback`;
+
+const githubOption = {
+  authorizationURL: githubLoginUrl,
+  tokenURL: githubTokenUrl,
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: githubCallbackUrl,
+};
+
+const githubCallback = async (accessToken, refreshToken, profile, done) => {
+  console.log(accessToken, refreshToken, profile);
+  [profile] = await accessGithubApi({ token: accessToken });
+  const [[user, _], err] = await User.getWithSocialId(profile.id);
+  if (!user) {
+    const [userId, err] = await User.createWithSocial({
+      social_id: profile.id,
+      name: profile.login,
+    });
+    const [[newUser, _], err] = await User.getWithId(userId);
+  }
+  return done(err, newUser);
+};
+
+passport.use("provider", new OAuth2Strategy(githubOption, githubCallback));
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);

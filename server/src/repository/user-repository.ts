@@ -12,6 +12,11 @@ export interface IUser {
   password: string;
 }
 
+export interface ISocialUser {
+  social_id: number;
+  name: string;
+}
+
 export interface ISignUpBody {
   name: string;
   userId: string;
@@ -45,9 +50,15 @@ export class User {
     return await selectQueryExecuter<IUser>(getUserWithIdQuery);
   }
 
-  static async createWithSocial() {
-    const selecteAllUserQuery = ``;
-    return await selectQueryExecuter<IUser>(selecteAllUserQuery);
+  static async getWithSocialId(socialId: number) {
+    const getUserWithSocialIdQuery = `SELECT user_id as userId, name, password, id FROM User WHERE social_id=${socialId};`;
+    return await selectQueryExecuter<IUser>(getUserWithSocialIdQuery);
+  }
+
+  static async createWithSocial(args: ISocialUser) {
+    const { name, social_id } = args;
+    const createUserWithSocialIdQuery = `INSERT INTO User(name, social_id) VALUES("${name}", "${social_id}")`;
+    return await insertQueryExecuter(createUserWithSocialIdQuery);
   }
 
   static async deleteWithId(id: number) {
