@@ -38,10 +38,6 @@ const githubOption = {
   callbackURL: githubCallbackUrl,
 };
 
-interface IProfile {
-  id: number;
-  name: string;
-}
 const githubCallback = async (accessToken, refreshToken, profile, done) => {
   console.log(accessToken, refreshToken, profile);
   [profile] = await accessGithubApi({ token: accessToken });
