@@ -11,10 +11,10 @@ interface IProps {
 }
 interface IState {}
 
-class BoxInput extends Component<IProps, IState> {
+class BoxInput extends Component<IProps, IState, undefined> {
   private errorElement: HTMLElement
   constructor(props: IProps) {
-    super(props)
+    super({ props })
     Object.setPrototypeOf(this, BoxInput.prototype)
     this.init()
     this.errorElement = this.element.querySelector('p')

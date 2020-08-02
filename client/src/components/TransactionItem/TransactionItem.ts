@@ -8,9 +8,9 @@ interface IProps {
 }
 interface IState {}
 
-class TransactionItem extends Component<IProps, IState> {
+class TransactionItem extends Component<IProps, IState, undefined> {
   constructor(props: IProps) {
-    super(props)
+    super({ props })
 
     Object.setPrototypeOf(this, TransactionItem.prototype)
     this.init()
@@ -19,10 +19,7 @@ class TransactionItem extends Component<IProps, IState> {
   renderPrice() {
     const { price: priceNum, isIncome } = this.props.transaction
 
-    return div({
-      className: `price ${isIncome ? 'income' : 'outcome'}`,
-      textContent: getCSVNumber(priceNum),
-    })
+    return
   }
 
   render() {
@@ -37,11 +34,14 @@ class TransactionItem extends Component<IProps, IState> {
     } = this.props.transaction
 
     return div(
-      { className: 'item-container', id: `item-${id}` },
+      {
+        className: 'item-container',
+        id: `item-${id}`,
+        accessKey: 'transaction-item',
+      },
       i({
         className: 'f7-icons item-icon',
         textContent: 'ant',
-        // style: { backgroundColor: '#4FED93' },
       }),
       div(
         { className: 'info-container' },
@@ -51,8 +51,10 @@ class TransactionItem extends Component<IProps, IState> {
         }),
         div({ className: 'info-content', textContent: content })
       ),
-      this.renderPrice()
-      // div({ textContent: createdAt.toString().split('T')[0] })
+      div({
+        className: `price ${isIncome ? 'income' : 'outcome'}`,
+        textContent: getCSVNumber(price),
+      })
     )
   }
 }
