@@ -42,15 +42,23 @@ const githubCallback = async (accessToken, refreshToken, profile, done) => {
   console.log(accessToken, refreshToken, profile);
   [profile] = await accessGithubApi({ token: accessToken });
   const [[user, _], err] = await User.getWithSocialId(profile.id);
-  if (!user) {
-    const [userId, err] = await User.createWithSocial({
-      social_id: profile.id,
-      name: profile.login,
-    });
-    const [[newUser, _], err] = await User.getWithId(userId);
+  if (user) {
+    return done(err, user);
   }
-  return done(err, newUser);
+  const [newUser, insertOrGetDberr] = await createAndGetSocialUser(profile);
+  return done(insertOrGetDberr, newUser);
 };
+
+async function createAndGetSocialUser(profile) {
+  const [userId, insertDbErr] = await User.createWithSocial({
+    social_id: profile.id,
+    name: profile.login,
+  });
+  const [[newUser, _], getDbErr] = await User.getWithId(userId);
+
+  const err = insertDbErr || getDbErr;
+  return [newUser, err];
+}
 
 passport.use("provider", new OAuth2Strategy(githubOption, githubCallback));
 
