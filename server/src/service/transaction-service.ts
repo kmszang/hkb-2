@@ -26,7 +26,7 @@ export const createNewTransaction = async (req: Request, res: Response) => {
 
 export const getAllTransactions = async (req: Request, res: Response) => {
 	const [allTransactions, fetchError] = await Transaction.getAll();
-	console.log(allTransactions);
+
 	if (fetchError) {
 		throw new DatabaseError(fetchError);
 	}
