@@ -20,6 +20,7 @@ export interface ITransaction {
 	categoryName: string;
 	createdAt: Date;
 	isIncome: boolean;
+	iconName: string;
 }
 
 export class Transaction {
@@ -40,7 +41,7 @@ export class Transaction {
 	static async getAll() {
 		const selectAllTransaction = `
 			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
-			C.name as categoryName, C.is_income as isIncome from Transaction as T
+			C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName from Transaction as T
 			JOIN Payment as P ON P.id = T.payment_id
 			JOIN Category as C ON C.id = T.category_id
 			WHERE T.is_active=true
