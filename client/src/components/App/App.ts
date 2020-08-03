@@ -4,20 +4,23 @@ import { Login } from '../Login/index'
 import { Header } from '../Header/index'
 import { Signup } from '../Signup/index'
 import { TransactionList } from '../TransactionList'
-import AddNewTransaction from '../AddNewTransaction/AddNewTransaction'
+import { AddNewTransaction } from '../AddNewTransaction'
+import { routing } from '../../utils/Routing'
+
 interface IProps {}
 interface IState {}
 
-class App extends Component<IProps, IState, undefined> {
+class App extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
 
     Object.setPrototypeOf(this, App.prototype)
+    routing.init(this)
     this.init()
   }
 
   render() {
-    return div({}, new Header(), new AddNewTransaction(), new TransactionList())
+    return div({}, new Header(), routing.getPage())
   }
 }
 
