@@ -1,1 +1,70 @@
 @import '../../styles/_variables.scss';
+
+.add-new-transaction-container{
+	width: 100%;
+	margin: 0 auto;
+	// display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.inputs-container{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.categroy-wrapper{
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+
+		.category-container{
+			opacity: 0.6;
+			transition: opacity 400ms ease;;
+
+			&:hover {
+				opacity: 1;
+			}
+
+			i{
+				width: 36px;
+				height: 36px;
+				border-radius: 5px;
+
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				margin: 0 5px;
+			}
+
+			i.income {
+				color: $hkb-blue;
+				background: $hkb-light-blue;
+			}
+
+			i.outcome {
+				color: $hkb-red;
+				background: $hkb-light-red;
+			}
+
+			.category-description{
+				color: $hkb-black;
+				text-align: center;
+				opacity: 0.7;
+				margin-top: 1px;
+				font-size:8px;
+			}
+		}
+
+
+		.category-container.selected{
+			opacity: 1;
+		}
+	}
+
+}
+
+

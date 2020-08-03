@@ -13,6 +13,19 @@
 
 	}
 
+	.price-summary{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 20px;
+	}
+
+	p {
+		width: fit-content;
+		// margin : 0 auto;
+	}
+
+
 	// .date-info{
 	// 	color: darkgray
 	// }
@@ -25,6 +38,12 @@
 
 .outcome {
 	color: $hkb-red;
+	margin-left: 5px;
+}
+
+.right.outcome {
+	color: $hkb-red;
+	margin-left: 5px;
 }
 
 .date-info-container{

@@ -7,9 +7,9 @@ interface IProps {
 }
 interface IState {}
 
-class Button extends Component<IProps, IState, undefined> {
+class Button extends Component<IProps, IState> {
   constructor(props: IProps) {
-    super({ props })
+    super(props)
 
     Object.setPrototypeOf(this, Button.prototype)
     this.init()

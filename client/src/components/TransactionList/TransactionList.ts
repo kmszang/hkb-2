@@ -111,14 +111,19 @@ class TransactionList extends Component<IProps, IState, undefined> {
         div(
           { className: 'date-info-container' },
           p({ className: 'date-info', textContent: date.toString() }),
-          p({
-            className: 'date-info income right',
-            textContent: getCSVNumber(sumOfIncome),
-          }),
-          p({
-            className: 'date-info outcome right',
-            textContent: getCSVNumber(sumOfOutcome),
-          })
+          div(
+            {
+              className: 'price-summary right',
+            },
+            p({
+              className: 'income',
+              textContent: getCSVNumber(sumOfIncome),
+            }),
+            p({
+              className: 'outcome',
+              textContent: getCSVNumber(sumOfOutcome),
+            })
+          )
         ),
         ...transactions.map(
           (transaction) => new TransactionItem({ transaction })

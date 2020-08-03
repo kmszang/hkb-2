@@ -17,9 +17,7 @@
 	i{
 		width: 36px;
 		height: 36px;
-		background: $hkb-light-blue;
 		border-radius: 5px;
-		color: $hkb-blue;
 		opacity: 0.7;
 
 		display: flex;
@@ -32,6 +30,16 @@
 		&:hover {
 			opacity: 1;
 		}
+	}
+
+	i.income {
+		color: $hkb-blue;
+		background: $hkb-light-blue;
+	}
+
+	i.outcome {
+		color: $hkb-red;
+		background: $hkb-light-red;
 	}
 
 	.info-container{

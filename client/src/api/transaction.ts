@@ -17,6 +17,7 @@ export interface ITransactionResponse {
   categoryName: string
   createdAt: Date
   isIncome: boolean
+  iconName: string
 }
 
 export const fetchAllTransaction = async () => {

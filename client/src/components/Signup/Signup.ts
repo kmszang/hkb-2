@@ -13,6 +13,7 @@ import { signUp } from '../../api/user'
 import { errorHandler } from '../../utils/errorHandler'
 interface IProps {}
 interface IState {}
+
 class Signup extends Component<IProps, IState> {
   constructor() {
     super()

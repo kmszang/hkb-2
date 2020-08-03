@@ -13,12 +13,15 @@ export type HTMLELementTagName = keyof Omit<
 >
 type HTMLElementTagType = HTMLElementTagNameMap[HTMLELementTagName]
 
-export type IAttribute = Partial<HTMLElementTagType>
+type CustomAttribute = {
+  eventTarget: string
+}
+export type IAttribute = Partial<HTMLElementTagType & CustomAttribute>
 
 export const createElement = (
   tagName: string,
   attributes: IAttribute,
-  ...childNodes: (HTMLElement | Component<any, any, any> | null)[]
+  ...childNodes: (HTMLElement | Component<any, any> | null)[]
 ): HTMLElement => {
   const newElement = document.createElement(tagName)
 
@@ -38,12 +41,12 @@ export const createElement = (
     // event
     if (typeof value === 'function') {
       const eventName = key.slice(2)
-      if (!attributes.className) {
+      if (!attributes.eventTarget) {
         newElement.addEventListener(eventName, value)
         continue
       }
 
-      eventHandler.assignEventToWindow(eventName, attributes.className, value)
+      eventHandler.assignEventToWindow(eventName, attributes.eventTarget, value)
       continue
     }
 
