@@ -38,7 +38,6 @@ export class Transaction {
 		JOIN Payment as P ON P.id = T.payment_id
 		JOIN Category as C ON C.id = T.category_id
 		WHERE T.id=${id} and T.is_active=true
-		ORDER BY createdAT DESC, categoryName, T.content, PaymentName, T.price;
 		`;
 		return await selectQueryExecuter<ITransaction>(selectOneTransaction);
 	}
@@ -50,7 +49,6 @@ export class Transaction {
 			JOIN Payment as P ON P.id = T.payment_id
 			JOIN Category as C ON C.id = T.category_id
 			WHERE T.is_active=true
-			ORDER BY createdAT DESC, categoryName, T.content, PaymentName, T.price;
 			`;
 		return await selectQueryExecuter<ITransaction>(selectAllTransaction);
 	}
