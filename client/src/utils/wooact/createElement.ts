@@ -21,7 +21,7 @@ export type IAttribute = Partial<HTMLElementTagType & CustomAttribute>
 export const createElement = (
   tagName: string,
   attributes: IAttribute,
-  ...childNodes: (HTMLElement | Component<any, any, any> | null)[]
+  ...childNodes: (HTMLElement | Component<any, any> | null)[]
 ): HTMLElement => {
   const newElement = document.createElement(tagName)
 
