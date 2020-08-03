@@ -1,5 +1,7 @@
 import { SignIn } from '../pages/SignIn'
 import { Transaction } from '../pages/Transaction'
+import { Statistics } from '../pages/Statistics'
+import { Calendar } from '../pages/Calendar'
 import { Component } from './wooact'
 import { Diffing } from './wooact/Diffing'
 
@@ -15,16 +17,16 @@ export const CALENDAR = '/calendar' as const
 
 const transactionPage = new Transaction()
 const signInPage = new SignIn()
-const statisticsPage = new Transaction()
-const calendarPage = new Transaction()
+const statisticsPage = new Statistics()
+const calendarPage = new Calendar()
 
 class Routing {
   private routes = {
     [SIGN_IN]: signInPage,
     [TRANSACTION]: transactionPage,
     [DEFAULT]: transactionPage,
-    [STATISTICS]: transactionPage,
-    [CALENDAR]: transactionPage,
+    [STATISTICS]: statisticsPage,
+    [CALENDAR]: calendarPage,
   }
 
   private app: Component<any, any>
