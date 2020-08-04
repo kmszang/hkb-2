@@ -4,7 +4,7 @@ import {
   createNewTransaction,
   ICreateTransaction,
 } from '../api/transaction'
-import { Store } from './Store'
+import { Store } from '../utils/wooact/Store'
 
 // actions
 export const FETCH_ALL_TRANSACTION = 'Transaction/FETCH_ALL' as const
@@ -42,10 +42,10 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
   protected updateStore(action: string, result: any) {
     switch (action) {
       case FETCH_ALL_TRANSACTION:
-        this.data = [...result]
+        this._data = [...result]
         break
       case ADD_ONE_TRANSACTION:
-        this.data = [...this.data, result]
+        this._data = [...this._data, result]
         break
     }
   }

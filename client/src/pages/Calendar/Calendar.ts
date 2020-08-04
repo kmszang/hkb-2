@@ -13,7 +13,7 @@ class Calendar extends Component<IProps, IState> {
   }
 
   render() {
-    return div({ className: 'calendar-container' })
+    return div({ className: 'calendar-container', textContent: 'calendar' })
   }
 }
 
