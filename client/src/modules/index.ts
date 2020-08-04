@@ -2,7 +2,6 @@ import { Store } from '../utils/Store'
 import { TransactionStore } from './TransactionStore'
 import { Month, MonthStore } from './MonthStore'
 import { ITransactionResponse } from '../api/transaction'
-import { fireEvent, STORE_UPDATED } from '../utils/customEventHandler'
 
 export interface ICombinedStore {
   transaction: Store<ITransactionResponse[]>

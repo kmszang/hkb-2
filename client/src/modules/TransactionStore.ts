@@ -40,7 +40,6 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
   }
 
   protected updateStore(action: string, result: any) {
-    let isUpdated = true
     switch (action) {
       case FETCH_ALL_TRANSACTION:
         this._data = [...result]
@@ -48,8 +47,6 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
       case ADD_ONE_TRANSACTION:
         this._data = [...this._data, result]
         break
-      default:
-        isUpdated = false
     }
 
     // window.dispatchEvent(
