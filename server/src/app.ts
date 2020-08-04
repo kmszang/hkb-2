@@ -8,14 +8,27 @@ import cors from "cors";
 import { CustomError } from "./errors/custom-error";
 import passport from "./passport";
 import session from "express-session";
+import { User } from "./repository/user-repository";
+const NedbStore = require("nedb-session-store")(session);
 const app = express();
-
-app.use(session({ secret: "cats" }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(
+  session({
+    secret: "cats",
+    store: new NedbStore({
+      filename: "sessionStore.db",
+    }),
+    cookie: {
+      domain: "http://localhost:3000",
+      sameSite: false,
+    },
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve static files at `public` directory
 app.use(express.static(path.join(__dirname, "/public")));
