@@ -1,5 +1,5 @@
-import { Component } from '../utils/wooact'
-import { Diffing } from '../utils/wooact/Diffing'
+import { Component } from '.'
+import { Diffing } from './Diffing'
 
 interface IActions {
   [actionName: string]: (args: any) => Promise<any> | any
@@ -8,8 +8,9 @@ interface IActions {
 export abstract class Store<T> {
   private subscribedComponent: Component<any, any>[] = []
   protected abstract actions: IActions
+  protected abstract updateStore(action: string, args?: any)
 
-  constructor(protected data: T) {}
+  constructor(protected _data: T) {}
 
   async dispatch(action: string, args?: any) {
     const selectedAction = this.actions[action]
@@ -29,8 +30,9 @@ export abstract class Store<T> {
     this.rerender()
   }
 
-  subscribe(component: Component<any, any>) {
+  subscribe(component: Component<any, any>): Store<T> {
     this.subscribedComponent.push(component)
+    return this
   }
 
   unSubscribe(component: Component<any, any>) {
@@ -39,23 +41,11 @@ export abstract class Store<T> {
     )
   }
 
-  protected abstract updateStore(action: string, args?: any)
-
-  public getActionNames() {
-    return new Set(Object.keys(this.actions))
-  }
-
-  public getData(): T {
-    return this.data
+  get data(): T {
+    return this._data
   }
 
   private rerender() {
-    this.subscribedComponent.forEach(
-      (component) =>
-        (component.element = Diffing.reconciliation(
-          component.element,
-          component.render()
-        ))
-    )
+    this.subscribedComponent.forEach((component) => component.reRenderBy(this))
   }
 }

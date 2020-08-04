@@ -13,7 +13,7 @@ class Statistics extends Component<IProps, IState> {
   }
 
   render() {
-    return div({ className: 'statistics-container' })
+    return div({ className: 'statistics-container', textContent: 'Statistics' })
   }
 }
 

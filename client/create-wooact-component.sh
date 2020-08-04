@@ -25,17 +25,25 @@ interface IProps {}
 interface IState {}
 
 class ${FILE_NAME} extends Component<IProps, IState> {
+  // usually get props through constructor
+  // state iniitailized in constructor and pass down to state
+
   // constructor(props: IProps) {
-  // super(props)
   // const initialState: IState = {
   //
   // }
-  // constructor(props: IProps) {
-  //   super(props, state)
+  // super(props, initialState)
+
   constructor() {
+
+    // super get props and state, if not existed just send null or nothing.
     super()
 
     Object.setPrototypeOf(this, ${FILE_NAME}.prototype)
+
+    // connectStore should be inintialized in here
+    // before init method called
+    // this.connectStore("name")
     this.init()
   }
 
