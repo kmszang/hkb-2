@@ -34,20 +34,19 @@ class Login extends Component<IProps, IState> {
     window.location.href = githubLoginuUrl
   }
 
-  loginHandler = async (e: Event) => {
+  loginHandler = async (e) => {
     e.preventDefault()
-
+    const $loginForm = e.target.closest('#login-form')
     const inputs = Array.from(
-      this.element.querySelectorAll('input')
+      $loginForm.querySelectorAll('input')
     ) as HTMLInputElement[]
-
     const loginBody = checkAndmakeInputData(inputs)
 
     if (!loginBody) {
       return
     }
 
-    const [result, err] = await githubLogIn(loginBody)
+    const [result, err] = await logIn(loginBody)
     console.log(result, err)
   }
 
