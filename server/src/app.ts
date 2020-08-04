@@ -8,7 +8,6 @@ import cors from "cors";
 import { CustomError } from "./errors/custom-error";
 import passport from "./passport";
 import session from "express-session";
-import { User } from "./repository/user-repository";
 const NedbStore = require("nedb-session-store")(session);
 const app = express();
 
