@@ -1,7 +1,11 @@
 import { Diffing } from './Diffing'
+import { Store } from './Store'
+import { Routing } from '../../utils/Routing'
+import { ICombinedStore, combinedStore } from '../../modules'
 
 abstract class Component<P, S> {
   public element: HTMLElement
+  protected store: Partial<ICombinedStore> = {}
 
   constructor(public props?: P, private state?: S) {
     Object.setPrototypeOf(this, Component.prototype)
@@ -43,9 +47,35 @@ abstract class Component<P, S> {
     this.componentDidMount()
   }
 
+  private injectState(partialState: Partial<S>) {
+    this.state = { ...this.state, ...partialState }
+  }
+
+  public extractState(): S {
+    return this.state
+  }
+
   abstract render?()
   protected componentDidMount() {}
   protected comopnentWillUnmount() {}
+
+  // co-working with store, need to call for using store's data or actions
+  protected connectStore(...storeNames: (keyof ICombinedStore)[]) {
+    storeNames.forEach((storeName) => {
+      // TODO need to fix!
+      this.store[storeName] = combinedStore[storeName].subscribe(this) as any
+    })
+  }
+
+  // callable by outside of component, but only restricted to Store or Routing
+  // and if it has a
+  public reRenderBy(caller: Store<any> | Routing, partialState?: Partial<S>) {
+    if (partialState) {
+      this.injectState(partialState)
+    }
+
+    this.reRender()
+  }
 }
 
 export default Component
