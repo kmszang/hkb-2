@@ -1,28 +1,32 @@
 @import '../../styles/_variables.scss';
 
 .add-new-transaction-container{
-	width: 100%;
+	max-width: 600px;
 	margin: 0 auto;
-	// display: flex;
-	justify-content: center;
-	align-items: center;
+	padding: 10px;
 
 	.inputs-container{
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: stretch;
+		margin: 10px 0 0 0;
 	}
 
-	.categroy-wrapper{
-
+	.selector-wrapper{
 		display: flex;
-		justify-content: center;
 		align-items: center;
 
+		.category-wrapper{
+			margin-left: auto;
+			display: flex;
+		}
+		.mode-wrapper{
+			display: flex;
+		}
 
 		.category-container{
-			opacity: 0.6;
-			transition: opacity 400ms ease;;
+			opacity: 0.5;
+			transition: all 200ms ease ;
 
 			&:hover {
 				opacity: 1;
@@ -63,8 +67,13 @@
 		.category-container.selected{
 			opacity: 1;
 		}
-	}
 
+	}
+	.add-new-btn {
+		width: 50%;
+		margin: 0px auto;
+		align-self: auto;
+	}
 }
 
 
