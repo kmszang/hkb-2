@@ -3,14 +3,24 @@ import { Transaction } from '../pages/Transaction'
 import { Statistics } from '../pages/Statistics'
 import { Calendar } from '../pages/Calendar'
 import { Component } from './wooact'
-import { Diffing } from './wooact/Diffing'
+import { combinedStore } from '../modules'
+import { listenEvent, STORE_UPDATED } from './customEventHandler'
 
 interface IRoutes {
   [route: string]: Component<any, any>
 }
 
+// declare global {
+//   namespace Window {
+//     interface PopStateEvent {
+//       state: ICombinedStore
+//     }
+//   }
+// }
+
 export const SIGN_IN = '/sign-in' as const
-export const DEFAULT = '/' as const
+export const BASIC = '/' as const
+export const DEFAULT = '' as const
 export const TRANSACTION = '/transaction' as const
 export const STATISTICS = '/statistics' as const
 export const CALENDAR = '/calendar' as const
@@ -20,11 +30,12 @@ const signInPage = new SignIn()
 const statisticsPage = new Statistics()
 const calendarPage = new Calendar()
 
-class Routing {
-  private routes = {
+export class Routing {
+  private routes: IRoutes = {
+    [BASIC]: transactionPage,
+    [DEFAULT]: transactionPage,
     [SIGN_IN]: signInPage,
     [TRANSACTION]: transactionPage,
-    [DEFAULT]: transactionPage,
     [STATISTICS]: statisticsPage,
     [CALENDAR]: calendarPage,
   }
@@ -32,7 +43,13 @@ class Routing {
   private app: Component<any, any>
 
   constructor() {
+    this.popStateHandler = this.popStateHandler.bind(this)
+    this.storeUpdatedHandler = this.storeUpdatedHandler.bind(this)
+
+    listenEvent(STORE_UPDATED, this.storeUpdatedHandler)
+    // listenEvent(P, this.storeUpdatedHandler)
     window.addEventListener('popstate', this.popStateHandler)
+    // window.addEventListener('storeupdated', this.storeUpdatedHandler)
   }
 
   init(component: Component<any, any>) {
@@ -40,7 +57,12 @@ class Routing {
   }
 
   getPath() {
-    return location.pathname
+    const path = location.pathname
+    if (!this.routes[path]) {
+      return DEFAULT
+    }
+
+    return path
   }
 
   getPage(): Component<any, any> {
@@ -48,25 +70,36 @@ class Routing {
   }
 
   pushTo(url: string) {
-    if (!this.routes[url]) {
+    const page = this.routes[url]
+
+    if (!page) {
       location.href = DEFAULT
+      this.app.reRenderBy(this)
+      return
+    }
+    history.pushState({}, '', url)
+
+    this.getPage().reRenderBy(this)
+    this.app.reRenderBy(this)
+  }
+
+  storeUpdatedHandler(e: CustomEvent) {
+    history.pushState(e.detail, '')
+  }
+
+  private popStateHandler(e: PopStateEvent) {
+    const { state } = e
+
+    console.log(state)
+    if (!state) {
       return
     }
 
-    history.pushState({}, '', url)
+    for (const [key, data] of Object.entries(state)) {
+      combinedStore[key].injectData(this, data)
+    }
 
-    this.rerender()
-  }
-
-  popStateHandler(e: PopStateEvent) {
-    this.rerender()
-  }
-
-  private rerender() {
-    this.app.element = Diffing.reconciliation(
-      this.app.element,
-      this.app.render()
-    )
+    this.app.reRenderBy(this)
   }
 }
 

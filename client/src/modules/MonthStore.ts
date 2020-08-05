@@ -1,21 +1,24 @@
-import { Store } from '../utils/wooact/Store'
+import { Store } from '../utils/Store'
+import { fireEvent, STORE_UPDATED } from '../utils/customEventHandler'
 
 // type
-export interface IMonth {
-  month: number
-}
+export type Month = number
 
 // actions
 export const CHANGE_MONTH = 'Month/CHANGE_MONTH' as const
 
 // connect store and actions
-export class MonthStore extends Store<IMonth> {
+export class MonthStore extends Store<Month> {
   actions = {
     [CHANGE_MONTH]: this.changeMonth,
   }
 
-  constructor() {
-    super({ month: new Date().getMonth() })
+  constructor(initialData: Month) {
+    super(initialData)
+    // TODO is this right?
+    // window.dispatchEvent(
+    //   new CustomEvent('storeupdated', { detail: { month: initialData } })
+    // )
   }
 
   // actions
@@ -26,8 +29,13 @@ export class MonthStore extends Store<IMonth> {
   protected updateStore(action: string, result: any) {
     switch (action) {
       case CHANGE_MONTH:
-        this._data = { ...this._data, ...result }
+        this._data = result
         break
     }
+
+    // window.dispatchEvent(
+    //   new CustomEvent('storeupdated', { detail: { month: this.data } })
+    // )
+    fireEvent(STORE_UPDATED, { month: this.data })
   }
 }

@@ -4,7 +4,7 @@ import {
   createNewTransaction,
   ICreateTransaction,
 } from '../api/transaction'
-import { Store } from '../utils/wooact/Store'
+import { Store } from '../utils/Store'
 
 // actions
 export const FETCH_ALL_TRANSACTION = 'Transaction/FETCH_ALL' as const
@@ -48,5 +48,9 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
         this._data = [...this._data, result]
         break
     }
+
+    // window.dispatchEvent(
+    //   new CustomEvent('storeupdated', { detail: { transaction: this.data } })
+    // )
   }
 }
