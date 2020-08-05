@@ -3,13 +3,20 @@
 .sidebar-container{
 	position: fixed;
 	left: 0;
-	top:70px;
+	top: 0;
 	bottom: 0;
-	height: 100%;
-	width: 5%;
+	height: 100vh;
+	width: 50px;
 
 	background-color: $hkb-white;
-	// display: flex;
+
+	.main-icon {
+		margin: 40px 0;
+		font-weight: 900;
+		color: $baemin-main;
+		// background-color: $baemin-main;
+		padding: 2px;
+	}
 
 	.icon-wrapper {
 		height: 200px;
