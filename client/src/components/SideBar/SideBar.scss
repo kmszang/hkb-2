@@ -1,0 +1,29 @@
+@import '../../styles/_variables.scss';
+
+.sidebar-container{
+	position: fixed;
+	left: 0;
+	top:70px;
+	bottom: 0;
+	height: 100%;
+	width: 5%;
+
+	background-color: $hkb-white;
+	// display: flex;
+
+	.icon-wrapper {
+		height: 200px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+
+	.i {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		bottom: 0;
+	}
+}
