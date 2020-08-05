@@ -1,6 +1,6 @@
-import { Store } from '../modules/Store'
+import { Store } from './Store'
 import { TransactionStore } from '../modules/TransactionStore'
-import { MonthStore } from '../modules/MonthStore'
+import { DateStore } from '../modules/DateStore'
 
 export const isTransactionStore = (
   store: Store<any>
@@ -8,6 +8,6 @@ export const isTransactionStore = (
   return store instanceof TransactionStore
 }
 
-export const isMonthStore = (store: Store<any>): store is MonthStore => {
-  return store instanceof MonthStore
+export const isMonthStore = (store: Store<any>): store is DateStore => {
+  return store instanceof DateStore
 }
