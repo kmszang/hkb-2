@@ -2,21 +2,10 @@ import { Component } from '../../utils/wooact'
 import { div, section, svg, p } from '../../utils/wooact/defaultElements'
 
 interface IProps {}
-interface IState {
-  totalMoney: number
-  dataSet: Array<object>
-}
+interface IState {}
 class BarChart extends Component<IProps, IState> {
-  // usually get props through constructor
-  // state iniitailized in constructor and pass down to state
-
-  // constructor(props: IProps) {
-  // super(props, initialState)
   private svgWidth: number
   private svgHeight: number
-  private barPadding: number
-  private totalMoney: number
-  private dataSet: Array<object>
 
   constructor() {
     // super get props and state, if not existed just send null or nothing.
@@ -147,7 +136,6 @@ class BarChart extends Component<IProps, IState> {
       div({ id: 'percent-list', class: 'list' }, ...percentList),
       $svg,
       div({ id: 'price-list', class: 'list' }, ...priceList)
-      // ...this.loopDateSet()
     )
   }
 }
