@@ -45,7 +45,7 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
         this._data = [...result]
         break
       case ADD_ONE_TRANSACTION:
-        this._data = [...this._data, result]
+        this._data = [result, ...this._data]
         break
     }
 

@@ -48,53 +48,10 @@ class ${FILE_NAME} extends Component<IProps, IState> {
   }
 
   render() {
-    return div({ className: 'container' })
+    return div({ className: '${LOWER}-container' })
   }
 }
 
 export default ${FILE_NAME};
 
 " > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}.ts`
-
-echo `echo "import { default as ${FILE_NAME} } from './${FILE_NAME}'
-import { domRenderer } from '../../utils/wooact'
-
-let ${LOWER}Component: ${FILE_NAME}
-let ${LOWER}Element: HTMLElement
-let app: HTMLElement = null
-
-beforeAll(() => {
-  document.body.innerHTML = '<div id="Test">' + '</div>'
-  app = document.querySelector('#Test')
-})
-
-beforeEach(() => {
-  ${LOWER}Component = new ${FILE_NAME}()
-  domRenderer(${LOWER}Component, app)
-  ${LOWER}Element = ${LOWER}Component.getElement()
-})
-
-afterEach(() => {
-  ${LOWER}Element.remove()
-})
-
-afterAll(() => {
-  app.remove()
-})
-
-describe('[${FILE_NAME} Component]', () => {
-  test('${FILE_NAME}이 정상적으로 렌더된다.', () => {
-    //given
-    // rendered
-
-    // when
-    // rendered
-
-    // then
-    expect(app.hasChildNodes).toBeTruthy()
-    expect(app.contains(${LOWER}Element)).toBeTruthy()
-  })
-})
-
-
-" > src/${FOLDER}/${FILE_NAME}/${FILE_NAME}.test.ts`

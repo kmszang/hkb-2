@@ -12,12 +12,12 @@ interface IProps {
 
 interface IState {}
 
-class BoxInput extends Component<IProps, IState, undefined> {
+class BoxInput extends Component<IProps, IState> {
   private errorElement: HTMLElement
   private debounceTimeout
 
   constructor(props: IProps) {
-    super({ props })
+    super(props)
 
     Object.setPrototypeOf(this, BoxInput.prototype)
     this.init()
@@ -52,10 +52,9 @@ class BoxInput extends Component<IProps, IState, undefined> {
         input({
           placeholder,
           name,
-          type: 'text',
+          type: type || 'text',
           iconName: iconName,
           oninput: (e) => this.onChagneHandler(e),
-          // onfocusout: (e) => this.onChagneHandler(e),
         })
       ),
       p({ textContent: errMessage, className: 'error' })
