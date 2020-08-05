@@ -48,7 +48,7 @@ class ${FILE_NAME} extends Component<IProps, IState> {
   }
 
   render() {
-    return div({ className: 'container' })
+    return div({ className: '${LOWER}-container' })
   }
 }
 
