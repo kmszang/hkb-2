@@ -15,7 +15,7 @@
         .pie circle {
             fill: none;
             stroke: gold;
-            stroke-width: 32;
+            stroke-width: 20;
             animation: rotate 1s reverse forwards;
         }
 
@@ -25,22 +25,163 @@
     </style>
 </head>
 <body>
+    <!-- <svg height="20" width="20" viewBox="0 0 20 20"> 
+        <!-- <circle r="5" cx="10" cy="10" fill="transparent"
+        stroke="red"
+        stroke-width="10"
+        stroke-dasharray="31.4 31.4"
+        transform="rotate(-90) translate(-20)" />
+        <circle r="5" cx="10" cy="10" fill="transparent"
+        stroke="blue"
+        stroke-width="10"
+        stroke-dasharray="calc(40 * 31.4 / 100) 31.4"
+        transform="rotate(-90) translate(-20)" />
+        <circle r="5" cx="10" cy="10" fill="transparent"
+        stroke="purple"
+        stroke-width="10"
+        stroke-dasharray="calc(60 * 31.4 / 100) 31.4"
+        transform="rotate(-90) translate(-20)" />
+        <circle r="5" cx="10" cy="10" fill="transparent"
+        stroke="gray"
+        stroke-width="10"
+        stroke-dasharray="calc(80 * 31.4 / 100) 31.4"
+        transform="rotate(-90) translate(-20)" />
+        <circle r="5" cx="10" cy="10" fill="transparent"
+        stroke="green"
+        stroke-width="10"
+        stroke-dasharray="calc(90 * 31.4 / 100) 31.4"
+        transform="rotate(-90) translate(-20)" /> -->
+        <!-- <circle r="5" cx="10" cy="10" fill="transparent"
+        stroke="black"
+        stroke-width="10"
+        stroke-dasharray="calc(10 * 31.4 / 100) 31.4"
+        transform="rotate(-90) translate(-20)" /> -->
+      <!-- </svg> -->
     <svg viewBox="-32 -32 64 64" class="pie">
-        <g>
-            <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 75.3 100; stroke-dashoffset: 0;" >
-            </circle>
-            <text x="0" y="75.3">asdfas</text>
-        </g>
-        <!-- <line x1="0" y1="0" x2="30" y2="30" style="stroke:rgb(255,0,0);stroke-width:2" />
-        <text x="0" y="15" fill="red">I love SVG!</text> -->
-        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 19.9 100; stroke: green; stroke-dashoffset: -75.3;">
-        </circle>
-        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 2.3 100; stroke: blue; stroke-dashoffset: -95.2;" >
-        </circle>
-        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 1.4 100; stroke: orange; stroke-dashoffset: -97.5; ">
-        </circle>
-        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 1.1 100; stroke: red; stroke-dashoffset: -98.9;" >
-        </circle>
+        <!-- <circle r="10" cx="0" cy="0" tranform="rotate(-90) translate(-20)" style="stroke-dasharray: 44.4975, 62.8319; stroke: yellow;"></circle> -->
+        <!-- <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 1.1 100; stroke: red; stroke-dashoffset: -98.9;" transform="rotate(-90) translate(-20)" >
+        </circle>  -->
     </svg>
+    <script>
+        const total = 6
+        const dataset = [
+        {
+            category:"123",
+            price: 1
+        },
+        {
+            category : '식비',
+            price : 2,
+        },
+        {
+            category : '생활',
+            price : 3,
+        },
+    ];
+    //     const dataset = [{
+    //         category : '생활',
+    //         price : 315000,
+    //     },
+    //     {
+    //         category : '식비',
+    //         price : 72000,
+    //     },
+    //     {
+    //         category : '교통',
+    //         price : 18000,
+    //     },
+    //     {
+    //         category : '쇼핑/뷰티',
+    //         price : 18000,
+    //     },
+    //     {
+    //         category : '의료/건강',
+    //         price : 9000,
+    //     },
+    //     {
+    //         category : 'asdf',
+    //         price : 3000,
+    //     },
+    //     {
+    //         category : 'asdf',
+    //         price : 3000,
+    //     },
+    // ];
+        const colorList = ['yellow', 'red', 'blue', 'purple', 'gray', 'black']
+
+
+        const $svg = document.getElementsByTagName('svg')[0]
+        const radius = 10
+        let previousPrice = 0
+        const centerCoordinate = [0, 0]
+        // const startCoordinate = [10,5]
+        // const endCoordinate = [0,0]
+
+        // const currentAngle = Math.PI/2
+        const fullAngle = 2*Math.PI;
+
+        // 원의 둘레
+        const circumference = 2 * Math.PI * radius
+        // let strokeDashOffSet = -(10*3/4*2*Math.PI)
+        let strokeDashOffSet = 0
+        
+        dataset.forEach((data, i) => {
+            const $g = document.createElementNS("http://www.w3.org/2000/svg", 'g');
+
+            const moneyRatio = (previousPrice / total)
+            const circleRatio = (moneyRatio * circumference)
+            const circleAngle = (fullAngle * moneyRatio)
+            // const currentX = Math.sin(currentAngle + circleAngle)
+            // const currentY = Math.cos(currentAngle + circleAngle)
+            // console.log(currentX)
+
+            const $circle = makeCircle(circleRatio, i)
+            
+            // const $line = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+            // $line.setAttribute('x1', radius * currentX)
+            // $line.setAttribute('x2', radius *startCoordinate[0])
+            // $line.setAttribute('y1', radius * currentY)
+            // $line.setAttribute('y2', radius *startCoordinate[0])
+            // $line.style.stroke = "rgb(255,0,0)"
+            $g.appendChild($circle)
+            // $g.appendChild($line)
+            $svg.appendChild($g)
+
+            strokeDashOffSet = strokeDashOffSet - circleRatio
+            // strokeDashOffSet = strokeDashOffSet - (moneyPercent/100)*radius * 2* Math.PI
+            // strokeDashOffSet = strokeDashOffSet - (radius*circleRatio/100*2*Math.PI)
+            // -(10*3/4*2*Math.PI)
+            previousPrice += data.price
+
+         })
+
+        function makeCircle(circleRatio, i){
+            // if(!circleRatio) circleRatio = 100
+
+            // const angle = circleRatio / circumference * 2 * Math.PI
+            // console.log(Math.cos(2*Math.PI*angle/2))
+            // console.log(Math.sin(2*Math.PI*angle/2))
+            
+            // console.log(angle)
+            const $circle = document.createElementNS("http://www.w3.org/2000/svg", 'circle');
+            
+            $circle.style.transform = "rotate(-90) "
+            $circle.setAttribute('transform', "rotate(-90)")
+            $circle.setAttribute('r', radius)
+            $circle.setAttribute('cx', centerCoordinate[0])
+            $circle.setAttribute('cy', centerCoordinate[1])
+            $circle.setAttribute('fill', 'transparent')
+
+
+            $circle.style.strokeDasharray = `${circleRatio}, 100000`
+            $circle.style.strokeDashoffset = strokeDashOffSet
+            // $circle.style.strokeDashoffset = -(10*3/2*Math.PI)
+            $circle.style.stroke = colorList[i]
+
+            
+            return $circle
+        }
+
+    </script>
 </body>
 </html>
