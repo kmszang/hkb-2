@@ -2,24 +2,19 @@ import { Component } from '../../utils/wooact'
 import { div, p, i } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
 import { getCSVNumber } from '../../utils/getCSVNumber'
+import { ICon } from '../ICon'
 
 interface IProps {
   transaction: ITransactionResponse
 }
 interface IState {}
 
-class TransactionItem extends Component<IProps, IState, undefined> {
+class TransactionItem extends Component<IProps, IState> {
   constructor(props: IProps) {
-    super({ props })
+    super(props)
 
     Object.setPrototypeOf(this, TransactionItem.prototype)
     this.init()
-  }
-
-  renderPrice() {
-    const { price: priceNum, isIncome } = this.props.transaction
-
-    return
   }
 
   render() {
@@ -39,9 +34,12 @@ class TransactionItem extends Component<IProps, IState, undefined> {
         id: `item-${id}`,
         accessKey: 'transaction-item',
       },
-      i({
-        className: `f7-icons item-icon ${isIncome ? 'income' : 'outcome'}`,
-        textContent: iconName,
+      new ICon({
+        isSelected: true,
+        isIncome,
+        iconName,
+        name: categoryName,
+        onClickHandler: () => {},
       }),
       div(
         { className: 'info-container' },
