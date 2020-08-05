@@ -7,6 +7,7 @@
     <style>
         .pie {
         width: 300px;
+        height: 300px;
         background: transparent;
         border-radius: 50%;
         }
@@ -24,17 +25,22 @@
     </style>
 </head>
 <body>
-    <svg viewBox="0 0 64 64" class="pie">
-        <circle r="25%" cx="50%" cy="50%" style="stroke-dasharray: 75.3 100; stroke-dashoffset: 0;" >
+    <svg viewBox="-32 -32 64 64" class="pie">
+        <g>
+            <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 75.3 100; stroke-dashoffset: 0;" >
+            </circle>
+            <text x="0" y="75.3">asdfas</text>
+        </g>
+        <!-- <line x1="0" y1="0" x2="30" y2="30" style="stroke:rgb(255,0,0);stroke-width:2" />
+        <text x="0" y="15" fill="red">I love SVG!</text> -->
+        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 19.9 100; stroke: green; stroke-dashoffset: -75.3;">
         </circle>
-        <circle r="25%" cx="50%" cy="50%" style="stroke-dasharray: 19.9 100; stroke: green; stroke-dashoffset: -75.3;">
+        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 2.3 100; stroke: blue; stroke-dashoffset: -95.2;" >
         </circle>
-        <circle r="25%" cx="50%" cy="50%" style="stroke-dasharray: 2.3 100; stroke: blue; stroke-dashoffset: -95.2;" >
+        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 1.4 100; stroke: orange; stroke-dashoffset: -97.5; ">
         </circle>
-        <circle r="25%" cx="50%" cy="50%" style="stroke-dasharray: 1.4 100; stroke: orange; stroke-dashoffset: -97.5; ">
+        <circle r="25%" cx="0" cy="0" style="stroke-dasharray: 1.1 100; stroke: red; stroke-dashoffset: -98.9;" >
         </circle>
-        <circle r="25%" cx="50%" cy="50%" style="stroke-dasharray: 1.1 100; stroke: red; stroke-dashoffset: -98.9;" >
-        </circle>
-      </svg>
+    </svg>
 </body>
 </html>
