@@ -1,5 +1,5 @@
 import { Diffing } from './Diffing'
-import { Store } from './Store'
+import { Store } from '../Store'
 import { Routing } from '../../utils/Routing'
 import { ICombinedStore, combinedStore } from '../../modules'
 

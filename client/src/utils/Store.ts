@@ -1,5 +1,5 @@
-import { Component } from '.'
-import { Diffing } from './Diffing'
+import { Component } from './wooact'
+import { Routing } from './Routing'
 
 interface IActions {
   [actionName: string]: (args: any) => Promise<any> | any
@@ -21,6 +21,7 @@ export abstract class Store<T> {
     }
 
     const result = selectedAction(args)
+
     if (result instanceof Promise) {
       this.updateStore(action, await result)
     } else {
@@ -31,14 +32,17 @@ export abstract class Store<T> {
   }
 
   subscribe(component: Component<any, any>): Store<T> {
+    this.subscribedComponent = this.subscribedComponent.filter(
+      (c) => c.constructor !== component.constructor
+    )
+
     this.subscribedComponent.push(component)
     return this
   }
 
-  unSubscribe(component: Component<any, any>) {
-    this.subscribedComponent = this.subscribedComponent.filter(
-      (c) => c !== component
-    )
+  injectData(caller: Routing, data: T) {
+    this._data = data
+    this.rerender()
   }
 
   get data(): T {
