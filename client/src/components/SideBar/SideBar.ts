@@ -3,30 +3,73 @@ import { div, button, i } from '../../utils/wooact/defaultElements'
 import { ICon } from '../ICon'
 import {
   SIGN_IN,
-  TRANSACTION,
   CALENDAR,
   STATISTICS,
   routing,
+  TRANSACTION,
 } from '../../utils/Routing'
+import { MONTH_IN_ENG } from '../../utils/dateInfos'
 
 interface IProps {}
-interface IState {}
+interface IState {
+  month: number
+  year: number
+}
 
 class SideBar extends Component<IProps, IState> {
   constructor() {
-    super()
+    const today = new Date()
+    const state: IState = {
+      year: today.getFullYear(),
+      month: today.getMonth() + 1,
+    }
+
+    super({}, state)
 
     Object.setPrototypeOf(this, SideBar.prototype)
-
+    this.connectStore('transaction')
     this.init()
+  }
+
+  renderMainIcon() {
+    return div(
+      { className: 'main-icon' },
+      new ICon({
+        isSelected: true,
+        onClickHandler: () => {},
+        name: '가계부',
+        iconName: 'minus_slash_plus',
+      })
+    )
+  }
+
+  renderDateInfo() {
+    const month = this.getState('month')
+    const year = this.getState('year')
+
+    return div(
+      {
+        className: 'date-container',
+      },
+      div({
+        className: 'year',
+        textContent: year.toString(),
+      }),
+      div({
+        className: 'month',
+        textContent: month.toString(),
+      }),
+      div({
+        className: 'month-eng',
+        textContent: MONTH_IN_ENG[month - 1],
+      })
+    )
   }
 
   renderRoutes() {
     const routes = [SIGN_IN, TRANSACTION, CALENDAR, STATISTICS]
     const icons = ['lock', 'list_dash', 'calendar', 'chart_bar']
 
-    //checkmark_alt_circle
-    //
     return routes.map(
       (route, idx) =>
         new ICon({
@@ -41,22 +84,9 @@ class SideBar extends Component<IProps, IState> {
   render() {
     return div(
       { className: 'sidebar-container' },
-      div(
-        { className: 'main-icon' },
-        new ICon({
-          isSelected: true,
-          onClickHandler: () => {},
-          name: '가계부',
-          iconName: 'minus_slash_plus',
-        })
-      ),
+      this.renderMainIcon(),
+      this.renderDateInfo(),
       div({ className: 'icon-wrapper' }, ...this.renderRoutes())
-      // new ICon({
-      //   isSelected: false,
-      //   onClickHandler: () => routing.pushTo(SIGN_IN),
-      //   name: '',
-      //   iconName: 'person_al1t_circle',
-      // })
     )
   }
 }

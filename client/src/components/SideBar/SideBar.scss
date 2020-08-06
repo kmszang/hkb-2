@@ -6,9 +6,12 @@
 	top: 0;
 	bottom: 0;
 	height: 100vh;
-	width: 50px;
+	width: 70px;
 
 	background-color: $hkb-white;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	.main-icon {
 		margin: 40px 0;
@@ -19,11 +22,30 @@
 	}
 
 	.icon-wrapper {
-		height: 200px;
-		display: flex;
-		flex-direction: column;
+		margin-top: auto;
+		div{
+			margin-bottom: 10px;
+		}
+	}
+
+    .date-container {
+        display: flex;
+        flex-direction: column;
 		align-items: center;
-		justify-content: space-evenly;
+
+		.year{
+			opacity: 0.5;
+			font-size: 10px;
+		}
+		.month{
+			font-variant-numeric: tabular-nums;
+			font-size: 32px;
+			font-weight: 900;
+			margin: -4px 0;
+		}
+		.month-eng{
+			font-size: 8px;
+		}
 	}
 
 	.i {
