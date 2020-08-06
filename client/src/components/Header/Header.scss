@@ -38,11 +38,16 @@ header{
         }
 
         .price-sum {
+            min-width: 120px;
             opacity: 0.6;
         }
 
         .price-sum.selected {
             opacity: 1;
         }
+    }
+
+    .filter-selector + .filter-selector {
+        margin-top: 3px;
     }
 }

@@ -5,12 +5,15 @@
 	margin: 0 40px;
 	grid-template-columns: repeat(7, 2fr);
 	grid-auto-rows: minmax(120px, auto);
+	// background-color: $hkb-white;
+	border-radius: 12px;
 
 	.day-eng{
 		margin-top: auto;
 
 		padding-left: 5px;
-		padding-bottom: 10px;
+		padding-bottom: 20px;
+		text-decoration: underline;
 	}
 
 	.SUN{
