@@ -4,8 +4,8 @@ import { ICon } from '../ICon'
 import { Routing } from '../../utils/Routing'
 import { SIGN_IN, TRANSACTION, CALENDAR, STATISTICS } from '../../pages/Router'
 import { MONTH_IN_ENG } from '../../utils/dateInfos'
-import { FETCH_ALL_TRANSACTION } from '../../modules/TransactionStore'
-import { SET_NEXT_MONTH, SET_PREV_MONTH } from '../../modules/DateStore'
+import { FETCH_ALL_TRANSACTION } from '../../stores/TransactionStore'
+import { SET_NEXT_MONTH, SET_PREV_MONTH } from '../../stores/DateStore'
 
 interface IProps {
   routing: Routing

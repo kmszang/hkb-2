@@ -3,6 +3,7 @@ import { div, p } from '../../utils/wooact/defaultElements'
 import { TransactionItem } from '../TransactionItem'
 import { getCSVNumber } from '../../utils/getCSVNumber'
 import { getRecordedDate, filterByDate } from '../../utils/dataFilterer'
+import { DAY_IN_ENG } from '../../utils/dateInfos'
 interface IProps {}
 interface IState {}
 
@@ -27,8 +28,6 @@ class TransactionList extends Component<IProps, IState> {
         (visible.income && isIncome) || (visible.outcome && !isIncome)
     )
 
-    console.log(filteredTransaction)
-
     const recordedDates = getRecordedDate(filteredTransaction)
 
     const filteredByDateTransaction = filterByDate(filteredTransaction)
@@ -40,24 +39,32 @@ class TransactionList extends Component<IProps, IState> {
         sumOfOutcome,
       } = filteredByDateTransaction[date.toString()]
 
-      // const {} =
+      const dateData = new Date(date)
+      const dateInfo = `[${DAY_IN_ENG[dateData.getDay()]}] ${
+        dateData.getMonth() + 1
+      }.${dateData.getDate()}`
+
       return div(
         { className: 'date-grouped-container' },
         div(
           { className: 'date-info-container' },
-          p({ className: 'date-info', textContent: date.toString() }),
+          p({ className: 'date-info', textContent: dateInfo }),
           div(
             {
               className: 'price-summary right',
             },
-            p({
-              className: 'income',
-              textContent: getCSVNumber(sumOfIncome),
-            }),
-            p({
-              className: 'outcome',
-              textContent: getCSVNumber(sumOfOutcome),
-            })
+            sumOfIncome > 0
+              ? p({
+                  className: 'income',
+                  textContent: getCSVNumber(sumOfIncome),
+                })
+              : null,
+            sumOfOutcome > 0
+              ? p({
+                  className: 'outcome',
+                  textContent: getCSVNumber(sumOfOutcome),
+                })
+              : null
           )
         ),
         ...transactions.map(
@@ -68,7 +75,6 @@ class TransactionList extends Component<IProps, IState> {
   }
 
   render() {
-    console.log('transaction list re-rendered')
     return div({ className: 'transaction-container' }, ...this.renderItems())
   }
 }

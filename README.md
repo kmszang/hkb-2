@@ -47,6 +47,20 @@ hkb-2
 4. `$ cd ../server`
 5. `$ npm i`
 
+### Database Structure
+<p align="center">
+  <img src="./assets/images/database.png" width="1000" />
+</p>
+
+### Database env structure
+
+```
+DB_HOST=52.78.221.38
+DB_USER=woowabros
+DB_NAME=woowa
+DB_PASS=Woowa?12345
+```
+
 ### Client
 
 ##### 컴포넌트 만들기
