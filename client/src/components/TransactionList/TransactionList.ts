@@ -3,7 +3,6 @@ import { div, p, data } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
 import { TransactionItem } from '../TransactionItem'
 import { getCSVNumber } from '../../utils/getCSVNumber'
-import { FETCH_ALL_TRANSACTION } from '../../modules/TransactionStore'
 import { getRecordedDate, filterByDate } from '../../utils/dataFilterer'
 interface IProps {}
 interface IState {}

@@ -9,6 +9,7 @@ import {
   TRANSACTION,
 } from '../../utils/Routing'
 import { MONTH_IN_ENG } from '../../utils/dateInfos'
+import { FETCH_ALL_TRANSACTION } from '../../modules/TransactionStore'
 
 interface IProps {}
 interface IState {
@@ -27,8 +28,46 @@ class SideBar extends Component<IProps, IState> {
     super({}, state)
 
     Object.setPrototypeOf(this, SideBar.prototype)
-    this.connectStore('transaction')
+    this.connectAction('transaction')
     this.init()
+  }
+
+  async fetchTransactions() {
+    const currentMonth = this.getState('month')
+    const currentYear = this.getState('year')
+
+    await this.store.transaction.dispatch(FETCH_ALL_TRANSACTION, {
+      month: currentMonth,
+      year: currentYear,
+    })
+  }
+
+  async setNextMonth() {
+    const currentMonth = this.getState('month')
+    const currentYear = this.getState('year')
+
+    if (currentMonth === 12) {
+      this.setState('month', 1)
+      this.setState('year', currentYear + 1)
+    } else {
+      this.setState('month', currentMonth + 1)
+    }
+
+    await this.fetchTransactions()
+  }
+
+  async setPrevMonth() {
+    const currentMonth = this.getState('month')
+    const currentYear = this.getState('year')
+
+    if (currentMonth === 1) {
+      this.setState('month', 12)
+      this.setState('year', currentYear - 1)
+    } else {
+      this.setState('month', currentMonth - 1)
+    }
+
+    await this.fetchTransactions()
   }
 
   renderMainIcon() {
@@ -51,6 +90,10 @@ class SideBar extends Component<IProps, IState> {
       {
         className: 'date-container',
       },
+      new ICon({
+        onClickHandler: () => this.setPrevMonth(),
+        iconName: 'arrow_left',
+      }),
       div({
         className: 'year',
         textContent: year.toString(),
@@ -62,6 +105,10 @@ class SideBar extends Component<IProps, IState> {
       div({
         className: 'month-eng',
         textContent: MONTH_IN_ENG[month - 1],
+      }),
+      new ICon({
+        onClickHandler: () => this.setNextMonth(),
+        iconName: 'arrow_right',
       })
     )
   }
@@ -75,7 +122,6 @@ class SideBar extends Component<IProps, IState> {
         new ICon({
           isSelected: routing.getPath() === route,
           onClickHandler: () => routing.pushTo(route),
-          name: '',
           iconName: icons[idx],
         })
     )

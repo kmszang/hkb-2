@@ -10,6 +10,11 @@ export interface ICreateTransaction {
 	paymentId: number;
 	userId: number;
 	categoryId: number;
+	date: string;
+}
+
+export interface IUpdateTransaction extends Partial<ICreateTransaction> {
+	id: number;
 }
 
 export interface ITransaction {
@@ -25,41 +30,76 @@ export interface ITransaction {
 
 export class Transaction {
 	static async create(args: ICreateTransaction) {
-		const { content, price, paymentId, userId, categoryId } = args;
-		const userCreateQuery = `INSERT INTO Transaction(content, price, payment_id, user_id, category_id) VALUES("${content}", "${price}", "${paymentId}", "${userId}", "${categoryId}");`;
-
+		const { content, price, paymentId, userId, categoryId, date } = args;
+		const userCreateQuery = `
+		INSERT INTO Transaction(content, price, payment_id, user_id, category_id, created_at)
+		VALUES("${content}", "${price}", "${paymentId}", "${userId}", "${categoryId}", "${date}");`;
 		return await insertQueryExecuter(userCreateQuery);
 	}
-
+	// where YEAR(BookDueDate) = 2019 AND MONTH(BookDueDate) = 12;
 	static async getOne(id: number) {
-		const selectOneTransaction = `
+		const selectOneTransactionQuery = `
 		SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
 		C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName from Transaction as T
 		JOIN Payment as P ON P.id = T.payment_id
 		JOIN Category as C ON C.id = T.category_id
 		WHERE T.id=${id} and T.is_active=true
 		`;
-		return await selectQueryExecuter<ITransaction>(selectOneTransaction);
+		return await selectQueryExecuter<ITransaction>(
+			selectOneTransactionQuery
+		);
 	}
 	// 카테고리, 내용, 결제수단, 금액순
-	static async getAll() {
-		const selectAllTransaction = `
+	static async getAll(date: string) {
+		const [year, month] = date.split("-");
+
+		const selectAllTransactionQuery = `
 			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
 			C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName from Transaction as T
 			JOIN Payment as P ON P.id = T.payment_id
 			JOIN Category as C ON C.id = T.category_id
-			WHERE T.is_active=true
+			WHERE T.is_active=true and YEAR(T.created_at)=${year} and MONTH(T.created_at)=${month}
 			`;
-		return await selectQueryExecuter<ITransaction>(selectAllTransaction);
+		return await selectQueryExecuter<ITransaction>(
+			selectAllTransactionQuery
+		);
 	}
 
-	// static async update(args: Partial<ICreateTransaction>) {
-	// 	const selectAllTransaction = `SELECT * FROM Transaction;`;
-	// 	return await selectQueryExecuter<ITransaction>(selectAllTransaction);
-	// }
+	static async update(args: Partial<IUpdateTransaction>) {
+		const { id, ...rest } = args;
+
+		const columnName = {
+			paymentId: "payment_id",
+			userId: "user_id",
+			categoryId: "category_id",
+			date: "created_at",
+		};
+
+		const updateTemplate = Object.entries(rest)
+			.filter(([key, value]) => value !== undefined)
+			.map(
+				([key, value]) =>
+					`${columnName[key] || key}=${
+						typeof value === "number" ? value : `"${value}"`
+					}`
+			)
+			.join(", ");
+
+		const updateQuery = `
+			UPDATE Transaction
+			SET ${updateTemplate}
+			WHERE id=${id}
+			;
+		;`;
+		return await updateOrDeleteQueryExecuter(updateQuery);
+	}
 
 	static async delete(id: number) {
-		const deleteUserQuery = `DELETE FROM Transaction WHERE id=${id};`;
+		const deleteUserQuery = `
+			UPDATE Transaction
+			SET is_active=false
+			WHERE id=${id};
+		`;
 		return await updateOrDeleteQueryExecuter(deleteUserQuery);
 	}
 }
