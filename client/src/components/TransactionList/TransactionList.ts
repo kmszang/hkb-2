@@ -19,7 +19,7 @@ class TransactionList extends Component<IProps, IState> {
     super({}, initialState)
 
     Object.setPrototypeOf(this, TransactionList.prototype)
-    this.connectStore('transaction')
+    this.connectStore('transaction', 'visible')
     this.init()
 
     this.totalIncome = 0
@@ -28,14 +28,19 @@ class TransactionList extends Component<IProps, IState> {
 
   renderItems() {
     const transactions = this.store.transaction.data
-
     if (!transactions) {
       return [null]
     }
 
-    const recordedDates = getRecordedDate(transactions)
+    const visible = this.store.visible.data
+    const filteredTransaction = transactions.filter(
+      ({ isIncome }) =>
+        (visible.income && isIncome) || (visible.outcome && !isIncome)
+    )
 
-    const filteredByDateTransaction = filterByDate(transactions)
+    const recordedDates = getRecordedDate(filteredTransaction)
+
+    const filteredByDateTransaction = filterByDate(filteredTransaction)
 
     return recordedDates.map((date, id) => {
       const {

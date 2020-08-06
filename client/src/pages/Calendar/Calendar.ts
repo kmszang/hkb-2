@@ -4,6 +4,7 @@ import {
   getFullDateIn,
   getFormattedDate,
   DAY_IN_ENG,
+  getDate,
 } from '../../utils/dateInfos'
 import { CalendarItem } from '../../components/CalendarItem'
 import { filterByDate } from '../../utils/dataFilterer'
@@ -19,16 +20,19 @@ class Calendar extends Component<IProps, IState> {
     super()
 
     Object.setPrototypeOf(this, Calendar.prototype)
-    this.connectStore('date', 'transaction')
+    this.connectStore('transaction')
     this.init()
   }
 
   getFullDate() {
-    if (!this.store.date || !this.store.date.data) {
+    const transactions = this.store.transaction.data
+    const dateInfo = getDate(transactions)
+
+    if (!dateInfo) {
       return []
     }
 
-    const { month, year } = this.store.date.data
+    const { month, year } = dateInfo
     const currentMonth = getFullDateIn(year, month)
     const previousMonth = getFullDateIn(year, month - 1)
     const nextMonth = getFullDateIn(year, month + 1)
@@ -72,7 +76,6 @@ class Calendar extends Component<IProps, IState> {
   render() {
     return div(
       { className: 'calendar-container' },
-      new Header({ title: 'Calendar' }),
       div(
         { className: 'calendar-table' },
         ...this.renderDayInEng(),

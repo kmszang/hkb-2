@@ -19,9 +19,8 @@ interface IRoutes {
 // }
 
 export const SIGN_IN = '/sign-in' as const
-export const BASIC = '/' as const
+export const TRANSACTION = '/' as const
 export const DEFAULT = '' as const
-export const TRANSACTION = '/transaction' as const
 export const STATISTICS = '/statistics' as const
 export const CALENDAR = '/calendar' as const
 
@@ -32,10 +31,8 @@ const calendarPage = new Calendar()
 
 export class Routing {
   private routes: IRoutes = {
-    [BASIC]: transactionPage,
-    [DEFAULT]: transactionPage,
-    [SIGN_IN]: signInPage,
     [TRANSACTION]: transactionPage,
+    [SIGN_IN]: signInPage,
     [STATISTICS]: statisticsPage,
     [CALENDAR]: calendarPage,
   }
@@ -90,7 +87,6 @@ export class Routing {
   private popStateHandler(e: PopStateEvent) {
     const { state } = e
 
-    console.log(state)
     if (!state) {
       return
     }

@@ -6,7 +6,7 @@ header{
     color: $hkb-black;
     height: 70px;
     width : 100%;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 
     h1{
         // text-align: center;
@@ -14,12 +14,35 @@ header{
         font-weight: 800;
     }
 
+
     .filter-selectors {
+        margin-top : 20px;
+        width: fit-content;
         margin-left: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
     }
 
+    .filter-selector {
+        display: flex;
+        align-items: center;
+
+        .price-sum.income {
+            color: $hkb-blue;
+        }
+
+        .price-sum.outcome {
+            color: $hkb-red;
+        }
+
+        .price-sum {
+            opacity: 0.6;
+        }
+
+        .price-sum.selected {
+            opacity: 1;
+        }
+    }
 }
