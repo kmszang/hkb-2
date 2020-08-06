@@ -1,19 +1,25 @@
 @import '../../styles/_variables.scss';
 header{
-    background-color: $baemin-main;
-    color: $white;
+    // background-color: $baemin-main;
+    // width: 80%;
+    display: flex;
+    color: $hkb-black;
     height: 70px;
+    width : 100%;
+    margin-bottom: 20px;
+
     h1{
-        text-align: center;
-        margin : 0;
-        padding-top: 16px;
+        // text-align: center;
+        margin-left : 20px;
+        font-weight: 800;
     }
-    p{
-        margin : 0;
-        position: relative;
-        bottom: 12px;
-        right: 19px;
-        text-align: right;
+
+    .filter-selectors {
+        margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
-    margin-bottom: 50px;
+
 }

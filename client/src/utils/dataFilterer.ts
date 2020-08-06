@@ -1,11 +1,13 @@
 import { ITransactionResponse } from '../api/transaction'
 
-interface IFilteredByDayTransactions {
-  [date: string]: {
-    transactions: ITransactionResponse[]
-    sumOfIncome: number
-    sumOfOutcome: number
-  }
+export interface ITransactionInfo {
+  transactions: ITransactionResponse[]
+  sumOfIncome: number
+  sumOfOutcome: number
+}
+
+export interface IFilteredByDayTransactions {
+  [date: string]: ITransactionInfo
 }
 
 export const filterByDate = (

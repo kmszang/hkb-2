@@ -1,19 +1,23 @@
 import { Store } from '../utils/Store'
 import { fireEvent, STORE_UPDATED } from '../utils/customEventHandler'
 
+export type DateInfo = {
+  year: number
+  month: number
+}
 // type
 export type Month = number
 
 // actions
-export const CHANGE_MONTH = 'Month/CHANGE_MONTH' as const
+export const CHANGE_DATE_INFO = 'Month/CHANGE_DATE_INFO' as const
 
 // connect store and actions
-export class MonthStore extends Store<Month> {
+export class DateStore extends Store<DateInfo> {
   actions = {
-    [CHANGE_MONTH]: this.changeMonth,
+    [CHANGE_DATE_INFO]: this.changeDateInfo,
   }
 
-  constructor(initialData: Month) {
+  constructor(initialData: DateInfo) {
     super(initialData)
     // TODO is this right?
     // window.dispatchEvent(
@@ -22,20 +26,20 @@ export class MonthStore extends Store<Month> {
   }
 
   // actions
-  changeMonth(updatedMonth: number) {
-    return updatedMonth
+  changeDateInfo(dateInfo: Partial<DateInfo>) {
+    return dateInfo
   }
 
   protected updateStore(action: string, result: any) {
     switch (action) {
-      case CHANGE_MONTH:
-        this._data = result
+      case CHANGE_DATE_INFO:
+        this._data = { ...this.data, ...result }
         break
     }
 
     // window.dispatchEvent(
     //   new CustomEvent('storeupdated', { detail: { month: this.data } })
     // )
-    fireEvent(STORE_UPDATED, { month: this.data })
+    fireEvent(STORE_UPDATED, { date: this.data })
   }
 }
