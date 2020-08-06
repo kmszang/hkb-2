@@ -2,6 +2,7 @@ import { Component } from '../../utils/wooact'
 import { div } from '../../utils/wooact/defaultElements'
 import { CustomDate } from '../../utils/dateInfos'
 import { ITransactionInfo } from '../../utils/dataFilterer'
+import { getCSVNumber } from '../../utils/getCSVNumber'
 
 interface IProps {
   date: CustomDate
@@ -15,23 +16,38 @@ class CalendarItem extends Component<IProps, IState> {
     super(props)
 
     Object.setPrototypeOf(this, CalendarItem.prototype)
-
-    this.connectStore()
     this.init()
   }
 
-  render() {
-    const { month, date, dayName } = this.props.date
-    let textContnet = `${month}-${date}-${dayName}`
-    if (this.props.transactions) {
-      const { sumOfIncome, sumOfOutcome } = this.props.transactions
-      textContnet += `\n+${sumOfIncome}\n-${sumOfOutcome}`
+  renderSum() {
+    if (!this.props.transactions) {
+      return null
     }
 
-    return div({
-      className: 'calendar-item-container',
-      textContent: textContnet,
-    })
+    const { sumOfIncome, sumOfOutcome } = this.props.transactions
+
+    return div(
+      { className: 'price-container' },
+      sumOfIncome > 0
+        ? div({ className: `income`, textContent: getCSVNumber(sumOfIncome) })
+        : null,
+      sumOfOutcome > 0
+        ? div({ className: `outcome`, textContent: getCSVNumber(sumOfOutcome) })
+        : null
+    )
+  }
+
+  render() {
+    const { date, dayName } = this.props.date
+
+    return div(
+      {
+        className: `calendar-item-container ${dayName}`,
+        // textContent: textContnet,
+      },
+      div({ className: `${dayName}`, textContent: `${date}` }),
+      this.renderSum()
+    )
   }
 }
 
