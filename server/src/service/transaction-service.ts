@@ -63,5 +63,5 @@ export const deleteTransaction = async (req: Request, res: Response) => {
 		throw new DatabaseError(removeError);
 	}
 
-	res.json("");
+	res.json(id);
 };
