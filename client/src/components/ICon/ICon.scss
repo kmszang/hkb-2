@@ -42,4 +42,9 @@
 
 .icon-container.selected{
 	opacity: 1;
+	transition: all 200ms ease ;
+
+	&:hover {
+		opacity: 0.7;
+	}
 }

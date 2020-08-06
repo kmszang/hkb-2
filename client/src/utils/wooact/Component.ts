@@ -1,7 +1,7 @@
 import { Diffing } from './Diffing'
 import { Store } from '../Store'
 import { Routing } from '../../utils/Routing'
-import { ICombinedStore, combinedStore } from '../../modules'
+import { ICombinedStore, combinedStore } from '../../stores'
 
 abstract class Component<P, S> {
   public element: HTMLElement
