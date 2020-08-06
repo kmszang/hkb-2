@@ -11,7 +11,13 @@ import session from "express-session";
 const NedbStore = require("nedb-session-store")(session);
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+    preflightContinue: true,
+  })
+);
 app.use(bodyParser.json());
 
 app.use(
@@ -20,10 +26,6 @@ app.use(
     store: new NedbStore({
       filename: "sessionStore.db",
     }),
-    cookie: {
-      domain: "http://localhost:3000",
-      sameSite: false,
-    },
   })
 );
 app.use(passport.initialize());
