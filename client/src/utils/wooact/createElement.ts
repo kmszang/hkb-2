@@ -11,6 +11,7 @@ export type HTMLELementTagName = keyof Omit<
   HTMLElementTagNameMap,
   'var' | 'object'
 >
+
 type HTMLElementTagType = HTMLElementTagNameMap[HTMLELementTagName]
 
 type CustomAttribute = {
@@ -19,7 +20,7 @@ type CustomAttribute = {
 export type IAttribute = Partial<HTMLElementTagType & CustomAttribute>
 
 export const createElement = (
-  tagName: string,
+  tagName: HTMLELementTagName,
   attributes: IAttribute,
   ...childNodes: (HTMLElement | Component<any, any> | null)[]
 ): HTMLElement => {
@@ -71,3 +72,17 @@ export const createElement = (
 
   return newElement
 }
+
+// export const createSVGAElement = (tagName: SVGAElementTagName, attributes: {}): SVGElement => {
+//   const newSVGElement = document.createElementNS('http://www.w3.org/2000/svg', tagName)
+
+//   return newSVGElement
+// }
+
+// export type SVGAElementTagName =
+//   | 'svg'
+//   | 'line'
+//   | 'text'
+//   | 'g'
+//   | 'polyline'
+//   | 'circle'
