@@ -1,6 +1,5 @@
 import { Component } from '../../utils/wooact'
-import { div, p, data } from '../../utils/wooact/defaultElements'
-import { ITransactionResponse } from '../../api/transaction'
+import { div, p } from '../../utils/wooact/defaultElements'
 import { TransactionItem } from '../TransactionItem'
 import { getCSVNumber } from '../../utils/getCSVNumber'
 import { getRecordedDate, filterByDate } from '../../utils/dataFilterer'
@@ -8,21 +7,12 @@ interface IProps {}
 interface IState {}
 
 class TransactionList extends Component<IProps, IState> {
-  private totalIncome: number
-  private totalOutcome: number
-
   constructor() {
-    const initialState: IState = {
-      transactions: [],
-    }
-    super({}, initialState)
+    super()
 
     Object.setPrototypeOf(this, TransactionList.prototype)
     this.connectStore('transaction', 'visible')
     this.init()
-
-    this.totalIncome = 0
-    this.totalOutcome = 0
   }
 
   renderItems() {
@@ -37,16 +27,20 @@ class TransactionList extends Component<IProps, IState> {
         (visible.income && isIncome) || (visible.outcome && !isIncome)
     )
 
+    console.log(filteredTransaction)
+
     const recordedDates = getRecordedDate(filteredTransaction)
 
     const filteredByDateTransaction = filterByDate(filteredTransaction)
 
-    return recordedDates.map((date, id) => {
+    return recordedDates.map((date) => {
       const {
         transactions,
         sumOfIncome,
         sumOfOutcome,
       } = filteredByDateTransaction[date.toString()]
+
+      // const {} =
       return div(
         { className: 'date-grouped-container' },
         div(
@@ -74,6 +68,7 @@ class TransactionList extends Component<IProps, IState> {
   }
 
   render() {
+    console.log('transaction list re-rendered')
     return div({ className: 'transaction-container' }, ...this.renderItems())
   }
 }
