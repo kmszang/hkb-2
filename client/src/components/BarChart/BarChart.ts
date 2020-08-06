@@ -8,6 +8,7 @@ interface IState {}
 class BarChart extends Component<IProps, IState> {
   private svgWidth: number
   private svgHeight: number
+  private totalMoney: number
   private dataSet: ITransactionResponse[]
   constructor(props: IProps) {
     // super get props and state, if not existed just send null or nothing.
@@ -19,7 +20,15 @@ class BarChart extends Component<IProps, IState> {
     this.svgWidth = 600
     this.svgHeight = 500
     this.dataSet = this.props.transaction
+    this.totalMoney = this.getTotalMoney()
     this.init()
+  }
+  getTotalMoney() {
+    let totalMoney = 0
+    this.dataSet.forEach((data) => {
+      totalMoney += data.price
+    })
+    return totalMoney
   }
   makeListItemStyle(barHeight, barPadding) {
     const pStyle = document.createElement('style')
@@ -32,7 +41,6 @@ class BarChart extends Component<IProps, IState> {
   }
   loopDateSet() {
     const barPadding = 5
-    const totalMoney = 444790
     const barHeight = this.svgHeight / this.dataSet.length
 
     this.makeListItemStyle(barHeight, barPadding)
@@ -50,20 +58,19 @@ class BarChart extends Component<IProps, IState> {
         data,
         barHeight,
         i,
-        totalMoney,
         barPadding,
       })
       $svg.appendChild($rect)
       categoryList.push(this.makeCategory(data))
-      percentList.push(this.makePercent(data, totalMoney))
+      percentList.push(this.makePercent(data, this.totalMoney))
       priceList.push(this.makePrice(data))
       i++
     })
     return { $svg, categoryList, percentList, priceList }
   }
-  makeRect({ data, barHeight, i, totalMoney, barPadding }) {
+  makeRect({ data, barHeight, i, barPadding }) {
     const $rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
-    const percent = (data.price / totalMoney) * 100
+    const percent = (data.price / this.totalMoney) * 100
     const translate = [0, barHeight * i]
     $rect.setAttribute('width', percent + '%')
     $rect.setAttribute('height', String(barHeight - barPadding))
@@ -94,8 +101,14 @@ class BarChart extends Component<IProps, IState> {
     return p({ textContent: data.categoryName, className: 'list-item' })
   }
   makePercent(data, totalMoney) {
-    const percent = Math.floor((data.price / totalMoney) * 100) + '%'
-    return p({ textContent: percent, className: 'list-item' })
+    const percent = (data.price / totalMoney) * 100
+    let textPercent = 0
+    if (percent < 1) {
+      textPercent = Math.floor(percent * 100) / 100
+    } else {
+      textPercent = Math.floor((data.price / totalMoney) * 100)
+    }
+    return p({ textContent: textPercent + '%', className: 'list-item' })
   }
   makePrice(data) {
     return p({ textContent: data.price + '원', className: 'list-item' })
