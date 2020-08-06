@@ -7,46 +7,18 @@ import { combinedStore } from '../modules'
 import { listenEvent, STORE_UPDATED } from './customEventHandler'
 
 interface IRoutes {
-  [route: string]: Component<any, any>
+  [route: string]: any
 }
 
-// declare global {
-//   namespace Window {
-//     interface PopStateEvent {
-//       state: ICombinedStore
-//     }
-//   }
-// }
-
-export const SIGN_IN = '/sign-in' as const
-export const TRANSACTION = '/' as const
-export const DEFAULT = '' as const
-export const STATISTICS = '/statistics' as const
-export const CALENDAR = '/calendar' as const
-
-const transactionPage = new Transaction()
-const signInPage = new SignIn()
-const statisticsPage = new Statistics()
-const calendarPage = new Calendar()
-
 export class Routing {
-  private routes: IRoutes = {
-    [TRANSACTION]: transactionPage,
-    [SIGN_IN]: signInPage,
-    [STATISTICS]: statisticsPage,
-    [CALENDAR]: calendarPage,
-  }
-
   private app: Component<any, any>
 
-  constructor() {
+  constructor(private routes: IRoutes) {
     this.popStateHandler = this.popStateHandler.bind(this)
     this.storeUpdatedHandler = this.storeUpdatedHandler.bind(this)
 
     listenEvent(STORE_UPDATED, this.storeUpdatedHandler)
-    // listenEvent(P, this.storeUpdatedHandler)
     window.addEventListener('popstate', this.popStateHandler)
-    // window.addEventListener('storeupdated', this.storeUpdatedHandler)
   }
 
   init(component: Component<any, any>) {
@@ -56,21 +28,21 @@ export class Routing {
   getPath() {
     const path = location.pathname
     if (!this.routes[path]) {
-      return DEFAULT
+      return '/'
     }
 
     return path
   }
 
   getPage(): Component<any, any> {
-    return this.routes[this.getPath()]
+    return new this.routes[this.getPath()]()
   }
 
   pushTo(url: string) {
     const page = this.routes[url]
 
     if (!page) {
-      location.href = DEFAULT
+      location.href = '/'
       this.app.reRenderBy(this)
       return
     }
@@ -98,5 +70,3 @@ export class Routing {
     this.app.reRenderBy(this)
   }
 }
-
-export const routing = new Routing()
