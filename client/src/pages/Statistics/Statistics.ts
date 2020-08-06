@@ -1,6 +1,5 @@
 import { Component } from '../../utils/wooact'
-import { div, input, button } from '../../utils/wooact/defaultElements'
-import { Header } from '../../components/Header'
+import { div } from '../../utils/wooact/defaultElements'
 
 interface IProps {}
 interface IState {}
