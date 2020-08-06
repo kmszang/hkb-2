@@ -24,50 +24,6 @@
 			display: flex;
 		}
 
-		.category-container{
-			opacity: 0.5;
-			transition: all 200ms ease ;
-
-			&:hover {
-				opacity: 1;
-			}
-
-			i{
-				width: 36px;
-				height: 36px;
-				border-radius: 5px;
-
-				display: flex;
-				align-items: center;
-				justify-content: center;
-
-				margin: 0 5px;
-			}
-
-			i.income {
-				color: $hkb-blue;
-				background: $hkb-light-blue;
-			}
-
-			i.outcome {
-				color: $hkb-red;
-				background: $hkb-light-red;
-			}
-
-			.category-description{
-				color: $hkb-black;
-				text-align: center;
-				opacity: 0.7;
-				margin-top: 1px;
-				font-size:8px;
-			}
-		}
-
-
-		.category-container.selected{
-			opacity: 1;
-		}
-
 	}
 	.add-new-btn {
 		width: 50%;

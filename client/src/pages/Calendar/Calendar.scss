@@ -2,6 +2,8 @@
 
 .calendar-table{
 	display: grid;
+	margin: 0 40px;
+	// width: 90%;
 	grid-template-columns: repeat(7, 1fr);
 	grid-auto-rows: minmax(60px, auto);
 }

@@ -1,28 +1,23 @@
 import { Store } from '../utils/Store'
 import { TransactionStore } from './TransactionStore'
-import { DateInfo, DateStore } from './DateStore'
+import { IVisible, VisibleStore } from './visibleStore'
 import { CategoryStore } from './CategoryStore'
 import { ITransactionResponse } from '../api/transaction'
 import { ICategoryResponse } from '../api/category'
 
 export interface ICombinedStore {
   transaction: Store<ITransactionResponse[]>
-  date: Store<DateInfo>
+  visible: Store<IVisible>
   category: Store<ICategoryResponse[]>
-}
-const today = new Date()
-const initialDate: DateInfo = {
-  year: today.getFullYear(),
-  month: today.getMonth() + 1,
 }
 
 const transactionStore = new TransactionStore()
-const dateStore = new DateStore(initialDate)
+const visibleStore = new VisibleStore({ income: true, outcome: true })
 const categoryStore = new CategoryStore()
 
 export const combinedStore: ICombinedStore = {
   transaction: transactionStore,
-  date: dateStore,
+  visible: visibleStore,
   category: categoryStore,
 }
 
