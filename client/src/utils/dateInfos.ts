@@ -1,3 +1,5 @@
+import { ITransactionResponse } from '../api/transaction'
+
 export type CustomDate = {
   year: number
   month: number
@@ -59,4 +61,24 @@ export const getTwoWidthNumber = (num: number): string => {
   }
 
   return `0${numStr}`
+}
+
+export const getDate = (transactions: ITransactionResponse[]): CustomDate => {
+  let dateInfo
+
+  if (!transactions || transactions.length === 0) {
+    dateInfo = new Date()
+  } else {
+    const transaction = transactions[0]
+    dateInfo = new Date(transaction.createdAt)
+  }
+
+  return {
+    date: dateInfo.getDate(),
+    year: dateInfo.getFullYear(),
+    month: dateInfo.getMonth() + 1,
+    monthName: MONTH_IN_ENG[dateInfo.getMonth()],
+    day: dateInfo.getDay(),
+    dayName: DAY_IN_ENG[dateInfo.getDay()],
+  }
 }
