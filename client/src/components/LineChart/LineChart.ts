@@ -254,7 +254,10 @@ class LineChart extends Component<IProps, IState> {
 
     const intervalY = Math.floor((this.startY - this.endY) / labelCount)
 
-    let intervalMoney = this.topOfLabel / labelCount
+    let intervalMoney = Math.floor(this.topOfLabel / labelCount / 10000) * 1000
+    if (!this.dataSet.length) {
+      intervalMoney = 10000
+    }
     let startTextY = this.startY
     let currentMoney = 0
     let count = labelCount
