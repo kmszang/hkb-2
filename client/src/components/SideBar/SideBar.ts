@@ -1,71 +1,44 @@
 import { Component } from '../../utils/wooact'
-import { div, button, i } from '../../utils/wooact/defaultElements'
+import { div } from '../../utils/wooact/defaultElements'
 import { ICon } from '../ICon'
-import {
-  SIGN_IN,
-  CALENDAR,
-  STATISTICS,
-  routing,
-  TRANSACTION,
-} from '../../utils/Routing'
+import { Routing } from '../../utils/Routing'
+import { SIGN_IN, TRANSACTION, CALENDAR, STATISTICS } from '../../pages/Router'
 import { MONTH_IN_ENG } from '../../utils/dateInfos'
 import { FETCH_ALL_TRANSACTION } from '../../modules/TransactionStore'
+import { SET_NEXT_MONTH, SET_PREV_MONTH } from '../../modules/DateStore'
 
-interface IProps {}
-interface IState {
-  month: number
-  year: number
+interface IProps {
+  routing: Routing
 }
+interface IState {}
 
 class SideBar extends Component<IProps, IState> {
-  constructor() {
-    const today = new Date()
-    const state: IState = {
-      year: today.getFullYear(),
-      month: today.getMonth() + 1,
-    }
-
-    super({}, state)
+  constructor(props: IProps) {
+    super(props)
 
     Object.setPrototypeOf(this, SideBar.prototype)
+    this.connectStore('date')
     this.connectAction('transaction')
     this.init()
   }
 
   async fetchTransactions() {
-    const currentMonth = this.getState('month')
-    const currentYear = this.getState('year')
+    const { month, year } = this.store.date.data
 
     await this.store.transaction.dispatch(FETCH_ALL_TRANSACTION, {
-      month: currentMonth,
-      year: currentYear,
+      month,
+      year,
     })
   }
 
-  async setNextMonth() {
-    const currentMonth = this.getState('month')
-    const currentYear = this.getState('year')
-
-    if (currentMonth === 12) {
-      this.setState('month', 1)
-      this.setState('year', currentYear + 1)
-    } else {
-      this.setState('month', currentMonth + 1)
-    }
+  async updateDate(action: string) {
+    this.store.date.dispatch(action)
 
     await this.fetchTransactions()
   }
 
   async setPrevMonth() {
-    const currentMonth = this.getState('month')
-    const currentYear = this.getState('year')
-
-    if (currentMonth === 1) {
-      this.setState('month', 12)
-      this.setState('year', currentYear - 1)
-    } else {
-      this.setState('month', currentMonth - 1)
-    }
+    this.store.date.dispatch(SET_PREV_MONTH)
 
     await this.fetchTransactions()
   }
@@ -83,15 +56,13 @@ class SideBar extends Component<IProps, IState> {
   }
 
   renderDateInfo() {
-    const month = this.getState('month')
-    const year = this.getState('year')
-
+    const { month, year } = this.store.date.data
     return div(
       {
         className: 'date-container',
       },
       new ICon({
-        onClickHandler: () => this.setPrevMonth(),
+        onClickHandler: () => this.updateDate(SET_PREV_MONTH),
         iconName: 'arrow_left',
       }),
       div({
@@ -107,7 +78,7 @@ class SideBar extends Component<IProps, IState> {
         textContent: MONTH_IN_ENG[month - 1],
       }),
       new ICon({
-        onClickHandler: () => this.setNextMonth(),
+        onClickHandler: () => this.updateDate(SET_NEXT_MONTH),
         iconName: 'arrow_right',
       })
     )
@@ -116,6 +87,7 @@ class SideBar extends Component<IProps, IState> {
   renderRoutes() {
     const routes = [SIGN_IN, TRANSACTION, CALENDAR, STATISTICS]
     const icons = ['lock', 'list_dash', 'calendar', 'chart_bar']
+    const { routing } = this.props
 
     return routes.map(
       (route, idx) =>
