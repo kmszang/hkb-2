@@ -14,7 +14,7 @@ class App extends Component<IProps, IState> {
     super(props)
 
     Object.setPrototypeOf(this, App.prototype)
-    this.connectStore('transaction', 'category')
+    this.connectStore('transaction', 'category', 'visible')
     routing.init(this)
     this.init()
   }
@@ -24,11 +24,24 @@ class App extends Component<IProps, IState> {
     this.store.category.dispatch(FETCH_ALL_CATEGORIES)
   }
 
+  getHeaderTitle(rawTitle: string) {
+    const title = rawTitle.slice(1)
+    if (!title) {
+      return 'Transaction'
+    }
+    return title.toUpperCase()[0] + title.slice(1)
+  }
+
   render() {
     return div(
       {},
       new SideBar(),
-      div({ className: 'main-container' }, routing.getPage())
+
+      div(
+        { className: 'main-container' },
+        new Header({ title: this.getHeaderTitle(routing.getPath()) }),
+        routing.getPage()
+      )
     )
   }
 }
