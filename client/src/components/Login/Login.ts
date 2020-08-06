@@ -8,7 +8,6 @@ import {
   h1,
 } from '../../utils/wooact/defaultElements'
 import { logIn, githubLogIn } from '../../api/user'
-import { errorHandler } from '../../utils/errorHandler'
 import { BoxInput } from '../BoxInput'
 import { Button } from '../Button'
 import {

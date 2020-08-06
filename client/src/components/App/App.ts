@@ -25,7 +25,11 @@ class App extends Component<IProps, IState> {
   }
 
   render() {
-    return div({}, new Header(), new SideBar(), routing.getPage())
+    return div(
+      {},
+      new SideBar(),
+      div({ className: 'main-container' }, routing.getPage())
+    )
   }
 }
 

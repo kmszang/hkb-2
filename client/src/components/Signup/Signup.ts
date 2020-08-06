@@ -10,7 +10,6 @@ import {
 } from '../../utils/authorization'
 import { Button } from '../Button'
 import { signUp } from '../../api/user'
-import { errorHandler } from '../../utils/errorHandler'
 interface IProps {}
 interface IState {}
 
@@ -31,10 +30,6 @@ class Signup extends Component<IProps, IState> {
     if (!signupBody) return
 
     const [signUpResponse, signUpError] = await signUp(signupBody)
-
-    if (signUpError) {
-      return errorHandler(signUpError)
-    }
   }
   render() {
     return section(

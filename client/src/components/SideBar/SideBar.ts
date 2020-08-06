@@ -1,5 +1,5 @@
 import { Component } from '../../utils/wooact'
-import { div, button } from '../../utils/wooact/defaultElements'
+import { div, button, i } from '../../utils/wooact/defaultElements'
 import { ICon } from '../ICon'
 import {
   SIGN_IN,
@@ -30,7 +30,7 @@ class SideBar extends Component<IProps, IState> {
     return routes.map(
       (route, idx) =>
         new ICon({
-          isSelected: false,
+          isSelected: routing.getPath() === route,
           onClickHandler: () => routing.pushTo(route),
           name: '',
           iconName: icons[idx],
@@ -41,28 +41,21 @@ class SideBar extends Component<IProps, IState> {
   render() {
     return div(
       { className: 'sidebar-container' },
-      div({ className: 'icon-wrapper' }, ...this.renderRoutes()),
-      new ICon({
-        isSelected: false,
-        onClickHandler: () => routing.pushTo(SIGN_IN),
-        name: '',
-        iconName: 'person_alt_circle',
-      })
-      // button({
-      //   textContent: '로그인',
-      //   onclick: () => routing.pushTo(SIGN_IN),
-      // }),
-      // button({
-      //   textContent: '내역',
-      //   onclick: () => routing.pushTo(TRANSACTION),
-      // }),
-      // button({
-      //   textContent: '달력',
-      //   onclick: () => routing.pushTo(CALENDAR),
-      // }),
-      // button({
-      //   textContent: '통계',
-      //   onclick: () => routing.pushTo(STATISTICS),
+      div(
+        { className: 'main-icon' },
+        new ICon({
+          isSelected: true,
+          onClickHandler: () => {},
+          name: '가계부',
+          iconName: 'minus_slash_plus',
+        })
+      ),
+      div({ className: 'icon-wrapper' }, ...this.renderRoutes())
+      // new ICon({
+      //   isSelected: false,
+      //   onClickHandler: () => routing.pushTo(SIGN_IN),
+      //   name: '',
+      //   iconName: 'person_al1t_circle',
       // })
     )
   }

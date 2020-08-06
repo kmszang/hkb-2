@@ -1,5 +1,6 @@
 import { Component } from '../../utils/wooact'
 import { div, input, button } from '../../utils/wooact/defaultElements'
+import { Header } from '../../components/Header'
 
 interface IProps {}
 interface IState {}
@@ -13,7 +14,10 @@ class Statistics extends Component<IProps, IState> {
   }
 
   render() {
-    return div({ className: 'statistics-container', textContent: 'Statistics' })
+    return div(
+      { className: 'statistics-container' },
+      new Header({ title: 'Statistics' })
+    )
   }
 }
 

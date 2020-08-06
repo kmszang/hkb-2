@@ -1,9 +1,8 @@
 import { Component } from '../../utils/wooact'
-import { div, input, button } from '../../utils/wooact/defaultElements'
-import { fetchAllCategories, ICategoryResponse } from '../../api/category'
+import { div } from '../../utils/wooact/defaultElements'
 import { AddNewTransaction } from '../../components/AddNewTransaction'
 import { TransactionList } from '../../components/TransactionList'
-import { CHANGE_MONTH } from '../../modules/MonthStore'
+import { Header } from '../../components/Header'
 
 interface IProps {}
 interface IState {
@@ -16,20 +15,14 @@ class Transaction extends Component<IProps, IState> {
     super({}, state)
 
     Object.setPrototypeOf(this, Transaction.prototype)
-    this.connectStore('month')
     this.init()
   }
 
   render() {
     return div(
       { className: 'transaction-container' },
-      button({
-        textContent: 'month',
-        onclick: () =>
-          this.store.month.dispatch(CHANGE_MONTH, this.store.month.data + 1),
-      }),
-      div({ textContent: this.store.month.data.toString() }),
-      new AddNewTransaction({ isAddMode: this.getState('isAddMode') }),
+      new Header({ title: 'Transactions' }),
+      // new AddNewTransaction({ isAddMode: this.getState('isAddMode') }),
       new TransactionList()
     )
   }
