@@ -1,35 +1,38 @@
 import { Router } from "express";
 import { validateBody } from "../middlewares/validate-body";
 import {
-	createNewTransaction,
-	getAllTransactions,
-	updateTransaction,
-	deleteTransaction,
+  createNewTransaction,
+  getAllTransactions,
+  updateTransaction,
+  deleteTransaction,
 } from "../service/transaction-service";
 import {
-	ICreateTransaction,
-	IUpdateTransaction,
+  ICreateTransaction,
+  IUpdateTransaction,
 } from "../repository/transaction-repository";
+import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 const transactionRouter = Router();
 
 transactionRouter.post(
-	"/",
-	validateBody<ICreateTransaction>([
-		"content",
-		"price",
-		"paymentId",
-		"userId",
-		"categoryId",
-	]),
-	createNewTransaction
+  "/",
+  isAuthenticated,
+  validateBody<ICreateTransaction>([
+    "content",
+    "price",
+    "paymentId",
+    "userId",
+    "categoryId",
+  ]),
+  createNewTransaction
 );
 
-transactionRouter.get("/:date", getAllTransactions);
+transactionRouter.get("/:date", isAuthenticated, getAllTransactions);
 transactionRouter.put(
-	"/",
-	validateBody<IUpdateTransaction>(["id"]),
-	updateTransaction
+  "/",
+  isAuthenticated,
+  validateBody<IUpdateTransaction>(["id"]),
+  updateTransaction
 );
 transactionRouter.delete("/:id", deleteTransaction);
 
