@@ -1,20 +1,14 @@
 import { Component } from '../../utils/wooact'
-import { div } from '../../utils/wooact/defaultElements'
+import { div, svg } from '../../utils/wooact/defaultElements'
 import { dataSet } from './dummyData'
+import { ITransactionResponse } from '../../api/transaction'
 interface IProps {}
 interface IState {}
 
-interface dataType {
-  id: number
-  price: number
-  content: string
-  createdAt: string
-  paymentName: string
-  categoryName: string
-  isIncome: number
-  iconName: string
-}
 class LineChart extends Component<IProps, IState> {
+  private svgWidth: 900
+  private svgHeight: 600
+
   private startX: number
   private startY: number
   private endX: number
@@ -40,13 +34,14 @@ class LineChart extends Component<IProps, IState> {
 
   private intervalY: number
   private averageExpense: number
-  private dataSet: Array<dataType>
+  private dataSet: Array<ITransactionResponse>
 
   constructor() {
     super()
 
     Object.setPrototypeOf(this, LineChart.prototype)
 
+    this.connectStore('transaction')
     this.initValues()
     this.init()
   }
@@ -54,8 +49,11 @@ class LineChart extends Component<IProps, IState> {
   initValues() {
     // 데이터 설정 필요
     this.currentMonth = 7
-    this.dataSet = dataSet
+    this.dataSet = this.store.transaction.data
     //
+
+    this.svgWidth = 900
+    this.svgHeight = 600
 
     this.startX = 100
     this.startY = 570
@@ -81,27 +79,27 @@ class LineChart extends Component<IProps, IState> {
     const { highestExpense, totalExpense } = this.getTotalAndAverageExpense()
     this.highestExpense = highestExpense
     this.totalExpense = totalExpense
-    this.averageExpense = totalExpense / this.dataSet.length
+    this.averageExpense = totalExpense / this.endOfMonth
   }
 
   getTotalAndAverageExpense() {
     let highestExpense = 0
     let totalExpense = 0
-    this.dataSet.forEach((data: dataType) => {
+    this.dataSet.forEach((data: ITransactionResponse) => {
       if (highestExpense < data.price) highestExpense = data.price
       totalExpense += data.price
     })
     return { highestExpense, totalExpense }
   }
 
-  makeSvg(width, height) {
+  makeSvg() {
     const $svg = this.createSvgElement('svg')
 
     this.setAttribute($svg, {
+      style: `width : ${this.svgWidth}px; height : ${this.svgHeight}px`,
+      viewBox: `0 0 ${this.svgWidth} ${this.svgHeight}`,
       id: 'line-chart',
       class: 'graph',
-      style: `width : ${width}px; height : ${height}px`,
-      viewBox: `0 0 ${width} ${height}`,
     })
 
     const $dateLabels = this.makeDateLabels()
@@ -340,9 +338,8 @@ class LineChart extends Component<IProps, IState> {
   }
 
   render() {
-    const svgWidth = 900
-    const svgHeight = 600
-    const $svg = this.makeSvg(svgWidth, svgHeight)
+    const $svg = this.makeSvg()
+    console.log($svg)
 
     return $svg
   }
