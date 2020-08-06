@@ -32,33 +32,45 @@ export class Transaction {
 	static async create(args: ICreateTransaction) {
 		const { content, price, paymentId, userId, categoryId, date } = args;
 		const userCreateQuery = `
-		INSERT INTO Transaction(content, price, payment_id, user_id, category_id, created_at)
-		VALUES("${content}", "${price}", "${paymentId}", "${userId}", "${categoryId}", "${date}");`;
+		INSERT INTO
+			Transaction(content, price, payment_id, user_id, category_id, created_at)
+		VALUES
+			("${content}", "${price}", "${paymentId}", "${userId}", "${categoryId}", "${date}");`;
 		return await insertQueryExecuter(userCreateQuery);
 	}
-	// where YEAR(BookDueDate) = 2019 AND MONTH(BookDueDate) = 12;
 	static async getOne(id: number) {
 		const selectOneTransactionQuery = `
-		SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
-		C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName from Transaction as T
-		JOIN Payment as P ON P.id = T.payment_id
-		JOIN Category as C ON C.id = T.category_id
-		WHERE T.id=${id} and T.is_active=true
+		SELECT
+			T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
+			C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName
+		FROM
+			Transaction as T
+		JOIN
+			Payment as P ON P.id = T.payment_id
+		JOIN
+			Category as C ON C.id = T.category_id
+		WHERE
+			T.id=${id} and T.is_active=true
 		`;
 		return await selectQueryExecuter<ITransaction>(
 			selectOneTransactionQuery
 		);
 	}
-	// 카테고리, 내용, 결제수단, 금액순
 	static async getAll(date: string) {
 		const [year, month] = date.split("-");
 
 		const selectAllTransactionQuery = `
-			SELECT T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
-			C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName from Transaction as T
-			JOIN Payment as P ON P.id = T.payment_id
-			JOIN Category as C ON C.id = T.category_id
-			WHERE T.is_active=true and YEAR(T.created_at)=${year} and MONTH(T.created_at)=${month}
+			SELECT
+				T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
+				C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName
+			FROM
+				Transaction as T
+			JOIN
+				Payment as P ON P.id = T.payment_id
+			JOIN
+				Category as C ON C.id = T.category_id
+			WHERE
+				T.is_active=true and YEAR(T.created_at)=${year} and MONTH(T.created_at)=${month}
 			`;
 		return await selectQueryExecuter<ITransaction>(
 			selectAllTransactionQuery
@@ -86,9 +98,12 @@ export class Transaction {
 			.join(", ");
 
 		const updateQuery = `
-			UPDATE Transaction
-			SET ${updateTemplate}
-			WHERE id=${id}
+			UPDATE
+				Transaction
+			SET
+				${updateTemplate}
+			WHERE
+				id=${id}
 			;
 		;`;
 		return await updateOrDeleteQueryExecuter(updateQuery);
@@ -96,9 +111,12 @@ export class Transaction {
 
 	static async delete(id: number) {
 		const deleteUserQuery = `
-			UPDATE Transaction
-			SET is_active=false
-			WHERE id=${id};
+			UPDATE
+				Transaction
+			SET
+				is_active=false
+			WHERE
+				id=${id};
 		`;
 		return await updateOrDeleteQueryExecuter(deleteUserQuery);
 	}
