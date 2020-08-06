@@ -45,7 +45,7 @@ class TransactionItem extends Component<IProps, IState> {
         { className: 'info-container' },
         div({
           className: 'info-payment',
-          textContent: paymentName + '/' + categoryName,
+          textContent: paymentName,
         }),
         div({ className: 'info-content', textContent: content })
       ),
