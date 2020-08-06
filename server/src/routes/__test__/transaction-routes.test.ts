@@ -10,6 +10,7 @@ import { InsufficientBodyError } from "../../errors/Insufficient-body";
 test("create transaction with proper value", async (done) => {
 	// given
 	const validTransaction: ICreateTransaction = {
+		date: "2020-08",
 		content: "for testing",
 		price: 5000,
 		paymentId: 4,
