@@ -1,0 +1,58 @@
+@import '../../styles/_variables.scss';
+
+.graph{
+
+  height: 600px;
+  width: 900px;
+
+  .labels.x-labels {
+    text-anchor: middle;
+  }
+  .labels.y-labels {
+    text-anchor: end;
+  }
+  .money-text{
+    text-align: right;
+  }
+  .grid {
+    stroke: #ccc;
+    stroke-dasharray: 0;
+    stroke-width: 1;
+  }
+  .line{
+    stroke:gray;
+    storke-width:1;
+    opacity: 0.3;
+  }
+  
+  .labels {
+    font-size: 13px;
+  }
+  
+  .label-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    fill: black;
+  }
+  
+  .data {
+    fill: red;
+    stroke-width: 1; 
+  }
+  
+  .poly-line{
+    stroke:#0074d9;
+    stroke-width:2;
+    fill : none
+  }
+  .average-line{
+    stroke: purple;
+    stroke-dasharray: 1;
+    stroke-width: 1;
+  }
+}
+  
+
+  
+  
