@@ -3,7 +3,9 @@ import { promiseHandler } from './promiseHandler'
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT'
 
 const baseUrl = 'http://localhost:3000/api'
-
+// const header = {
+//   'Access-Control-Allow-Credentials': true,
+// }
 export const fetchWrapper = async <T, B>(
   method: MethodType,
   url: string,
@@ -14,7 +16,9 @@ export const fetchWrapper = async <T, B>(
       method,
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': true,
       },
+      credentials: 'include',
       body: JSON.stringify(body),
     })
   )
@@ -22,7 +26,7 @@ export const fetchWrapper = async <T, B>(
   if (err) {
     return [null, err]
   }
-
+  // console.log(response.headers)
   const res = await response.json()
   return [res, null]
 }
