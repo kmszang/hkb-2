@@ -1,21 +1,24 @@
 import { Component } from '../../utils/wooact'
 import { div, section, svg, p } from '../../utils/wooact/defaultElements'
-
-interface IProps {}
+import { ITransactionResponse } from '../../api/transaction'
+interface IProps {
+  transaction: ITransactionResponse[]
+}
 interface IState {}
 class BarChart extends Component<IProps, IState> {
   private svgWidth: number
   private svgHeight: number
-
-  constructor() {
+  private dataSet: ITransactionResponse[]
+  constructor(props: IProps) {
     // super get props and state, if not existed just send null or nothing.
-    super()
+    super(props)
 
     Object.setPrototypeOf(this, BarChart.prototype)
 
     // svg의 크기를 정한다
-    this.svgWidth = 200
+    this.svgWidth = 600
     this.svgHeight = 500
+    this.dataSet = this.props.transaction
     this.init()
   }
   makeListItemStyle(barHeight, barPadding) {
@@ -28,32 +31,9 @@ class BarChart extends Component<IProps, IState> {
     document.getElementsByTagName('head')[0].appendChild(pStyle)
   }
   loopDateSet() {
-    const dataSet = [
-      {
-        category: '생활',
-        price: 315000,
-      },
-      {
-        category: '식비',
-        price: 72000,
-      },
-      {
-        category: '교통',
-        price: 18000,
-      },
-      {
-        category: '쇼핑/뷰티',
-        price: 18000,
-      },
-      {
-        category: '의료/건강',
-        price: 9000,
-      },
-    ]
-
     const barPadding = 5
     const totalMoney = 444790
-    const barHeight = this.svgHeight / dataSet.length
+    const barHeight = this.svgHeight / this.dataSet.length
 
     this.makeListItemStyle(barHeight, barPadding)
 
@@ -65,7 +45,7 @@ class BarChart extends Component<IProps, IState> {
     const percentList = []
     const priceList = []
 
-    dataSet.forEach((data) => {
+    this.dataSet.forEach((data) => {
       const $rect = this.makeRect({
         data,
         barHeight,
@@ -111,7 +91,7 @@ class BarChart extends Component<IProps, IState> {
   }
 
   makeCategory(data) {
-    return p({ textContent: data.category, className: 'list-item' })
+    return p({ textContent: data.categoryName, className: 'list-item' })
   }
   makePercent(data, totalMoney) {
     const percent = Math.floor((data.price / totalMoney) * 100) + '%'
