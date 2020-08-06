@@ -2,6 +2,7 @@ import { Component } from '../../utils/wooact'
 import { header, h1, div, span } from '../../utils/wooact/defaultElements'
 import { ICon } from '../ICon'
 import { TOGGLE_INCOME, TOGGLE_OUTCOME } from '../../modules/visibleStore'
+import { getCSVNumber } from '../../utils/getCSVNumber'
 
 interface IProps {
   title: string
@@ -55,7 +56,7 @@ class Header extends Component<IProps, IState> {
       },
       div({
         className: `price-sum ${key} ${visible.data[key] ? 'selected' : ''}`,
-        textContent: priceSum.toString(),
+        textContent: getCSVNumber(priceSum),
       }),
       new ICon({
         isSelected: visible.data[key],
@@ -69,8 +70,6 @@ class Header extends Component<IProps, IState> {
 
   render() {
     this.prepareData()
-    console.log(this.sumOfIncome)
-    console.log(this.sumOfOutcome)
 
     return header(
       { className: 'header-container' },

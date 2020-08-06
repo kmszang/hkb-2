@@ -31,7 +31,11 @@ export abstract class Store<T> {
     this.rerender()
   }
 
-  subscribe(component: Component<any, any>): Store<T> {
+  subscribe(component?: Component<any, any>): Store<T> {
+    if (!component) {
+      return this
+    }
+
     this.subscribedComponent = this.subscribedComponent.filter(
       (c) => c.constructor !== component.constructor
     )

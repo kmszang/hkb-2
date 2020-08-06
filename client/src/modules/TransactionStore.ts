@@ -21,8 +21,12 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
     super(initData || null)
   }
 
-  async fetchAllTransactions() {
-    const [fetchedTransactions, fetchError] = await fetchAllTransaction()
+  async fetchAllTransactions(args: { year: number; month: number }) {
+    const { year, month } = args
+    const [fetchedTransactions, fetchError] = await fetchAllTransaction(
+      year,
+      month
+    )
     if (fetchError) {
       return console.error(fetchError)
     }

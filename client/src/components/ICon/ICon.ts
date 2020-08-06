@@ -2,10 +2,10 @@ import { Component } from '../../utils/wooact'
 import { div, i } from '../../utils/wooact/defaultElements'
 
 interface IProps {
-  isSelected: boolean
+  isSelected?: boolean
   onClickHandler: () => void
   isIncome?: boolean
-  name: string
+  name?: string
   iconName: string
 }
 interface IState {}
@@ -32,7 +32,7 @@ class ICon extends Component<IProps, IState> {
         className: `f7-icons ${iconClass}`,
         textContent: iconName,
       }),
-      div({ className: 'icon-description', textContent: name })
+      name ? div({ className: 'icon-description', textContent: name }) : null
     )
   }
 }

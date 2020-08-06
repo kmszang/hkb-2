@@ -67,6 +67,13 @@ abstract class Component<P, S> {
     })
   }
 
+  protected connectAction(...storeNames: (keyof ICombinedStore)[]) {
+    storeNames.forEach((storeName) => {
+      // TODO need to fix!
+      this.store[storeName] = combinedStore[storeName].subscribe() as any
+    })
+  }
+
   // callable by outside of component, but only restricted to Store or Routing
   // and if it has a
   public reRenderBy(caller: Store<any> | Routing, partialState?: Partial<S>) {

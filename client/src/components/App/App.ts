@@ -14,13 +14,17 @@ class App extends Component<IProps, IState> {
     super(props)
 
     Object.setPrototypeOf(this, App.prototype)
-    this.connectStore('transaction', 'category', 'visible')
+    this.connectAction('transaction', 'category')
     routing.init(this)
     this.init()
   }
 
   async componentDidMount() {
-    this.store.transaction.dispatch(FETCH_ALL_TRANSACTION)
+    const today = new Date()
+    this.store.transaction.dispatch(FETCH_ALL_TRANSACTION, {
+      month: today.getMonth() + 1,
+      year: today.getFullYear(),
+    })
     this.store.category.dispatch(FETCH_ALL_CATEGORIES)
   }
 
