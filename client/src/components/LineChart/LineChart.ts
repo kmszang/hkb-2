@@ -1,8 +1,16 @@
 import { Component } from '../../utils/wooact'
 import { div, svg } from '../../utils/wooact/defaultElements'
-import { dataSet } from './dummyData'
 import { ITransactionResponse } from '../../api/transaction'
-interface IProps {}
+
+interface IDate {
+  month: number
+  year: number
+}
+interface IProps {
+  date: IDate
+  transaction: ITransactionResponse[]
+}
+
 interface IState {}
 
 class LineChart extends Component<IProps, IState> {
@@ -38,13 +46,10 @@ class LineChart extends Component<IProps, IState> {
   private averageExpense: number
   private dataSet: Array<ITransactionResponse>
 
-  constructor() {
-    super()
+  constructor(props: IProps) {
+    super(props)
 
     Object.setPrototypeOf(this, LineChart.prototype)
-
-    this.connectStore('transaction')
-    this.connectStore('date')
 
     this.initValues()
     this.init()
@@ -52,11 +57,12 @@ class LineChart extends Component<IProps, IState> {
 
   initValues() {
     // 데이터 설정 필요
-    const { month, year } = this.store.date.data
+    const { month, year } = this.props.date
     this.currentYear = year
     this.currentMonth = month
-    this.dataSet = this.store.transaction.data
-
+    this.dataSet = this.props.transaction.sort(function (a, b) {
+      return a.createdAt > b.createdAt ? 1 : -1
+    })
     this.svgWidth = 900
     this.svgHeight = 600
 
@@ -171,21 +177,24 @@ class LineChart extends Component<IProps, IState> {
 
     let i = 0
     let animationDuration = 0
+    let previousPrice = 0
     while (startDate <= this.endOfMonth) {
       let height = 4
 
       if (
-        dataSet[i] &&
+        this.dataSet[i] &&
         startDate === new Date(this.dataSet[i].createdAt).getDate()
       ) {
-        const ratio = dataSet[i].price / this.topOfLabel
-        const length = this.startY - this.endY
-        height = length * ratio + markerPaddingTop
+        previousPrice += this.dataSet[i].price
         i++
+        continue
       }
 
-      polyLinePoints += ` ${startMarkerX},${this.startY - height}`
+      const ratio = previousPrice / this.topOfLabel
+      const length = this.startY - this.endY
+      height = length * ratio + markerPaddingTop
 
+      polyLinePoints += ` ${startMarkerX},${this.startY - height}`
       const $marker = this.makeMarker(startMarkerX, height)
       this.setAttribute($marker, {
         style: `animation-duration : ${animationDuration}s`,
@@ -195,6 +204,7 @@ class LineChart extends Component<IProps, IState> {
       startMarkerX += this.intervalX
       startDate++
       animationDuration += 0.1
+      previousPrice = 0
     }
 
     const $polyLine = this.makePolyLine(polyLinePoints)
