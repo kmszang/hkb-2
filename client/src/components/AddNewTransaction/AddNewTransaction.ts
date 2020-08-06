@@ -2,7 +2,7 @@ import { Component } from '../../utils/wooact'
 import { div, input, button } from '../../utils/wooact/defaultElements'
 import { ICategoryResponse } from '../../api/category'
 import { BoxInput } from '../BoxInput'
-import { ADD_ONE_TRANSACTION } from '../../modules/TransactionStore'
+import { ADD_ONE_TRANSACTION } from '../../stores/TransactionStore'
 import { ICon } from '../ICon'
 
 interface IProps {

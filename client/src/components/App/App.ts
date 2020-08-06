@@ -1,8 +1,8 @@
 import { Component } from '../../utils/wooact'
 import { div } from '../../utils/wooact/defaultElements'
 import { RouterComponent } from '../../pages/Router'
-import { FETCH_ALL_TRANSACTION } from '../../modules/TransactionStore'
-import { FETCH_ALL_CATEGORIES } from '../../modules/CategoryStore'
+import { FETCH_ALL_TRANSACTION } from '../../stores/TransactionStore'
+import { FETCH_ALL_CATEGORIES } from '../../stores/CategoryStore'
 import { SideBar } from '../SideBar'
 
 interface IProps {}

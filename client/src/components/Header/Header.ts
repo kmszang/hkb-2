@@ -1,7 +1,7 @@
 import { Component } from '../../utils/wooact'
 import { header, h1, div, span } from '../../utils/wooact/defaultElements'
 import { ICon } from '../ICon'
-import { TOGGLE_INCOME, TOGGLE_OUTCOME } from '../../modules/visibleStore'
+import { TOGGLE_INCOME, TOGGLE_OUTCOME } from '../../stores/visibleStore'
 import { getCSVNumber } from '../../utils/getCSVNumber'
 
 interface IProps {

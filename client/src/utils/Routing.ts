@@ -3,7 +3,7 @@ import { Transaction } from '../pages/Transaction'
 import { Statistics } from '../pages/Statistics'
 import { Calendar } from '../pages/Calendar'
 import { Component } from './wooact'
-import { combinedStore } from '../modules'
+import { combinedStore } from '../stores'
 import { listenEvent, STORE_UPDATED } from './customEventHandler'
 
 interface IRoutes {

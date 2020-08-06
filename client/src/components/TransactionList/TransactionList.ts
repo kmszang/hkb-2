@@ -27,8 +27,6 @@ class TransactionList extends Component<IProps, IState> {
         (visible.income && isIncome) || (visible.outcome && !isIncome)
     )
 
-    console.log(filteredTransaction)
-
     const recordedDates = getRecordedDate(filteredTransaction)
 
     const filteredByDateTransaction = filterByDate(filteredTransaction)
@@ -40,7 +38,6 @@ class TransactionList extends Component<IProps, IState> {
         sumOfOutcome,
       } = filteredByDateTransaction[date.toString()]
 
-      // const {} =
       return div(
         { className: 'date-grouped-container' },
         div(
