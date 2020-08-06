@@ -1,8 +1,16 @@
 import { Component } from '../../utils/wooact'
 import { div, svg } from '../../utils/wooact/defaultElements'
-import { dataSet } from './dummyData'
 import { ITransactionResponse } from '../../api/transaction'
-interface IProps {}
+
+interface IDate {
+  month: number
+  year: number
+}
+interface IProps {
+  date: IDate
+  transaction: ITransactionResponse[]
+}
+
 interface IState {}
 
 class LineChart extends Component<IProps, IState> {
@@ -14,6 +22,8 @@ class LineChart extends Component<IProps, IState> {
   private endX: number
   private endY: number
 
+  // 현재 년도
+  private currentYear: number
   // 현재 월
   private currentMonth: number
 
@@ -36,22 +46,23 @@ class LineChart extends Component<IProps, IState> {
   private averageExpense: number
   private dataSet: Array<ITransactionResponse>
 
-  constructor() {
-    super()
+  constructor(props: IProps) {
+    super(props)
 
     Object.setPrototypeOf(this, LineChart.prototype)
 
-    this.connectStore('transaction')
     this.initValues()
     this.init()
   }
 
   initValues() {
     // 데이터 설정 필요
-    this.currentMonth = 7
-    this.dataSet = this.store.transaction.data
-    //
-
+    const { month, year } = this.props.date
+    this.currentYear = year
+    this.currentMonth = month
+    this.dataSet = this.props.transaction.sort(function (a, b) {
+      return a.createdAt > b.createdAt ? 1 : -1
+    })
     this.svgWidth = 900
     this.svgHeight = 600
 
@@ -70,7 +81,7 @@ class LineChart extends Component<IProps, IState> {
 
     this.circlePadding = 5
     // 해당 월의 마지막 날짜
-    this.endOfMonth = new Date(2020, this.currentMonth, 0).getDate()
+    this.endOfMonth = new Date(this.currentYear, this.currentMonth, 0).getDate()
     // 5일 기준
     this.dateInterval = 5
 
@@ -165,27 +176,35 @@ class LineChart extends Component<IProps, IState> {
     })
 
     let i = 0
-
+    let animationDuration = 0
+    let previousPrice = 0
     while (startDate <= this.endOfMonth) {
       let height = 4
 
       if (
-        dataSet[i] &&
+        this.dataSet[i] &&
         startDate === new Date(this.dataSet[i].createdAt).getDate()
       ) {
-        const ratio = dataSet[i].price / this.topOfLabel
-        const length = this.startY - this.endY
-        height = length * ratio + markerPaddingTop
+        previousPrice += this.dataSet[i].price
         i++
+        continue
       }
 
-      polyLinePoints += ` ${startMarkerX},${this.startY - height}`
+      const ratio = previousPrice / this.topOfLabel
+      const length = this.startY - this.endY
+      height = length * ratio + markerPaddingTop
 
+      polyLinePoints += ` ${startMarkerX},${this.startY - height}`
       const $marker = this.makeMarker(startMarkerX, height)
+      this.setAttribute($marker, {
+        style: `animation-duration : ${animationDuration}s`,
+      })
       this.appendChildren($g, [$marker])
 
       startMarkerX += this.intervalX
       startDate++
+      animationDuration += 0.1
+      previousPrice = 0
     }
 
     const $polyLine = this.makePolyLine(polyLinePoints)
@@ -228,7 +247,10 @@ class LineChart extends Component<IProps, IState> {
     const $g = this.createSvgElement('g')
 
     const { labelCount, paddingTop } = this.determineCountAndPadding()
-    this.topOfLabel = this.highestExpense + paddingTop
+    // 만원 기준
+    const standard = 10000
+    const cleanNumbr = Math.floor(this.highestExpense / standard)
+    this.topOfLabel = cleanNumbr * standard + paddingTop
 
     const intervalY = Math.floor((this.startY - this.endY) / labelCount)
 

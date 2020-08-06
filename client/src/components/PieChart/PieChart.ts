@@ -2,7 +2,9 @@ import { Component } from '../../utils/wooact'
 import { div } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
 // import { dataSet } from './dummyData'
-interface IProps {}
+interface IProps {
+  transaction: ITransactionResponse[]
+}
 interface IState {}
 
 class PieChart extends Component<IProps, IState> {
@@ -13,10 +15,10 @@ class PieChart extends Component<IProps, IState> {
 
   private centerCoordinate = [0, 0]
   private fullAngle = 2 * Math.PI
-  private dataSet: Array<ITransactionResponse>
+  private dataSet: ITransactionResponse[]
 
-  constructor() {
-    super()
+  constructor(props: IProps) {
+    super(props)
 
     Object.setPrototypeOf(this, PieChart.prototype)
 
@@ -28,7 +30,10 @@ class PieChart extends Component<IProps, IState> {
     this.radius = 7
     this.diameter = 2 * this.radius
     this.circumference = this.fullAngle * this.radius
-    // this.dataSet = dataSet
+    this.dataSet = this.props.transaction.sort(function (a, b) {
+      return a.price > b.price ? -1 : 1
+    })
+    console.log(this.dataSet)
   }
 
   getTotalExpense() {
@@ -41,6 +46,10 @@ class PieChart extends Component<IProps, IState> {
 
   makeSvg() {
     const $svg = this.createSvgElement('svg')
+    this.setAttribute($svg, {
+      class: 'pie',
+      viewBox: '-32 -32 64 64',
+    })
     let strokeDashOffSet = 0
     let previousAngle = 0
     const totalExpense = this.getTotalExpense()
@@ -72,7 +81,7 @@ class PieChart extends Component<IProps, IState> {
     const circleAngle = this.fullAngle * moneyRatio
 
     const $circle = this.makeCircle(strokeDashOffSet, circleRatio, i)
-    const $label = this.makeLabel(previousAngle, circleAngle)
+    const $label = this.makeLabel(previousAngle, circleAngle, i)
 
     this.hideSmallPercent(moneyRatio, $circle, $label)
 
@@ -98,7 +107,7 @@ class PieChart extends Component<IProps, IState> {
     const $label = e.target.nextElementSibling
     $label.classList.add('low-percent')
   }
-  makeLabel(previousAngle, circleAngle) {
+  makeLabel(previousAngle, circleAngle, i) {
     const $label = this.createSvgElement('g')
     const x = Math.sin(previousAngle + circleAngle / 2)
     const y = -Math.cos(previousAngle + circleAngle / 2)
@@ -123,6 +132,7 @@ class PieChart extends Component<IProps, IState> {
       startPointY,
       textPositionX,
       pathLength,
+      i,
     })
     this.appendChildren($label, [$line, $line2, $text])
     return $label
@@ -132,7 +142,7 @@ class PieChart extends Component<IProps, IState> {
       element.appendChild(child)
     })
   }
-  makeText({ startPointX, startPointY, textPositionX, pathLength }) {
+  makeText({ startPointX, startPointY, textPositionX, pathLength, i }) {
     const $text = this.createSvgElement('text')
     const text = '카테고리'
     this.setAttribute($text, {
@@ -140,7 +150,7 @@ class PieChart extends Component<IProps, IState> {
       y: startPointY * pathLength,
       class: 'label-text',
     })
-    $text.textContent = text
+    $text.textContent = this.dataSet[i].categoryName
     return $text
   }
   makeFirstLine({ startPointX, startPointY, pathLength }) {
@@ -160,7 +170,7 @@ class PieChart extends Component<IProps, IState> {
     this.setAttribute($line, {
       x1: startPointX * pathLength,
       y1: startPointY * pathLength,
-      x2: startPointX * secondPathLength,
+      x2: startPointX + secondPathLength,
       y2: startPointY * pathLength,
     })
     return $line

@@ -1,1 +1,40 @@
 @import '../../styles/_variables.scss';
+.pie {
+    width: 500px;
+    height: 500px;
+    background: transparent;
+    border-radius: 50%;
+
+    circle {
+        fill: none;
+        stroke: gold;
+        /* stroke-width: 5; */
+        transform: rotate(-90);
+        animation: rotateCircle 1s reverse forwards;
+    }
+
+    g line{
+        fill : blue;
+        stroke : rgb(255,0,0);
+        stroke-width:0.1;
+        animation: growLine 1s linear forwards;
+    }
+    .label-text{
+        animation: growFont 1s linear forwards;
+        font-size: 2px;
+    }
+    .low-percent{
+        opacity: 0;
+    }
+}
+@keyframes rotateCircle {
+    to{ stroke-dasharray: 0 100;}
+} 
+@keyframes growFont {
+    0%{ font-size: 0}
+    100%{font-size : 2px}
+} 
+@keyframes growLine {
+    0%{ stroke-width : 0}
+    100%{ stroke-width: 0.1}
+}
