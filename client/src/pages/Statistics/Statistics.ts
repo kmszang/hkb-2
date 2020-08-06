@@ -14,10 +14,7 @@ class Statistics extends Component<IProps, IState> {
   }
 
   render() {
-    return div(
-      { className: 'statistics-container' },
-      new Header({ title: 'Statistics' })
-    )
+    return div({ className: 'statistics-container' })
   }
 }
 

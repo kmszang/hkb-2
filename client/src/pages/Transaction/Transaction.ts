@@ -21,7 +21,6 @@ class Transaction extends Component<IProps, IState> {
   render() {
     return div(
       { className: 'transaction-container' },
-      new Header({ title: 'Transactions' }),
       // new AddNewTransaction({ isAddMode: this.getState('isAddMode') }),
       new TransactionList()
     )
