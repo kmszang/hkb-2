@@ -1,14 +1,12 @@
 import { Component } from '../../utils/wooact'
-import { div, input, button } from '../../utils/wooact/defaultElements'
+import { div } from '../../utils/wooact/defaultElements'
 import {
   getFullDateIn,
   getFormattedDate,
   DAY_IN_ENG,
-  getDate,
 } from '../../utils/dateInfos'
 import { CalendarItem } from '../../components/CalendarItem'
 import { filterByDate } from '../../utils/dataFilterer'
-import { Header } from '../../components/Header'
 
 interface IProps {}
 interface IState {}
@@ -20,19 +18,17 @@ class Calendar extends Component<IProps, IState> {
     super()
 
     Object.setPrototypeOf(this, Calendar.prototype)
-    this.connectStore('transaction')
+    this.connectStore('transaction', 'date', 'visible')
     this.init()
   }
 
   getFullDate() {
-    const transactions = this.store.transaction.data
-    const dateInfo = getDate(transactions)
-
-    if (!dateInfo) {
+    const date = this.store.date.data
+    if (!date) {
       return []
     }
 
-    const { month, year } = dateInfo
+    const { month, year } = date
     const currentMonth = getFullDateIn(year, month)
     const previousMonth = getFullDateIn(year, month - 1)
     const nextMonth = getFullDateIn(year, month + 1)
@@ -50,7 +46,7 @@ class Calendar extends Component<IProps, IState> {
 
   renderDayInEng() {
     return DAY_IN_ENG.map((eng) =>
-      div({ className: 'day-eng', textContent: eng })
+      div({ className: `day-eng ${eng}`, textContent: eng })
     )
   }
 
@@ -61,11 +57,20 @@ class Calendar extends Component<IProps, IState> {
     }
 
     const transactions = this.store.transaction.data
+
     if (!transactions || transactions.length === 0) {
-      return [null]
+      return fullDate.map((date) => {
+        return new CalendarItem({ date, transactions: null })
+      })
     }
 
-    const filteredByDateTransactions = filterByDate(transactions)
+    const visible = this.store.visible.data
+    const filteredTransaction = transactions.filter(
+      ({ isIncome }) =>
+        (visible.income && isIncome) || (visible.outcome && !isIncome)
+    )
+
+    const filteredByDateTransactions = filterByDate(filteredTransaction)
     return fullDate.map((date) => {
       const keyDate = getFormattedDate(date)
       const transactionsOfDate = filteredByDateTransactions[keyDate]
