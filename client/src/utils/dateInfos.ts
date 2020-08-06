@@ -28,8 +28,7 @@ export const DAY_IN_ENG = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 
 export const getFullDateIn = (year: number, month: number): CustomDate[] => {
   const endDate = new Date(year, month, 0).getDate()
-  const startDay = new Date(year, month, 5).getDay()
-
+  const startDay = new Date(year, month - 1, 1).getDay()
   const currentMonthDate = [...Array(endDate)].map((_, i) => i + 1)
 
   return currentMonthDate.map<CustomDate>((date, i) => {

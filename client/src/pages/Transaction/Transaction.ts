@@ -1,8 +1,6 @@
 import { Component } from '../../utils/wooact'
 import { div } from '../../utils/wooact/defaultElements'
-import { AddNewTransaction } from '../../components/AddNewTransaction'
 import { TransactionList } from '../../components/TransactionList'
-import { Header } from '../../components/Header'
 
 interface IProps {}
 interface IState {
@@ -19,11 +17,8 @@ class Transaction extends Component<IProps, IState> {
   }
 
   render() {
-    return div(
-      { className: 'transaction-container' },
-      // new AddNewTransaction({ isAddMode: this.getState('isAddMode') }),
-      new TransactionList()
-    )
+    console.log('transaction rerendered')
+    return div({ className: 'transaction-container' }, new TransactionList())
   }
 }
 
