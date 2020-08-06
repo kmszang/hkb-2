@@ -7,6 +7,7 @@ export interface ICreateTransaction {
   paymentId: number
   userId: number
   categoryId: number
+  date: string
 }
 
 export interface IUpdateTransaction extends Partial<ICreateTransaction> {
