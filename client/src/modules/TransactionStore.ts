@@ -48,9 +48,5 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
         this._data = [result, ...this._data]
         break
     }
-
-    // window.dispatchEvent(
-    //   new CustomEvent('storeupdated', { detail: { transaction: this.data } })
-    // )
   }
 }
