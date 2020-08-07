@@ -40,8 +40,8 @@ export class PaymentStore extends Store<IPayment[]> {
     return fetchedPayments.map((payment) => ({ ...payment, selected: false }))
   }
 
-  async fetchUsersPayment(userId: number) {
-    const [usersPayment, fetchError] = await fetchUsersPayment(userId)
+  async fetchUsersPayment() {
+    const [usersPayment, fetchError] = await fetchUsersPayment()
 
     if (fetchError) {
       return console.error(fetchError)

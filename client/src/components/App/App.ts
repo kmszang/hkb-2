@@ -12,6 +12,7 @@ import {
 interface IProps {}
 interface IState {}
 
+export const router = new RouterComponent()
 class App extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props)
@@ -38,8 +39,6 @@ class App extends Component<IProps, IState> {
   }
 
   render() {
-    const router = new RouterComponent()
-
     return div({}, new SideBar({ routing: router.routing }), router)
   }
 }

@@ -17,6 +17,7 @@ export const fetchWrapper = async <T, B>(
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Origin': true,
       },
       credentials: 'include',
       body: JSON.stringify(body),
@@ -26,7 +27,6 @@ export const fetchWrapper = async <T, B>(
   if (err) {
     return [null, err]
   }
-  // console.log(response.headers)
   const res = await response.json()
   return [res, null]
 }
