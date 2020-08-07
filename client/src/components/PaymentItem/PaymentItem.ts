@@ -27,7 +27,7 @@ class PaymentItem extends Component<IProps, IState> {
     const { payment } = this.props
     this.store.payment.dispatch(ADD_ONE_TRANSACTION, {
       paymentId: payment.id,
-      userId: 78,
+      // userId: 78,
     })
   }
   onClickDeleteHandler = (e) => {
@@ -35,7 +35,7 @@ class PaymentItem extends Component<IProps, IState> {
     const { payment } = this.props
     this.store.payment.dispatch(DELETE_TRANSACTION, {
       paymentId: payment.id,
-      userId: 78,
+      // userId: 78,
     })
   }
   render() {

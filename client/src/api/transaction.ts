@@ -5,7 +5,7 @@ export interface ICreateTransaction {
   content: string
   price: number
   paymentId: number
-  userId: number
+  userId?: number
   categoryId: number
   date: string
 }

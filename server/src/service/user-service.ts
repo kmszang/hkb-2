@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User, ISignUpBody } from "../repository/user-repository";
-import { encrypt } from "../utils/encryption";
-
+import encrypt from "../utils/encryption";
+import { AuthenticateError } from "../errors/authenticate-error";
 declare global {
   namespace Express {
     interface Request {
@@ -28,7 +28,7 @@ export const signUpWithId = async (req: Request, res: Response) => {
 export const loginController = async (req: Request, res: Response) => {
   //   console.log(req.session.cookie);
   if (!req.user) {
-    return res.redirect(401, "http://localhost:9000");
+    throw new AuthenticateError();
   }
-  return res.redirect("http://localhost:9000");
+  return res.status(200).json({ status: 200 });
 };
