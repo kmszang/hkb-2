@@ -15,7 +15,6 @@ app.use(
   cors({
     origin: true,
     credentials: true,
-    preflightContinue: true,
   })
 );
 app.use(bodyParser.json());
@@ -42,7 +41,11 @@ app.use(router);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof CustomError) {
     res.status(err.statusCode);
-    res.json(err.message);
+    res.json({
+      status: err.statusCode,
+      message: err.message,
+    });
+    // res.redirect("http://localhost:9000");
     return;
   }
 
