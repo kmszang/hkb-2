@@ -15,6 +15,8 @@ import {
   validatePassword,
   checkAndmakeInputData,
 } from '../../utils/authorization'
+import { router } from '../App/App'
+import { TRANSACTION, SIGN_IN } from '../../pages/Router'
 
 const githubLoginuUrl = 'http://localhost:3000/api/github-login'
 
@@ -45,8 +47,15 @@ class Login extends Component<IProps, IState> {
       return
     }
 
-    const [result, err] = await logIn(loginBody)
-    console.log(result, err)
+    try {
+      const result = await logIn(loginBody)
+      if (!result || result.status !== 200) {
+        return alert('로그인을 다시 해주세요')
+      }
+    } catch (e) {
+      return alert('로그인을 다시 해주세요')
+    }
+    router.routing.pushTo(TRANSACTION)
   }
 
   render() {

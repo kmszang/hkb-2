@@ -7,22 +7,25 @@ import {
   deletePayment,
 } from "../service/payment-service";
 import { IUserPayment } from "../repository/payment-repository";
+import { isAuthenticated } from "../middlewares/isAuthenticated";
 
 const paymentRouter = Router();
 
 paymentRouter.post(
   "/",
-  validateBody<IUserPayment>(["paymentId", "userId"]),
+  isAuthenticated,
+  validateBody<IUserPayment>(["paymentId"]),
   addNewPayment
 );
 
 paymentRouter.delete(
   "/",
-  validateBody<IUserPayment>(["paymentId", "userId"]),
+  isAuthenticated,
+  validateBody<IUserPayment>(["paymentId"]),
   deletePayment
 );
 
 paymentRouter.get("/", getAllPayments);
-paymentRouter.get("/:userId", getUsersPayments);
+paymentRouter.get("/", isAuthenticated, getUsersPayments);
 
 export default paymentRouter;

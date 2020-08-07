@@ -2,7 +2,7 @@ import { fetchWrapper } from '../utils/fetchWrapper'
 import { PAYMENT } from './apiRoutes'
 
 export interface IPaymentCreateBody {
-  userId: number
+  userId?: number
   paymentId: number
 }
 
@@ -15,11 +15,8 @@ export const fetchAllPayment = async () => {
   return await fetchWrapper<IPaymentResponse[], undefined>('GET', PAYMENT)
 }
 
-export const fetchUsersPayment = async (userId: number) => {
-  return await fetchWrapper<IPaymentResponse[], undefined>(
-    'GET',
-    PAYMENT + `/${userId}`
-  )
+export const fetchUsersPayment = async () => {
+  return await fetchWrapper<IPaymentResponse[], undefined>('GET', PAYMENT)
 }
 
 export const createNewPayment = async (args: IPaymentCreateBody) => {

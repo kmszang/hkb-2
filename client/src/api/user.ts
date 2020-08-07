@@ -1,6 +1,8 @@
 import { fetchWrapper } from '../utils/fetchWrapper'
 import { GITHUBLOGIN, LOGIN, SIGN_UP } from './apiRoutes'
-export interface ILogInResponse {}
+export interface ILogInResponse {
+  status: number
+}
 
 export interface ILogInBody {
   userId: string
@@ -14,7 +16,17 @@ export interface ISignUpBody {
 }
 
 export const logIn = async (body: ILogInBody) => {
-  return await fetchWrapper<ILogInResponse, ILogInBody>('POST', LOGIN, body)
+  return await fetch('http://localhost:3000/api/login', {
+    method: 'post',
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Origin': 'true',
+    },
+    credentials: 'include',
+    body: JSON.stringify(body),
+  })
+  // return await fetchWrapper<ILogInResponse, ILogInBody>('POST', LOGIN, body)
 }
 
 export const githubLogIn = async (body: ILogInBody) => {

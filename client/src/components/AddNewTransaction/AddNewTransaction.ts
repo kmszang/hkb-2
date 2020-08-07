@@ -236,7 +236,7 @@ class AddNewTransaction extends Component<IProps, IState> {
       content: contentEle.value,
       price: parseInt(priceEle.value),
       paymentId: +payment.value,
-      userId: 78,
+      // userId: 78,
       categoryId: this.getState('selectedCategoryId') as number,
       date: this.getState('date') as string,
     }

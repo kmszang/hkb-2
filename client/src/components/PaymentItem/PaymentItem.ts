@@ -28,7 +28,7 @@ class PaymentItem extends Component<IProps, IState> {
 
     await this.store.payment.dispatch(ADD_ONE_PAYMENT, {
       paymentId: payment.id,
-      userId: 78,
+      // userId: 78,
     })
   }
 
@@ -37,7 +37,7 @@ class PaymentItem extends Component<IProps, IState> {
 
     this.store.payment.dispatch(DELETE_PAYMENT, {
       paymentId: payment.id,
-      userId: 78,
+      // userId: 78,
     })
   }
 

@@ -21,7 +21,6 @@ transactionRouter.post(
     "content",
     "price",
     "paymentId",
-    "userId",
     "categoryId",
   ]),
   createNewTransaction
@@ -34,6 +33,6 @@ transactionRouter.put(
   validateBody<IUpdateTransaction>(["id"]),
   updateTransaction
 );
-transactionRouter.delete("/:id", deleteTransaction);
+transactionRouter.delete("/:id", isAuthenticated, deleteTransaction);
 
 export default transactionRouter;
