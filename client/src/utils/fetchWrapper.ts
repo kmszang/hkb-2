@@ -3,7 +3,7 @@ import { localUrl, deployUrl } from '../../config/url'
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT'
 
 // const baseUrl = localUrl
-const baseUrl = deployUrl
+const baseUrl = deployUrl + '/api'
 
 // const baseUrl = process.env.mode === 'production' ? localUrl : deployUrl
 
