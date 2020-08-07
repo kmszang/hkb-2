@@ -4,6 +4,10 @@ import { RouterComponent } from '../../pages/Router'
 import { FETCH_ALL_TRANSACTION } from '../../stores/TransactionStore'
 import { FETCH_ALL_CATEGORIES } from '../../stores/CategoryStore'
 import { SideBar } from '../SideBar'
+import {
+  FETCH_ALL_PAYMENT,
+  FETCH_USERS_PAYMENT,
+} from '../../stores/PaymentStore'
 
 interface IProps {}
 interface IState {}
@@ -13,7 +17,7 @@ class App extends Component<IProps, IState> {
     super(props)
 
     Object.setPrototypeOf(this, App.prototype)
-    this.connectAction('transaction', 'category')
+    this.connectAction('transaction', 'category', 'payment')
     this.init()
   }
 
@@ -28,6 +32,9 @@ class App extends Component<IProps, IState> {
       ...initialDate,
     })
     this.store.category.dispatch(FETCH_ALL_CATEGORIES)
+    this.store.payment.dispatch(FETCH_ALL_PAYMENT)
+    // TODO
+    this.store.payment.dispatch(FETCH_USERS_PAYMENT, 78)
   }
 
   render() {
