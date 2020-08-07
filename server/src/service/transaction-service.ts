@@ -38,6 +38,8 @@ export const getAllTransactions = async (req: Request, res: Response) => {
 
 export const updateTransaction = async (req: Request, res: Response) => {
   const args = req.body as IUpdateTransaction;
+  req.body.userId = req.user.id;
+  // args["userId"] = req.user.id;
   const [updatedRows, updateError] = await Transaction.update(req.body);
 
   if (updateError || updatedRows !== 1) {
