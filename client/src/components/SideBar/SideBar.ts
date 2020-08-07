@@ -2,7 +2,13 @@ import { Component } from '../../utils/wooact'
 import { div } from '../../utils/wooact/defaultElements'
 import { ICon } from '../ICon'
 import { Routing } from '../../utils/Routing'
-import { SIGN_IN, TRANSACTION, CALENDAR, STATISTICS } from '../../pages/Router'
+import {
+  SIGN_IN,
+  TRANSACTION,
+  CALENDAR,
+  STATISTICS,
+  PAYMENT,
+} from '../../pages/Router'
 import { MONTH_IN_ENG } from '../../utils/dateInfos'
 import { FETCH_ALL_TRANSACTION } from '../../stores/TransactionStore'
 import { SET_NEXT_MONTH, SET_PREV_MONTH } from '../../stores/DateStore'
@@ -85,8 +91,8 @@ class SideBar extends Component<IProps, IState> {
   }
 
   renderRoutes() {
-    const routes = [SIGN_IN, TRANSACTION, CALENDAR, STATISTICS]
-    const icons = ['lock', 'list_dash', 'calendar', 'chart_bar']
+    const routes = [SIGN_IN, TRANSACTION, PAYMENT, CALENDAR, STATISTICS]
+    const icons = ['lock', 'list_dash', 'list_dash', 'calendar', 'chart_bar']
     const { routing } = this.props
 
     return routes.map(
