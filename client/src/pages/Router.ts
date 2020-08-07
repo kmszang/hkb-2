@@ -6,11 +6,12 @@ import { Calendar } from './Calendar'
 import { Routing } from '../utils/Routing'
 import { div } from '../utils/wooact/defaultElements'
 import { Header } from '../components/Header'
-
+import { Payment } from './Payment'
 export const SIGN_IN = '/sign-in' as const
 export const TRANSACTION = '/' as const
 export const STATISTICS = '/statistics' as const
 export const CALENDAR = '/calendar' as const
+export const PAYMENT = '/payment' as const
 
 interface IProps {}
 interface IState {}
@@ -27,6 +28,7 @@ export class RouterComponent extends Component<IProps, IState> {
       [SIGN_IN]: SignIn,
       [STATISTICS]: Statistics,
       [CALENDAR]: Calendar,
+      [PAYMENT]: Payment,
     })
     this.routing.init(this)
     this.init()
