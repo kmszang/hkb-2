@@ -1,6 +1,6 @@
 import { Store } from '../utils/Store'
 import { TransactionStore } from './TransactionStore'
-import { IVisible, VisibleStore } from './visibleStore'
+import { IVisible, VisibleStore } from './VisibleStore'
 import { CategoryStore } from './CategoryStore'
 import { DateInfo, DateStore } from './DateStore'
 import { IPayment, PaymentStore } from './PaymentStore'
