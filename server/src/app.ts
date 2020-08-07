@@ -20,37 +20,35 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(
-  session({
-    secret: "cats",
-    store: new NedbStore({
-      filename: "sessionStore.db",
-    }),
-    cookie: {
-      httpOnly: false,
-    },
-  })
+	session({
+		secret: "cats",
+		store: new NedbStore({
+			filename: "sessionStore.db",
+		}),
+	})
 );
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Serve static files at `public` directory
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "../public")));
 
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  if (err instanceof CustomError) {
-    res.status(err.statusCode);
-    res.json({
-      status: err.statusCode,
-      message: err.message,
-    });
-    // res.redirect("http://localhost:9000");
-    return;
-  }
 
-  console.error("invalid error type : ", err);
-  res.json("");
+	if (err instanceof CustomError) {
+		res.status(err.statusCode);
+		res.json(err.message);
+		return;
+	}
+
+	console.error("invalid error type : ", err);
+	res.json("");
+});
+
+app.get("/*", (req, res) => {
+	res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 export default app;
