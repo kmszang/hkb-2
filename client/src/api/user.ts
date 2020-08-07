@@ -1,5 +1,6 @@
 import { fetchWrapper } from '../utils/fetchWrapper'
 import { GITHUBLOGIN, LOGIN, SIGN_UP } from './apiRoutes'
+import { localUrl, deployUrl } from '../../config/url'
 export interface ILogInResponse {
   status: number
 }
@@ -16,7 +17,12 @@ export interface ISignUpBody {
 }
 
 export const logIn = async (body: ILogInBody) => {
-  return await fetch('http://localhost:3000/api/login', {
+  // const baseUrl = process.env.mode === 'production' ? deployUrl : localUrl
+
+  // const baseUrl = localUrl
+  const baseUrl = deployUrl
+  const loginUrl = '/api/login'
+  return await fetch(`${baseUrl}${loginUrl}`, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',

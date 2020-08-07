@@ -25,10 +25,14 @@ export const signUpWithId = async (req: Request, res: Response) => {
   res.json(insertedUser);
 };
 
-export const loginController = async (req: Request, res: Response) => {
-  //   console.log(req.session.cookie);
+export const loginController = (req: Request, res: Response) => {
   if (!req.user) {
     throw new AuthenticateError();
   }
   return res.status(200).json({ status: 200 });
+};
+
+export const githubLoginController = (req: Request, res: Response) => {
+  // const clientUrl = "http://52.78.221.38:3000";
+  res.redirect("/");
 };
