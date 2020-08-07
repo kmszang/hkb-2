@@ -23,11 +23,7 @@ export const fetchUsersPayment = async (userId: number) => {
 }
 
 export const createNewPayment = async (args: IPaymentCreateBody) => {
-  return await fetchWrapper<IPaymentResponse, IPaymentCreateBody>(
-    'POST',
-    PAYMENT,
-    args
-  )
+  return await fetchWrapper<number, IPaymentCreateBody>('POST', PAYMENT, args)
 }
 
 export const deletePayment = async (args: IPaymentCreateBody) => {

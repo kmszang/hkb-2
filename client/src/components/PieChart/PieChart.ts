@@ -3,7 +3,7 @@ import { div } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
 // import { dataSet } from './dummyData'
 interface IProps {
-  transaction: ITransactionResponse[]
+  transaction: { price: number; categoryName: string }[]
 }
 interface IState {}
 
@@ -15,7 +15,7 @@ class PieChart extends Component<IProps, IState> {
 
   private centerCoordinate = [0, 0]
   private fullAngle = 2 * Math.PI
-  private dataSet: ITransactionResponse[]
+  private dataSet: { price: number; categoryName: string }[]
 
   constructor(props: IProps) {
     super(props)
@@ -26,14 +26,22 @@ class PieChart extends Component<IProps, IState> {
     this.init()
   }
   initValues() {
-    this.colorList = ['yellow', 'red', 'blue', 'purple', 'gray', 'black']
+    this.colorList = [
+      '#207567',
+      '#358873',
+      '#4E9C81',
+      '#6BAF92',
+      '#8DC3A7',
+      '#B4D6C1',
+      '#DFEAE2',
+      '#FAF3DD',
+    ]
     this.radius = 7
     this.diameter = 2 * this.radius
     this.circumference = this.fullAngle * this.radius
     this.dataSet = this.props.transaction.sort(function (a, b) {
       return a.price > b.price ? -1 : 1
     })
-    console.log(this.dataSet)
   }
 
   getTotalExpense() {
@@ -219,7 +227,8 @@ class PieChart extends Component<IProps, IState> {
   }
   render() {
     const $svg = this.makeSvg()
-    return $svg
+
+    return div({ className: 'pie-box' }, $svg)
   }
 }
 

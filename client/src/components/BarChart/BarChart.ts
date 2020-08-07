@@ -2,7 +2,7 @@ import { Component } from '../../utils/wooact'
 import { div, section, svg, p } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
 interface IProps {
-  transaction: ITransactionResponse[]
+  transaction: { price: number; categoryName: string }[]
 }
 interface IState {}
 class BarChart extends Component<IProps, IState> {
@@ -20,6 +20,7 @@ class BarChart extends Component<IProps, IState> {
     this.svgWidth = 600
     this.svgHeight = 500
     this.dataSet = this.props.transaction
+    console.log(this.dataSet)
     this.totalMoney = this.getTotalMoney()
     this.init()
   }
@@ -52,13 +53,23 @@ class BarChart extends Component<IProps, IState> {
     const categoryList = []
     const percentList = []
     const priceList = []
-
-    this.dataSet.forEach((data) => {
+    const colors = [
+      '#207567',
+      '#358873',
+      '#4E9C81',
+      '#6BAF92',
+      '#8DC3A7',
+      '#B4D6C1',
+      '#DFEAE2',
+      '#FAF3DD',
+    ]
+    this.dataSet.forEach((data, idx) => {
       const $rect = this.makeRect({
         data,
         barHeight,
         i,
         barPadding,
+        color: colors[idx],
       })
       $svg.appendChild($rect)
       categoryList.push(this.makeCategory(data))
@@ -68,7 +79,7 @@ class BarChart extends Component<IProps, IState> {
     })
     return { $svg, categoryList, percentList, priceList }
   }
-  makeRect({ data, barHeight, i, barPadding }) {
+  makeRect({ data, barHeight, i, barPadding, color }) {
     const $rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
     const percent = (data.price / this.totalMoney) * 100
     const translate = [0, barHeight * i]
@@ -76,14 +87,16 @@ class BarChart extends Component<IProps, IState> {
     $rect.setAttribute('height', String(barHeight - barPadding))
     $rect.setAttribute('transform', 'translate(' + translate + ')')
     $rect.setAttribute('class', 'line')
+    $rect.style['stroke'] = color
+    $rect.style['fill'] = color
 
-    const $animate = this.makeAnimtaterForRect(percent)
+    const $animate = this.makeAnimtaterForRect(percent, color)
     $rect.appendChild($animate)
 
     return $rect
   }
 
-  makeAnimtaterForRect(percent) {
+  makeAnimtaterForRect(percent, color) {
     const $animate = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'animate'

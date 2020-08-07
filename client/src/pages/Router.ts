@@ -7,6 +7,7 @@ import { Routing } from '../utils/Routing'
 import { div } from '../utils/wooact/defaultElements'
 import { Header } from '../components/Header'
 import { Payment } from './Payment'
+
 export const SIGN_IN = '/sign-in' as const
 export const TRANSACTION = '/' as const
 export const STATISTICS = '/statistics' as const

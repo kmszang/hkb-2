@@ -91,8 +91,9 @@ class SideBar extends Component<IProps, IState> {
   }
 
   renderRoutes() {
-    const routes = [SIGN_IN, TRANSACTION, PAYMENT, CALENDAR, STATISTICS]
-    const icons = ['lock', 'list_dash', 'list_dash', 'calendar', 'chart_bar']
+    console.log(document.cookie)
+    const routes = [SIGN_IN, TRANSACTION, CALENDAR, STATISTICS, PAYMENT]
+    const icons = ['lock', 'list_dash', 'calendar', 'chart_bar', 'creditcard']
     const { routing } = this.props
 
     return routes.map(

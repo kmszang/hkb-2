@@ -29,5 +29,3 @@ export const combinedStore: ICombinedStore = {
   date: new DateStore(initialDate),
   payment: new PaymentStore(),
 }
-
-console.log(combinedStore)

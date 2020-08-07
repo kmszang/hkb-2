@@ -2,8 +2,8 @@ import { Component } from '../../utils/wooact'
 import { div, p, button } from '../../utils/wooact/defaultElements'
 import {
   IPayment,
-  DELETE_TRANSACTION,
-  ADD_ONE_TRANSACTION,
+  DELETE_PAYMENT,
+  ADD_ONE_PAYMENT,
 } from '../../stores/PaymentStore'
 import { ICon } from '../ICon'
 interface IProps {
@@ -22,30 +22,41 @@ class PaymentItem extends Component<IProps, IState> {
     this.connectAction('payment')
     this.init()
   }
-  onClickAddHandler = (e) => {
-    e.preventDefault()
+
+  async onClickAddHandler() {
     const { payment } = this.props
-    this.store.payment.dispatch(ADD_ONE_TRANSACTION, {
+
+    await this.store.payment.dispatch(ADD_ONE_PAYMENT, {
       paymentId: payment.id,
       userId: 78,
     })
   }
-  onClickDeleteHandler = (e) => {
-    e.preventDefault()
+
+  async onClickDeleteHandler() {
     const { payment } = this.props
-    this.store.payment.dispatch(DELETE_TRANSACTION, {
+
+    this.store.payment.dispatch(DELETE_PAYMENT, {
       paymentId: payment.id,
       userId: 78,
     })
   }
+
   render() {
     const { payment, buttonContent, mode } = this.props
-    const onClickHandler =
-      mode === '추가' ? this.onClickAddHandler : this.onClickDeleteHandler
+
+    const onClickHandler = () =>
+      mode === '추가' ? this.onClickAddHandler() : this.onClickDeleteHandler()
+
     return div(
       { className: 'paymentitem-container' },
       p({ textContent: payment.name }),
-      button({ textContent: buttonContent, onclick: onClickHandler })
+      new ICon({
+        isSelected: false,
+        onClickHandler: () => onClickHandler(),
+        isIncome: mode === '추가',
+        iconName: mode === '추가' ? 'plus' : 'minus',
+      })
+      // button({ textContent: buttonContent, onclick: onClickHandler })
     )
   }
 }

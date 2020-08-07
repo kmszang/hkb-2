@@ -1,7 +1,13 @@
 @import '../../styles/_variables.scss';
+.pie-box{
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+}
 .pie {
     width: 500px;
     height: 500px;
+    margin: 0 auto;
     background: transparent;
     border-radius: 50%;
 
@@ -15,7 +21,7 @@
 
     g line{
         fill : blue;
-        stroke : rgb(255,0,0);
+        stroke : $hkb-light-green;
         stroke-width:0.1;
         animation: growLine 1s linear forwards;
     }
@@ -29,11 +35,11 @@
 }
 @keyframes rotateCircle {
     to{ stroke-dasharray: 0 100;}
-} 
+}
 @keyframes growFont {
     0%{ font-size: 0}
     100%{font-size : 2px}
-} 
+}
 @keyframes growLine {
     0%{ stroke-width : 0}
     100%{ stroke-width: 0.1}

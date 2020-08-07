@@ -13,21 +13,22 @@ class Payment extends Component<IProps, IState> {
     this.init()
   }
   filterPayment() {
-    const selectedPayments = []
-    const unSelectedPayments = []
+    if (!this.store.payment.data) {
+      return [[], []]
+    }
+    const selectedPayments = this.store.payment.data.filter(
+      ({ selected }) => selected
+    )
+    const unSelectedPayments = this.store.payment.data.filter(
+      ({ selected }) => !selected
+    )
 
-    this.store.payment.data.forEach((payment) => {
-      if (payment.selected) {
-        return selectedPayments.push(payment)
-      }
-      unSelectedPayments.push(payment)
-    })
-
-    return { selectedPayments, unSelectedPayments }
+    return [selectedPayments, unSelectedPayments]
   }
 
   render() {
-    const { selectedPayments, unSelectedPayments } = this.filterPayment()
+    const [selectedPayments, unSelectedPayments] = this.filterPayment()
+    console.log('rerender', [selectedPayments, unSelectedPayments])
     return div(
       { className: 'payment-container' },
       new PaymentBox({
