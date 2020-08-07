@@ -39,7 +39,7 @@ hkb-2
 │       └── src
 ```
 
-#### Set-up
+## Set-up
 
 1. `$ git clone https://github.com/woowa-techcamp-2020/hkb-2`
 2. `$ cd ./client`
@@ -47,21 +47,33 @@ hkb-2
 4. `$ cd ../server`
 5. `$ npm i`
 
-### Database Structure
+## Database Structure
 <p align="center">
   <img src="./assets/images/database.png" width="1000" />
 </p>
 
-### Database env structure
+## 환경 변수 설정
 
-```
-DB_HOST=52.78.221.38
-DB_USER=woowabros
-DB_NAME=woowa
-DB_PASS=Woowa?12345
+**해당 프로젝트의 환경변수는 .env 파일에 담겨 있습니다.**
+
+> .env 파일은 올라가 있지 않으니 sample.env에 값을 입력하고 .env로 파일이름을 바꾸시면 됩니다. 
+```bash
+src
+└─ server
+   └─ sample.env
 ```
 
-### Client
+**sample.env**
+```bash
+DB_HOST=
+DB_USER=
+DB_NAME=
+DB_PASS=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+```
+
+## Client
 
 ##### 컴포넌트 만들기
 ```bash
@@ -69,6 +81,21 @@ $ create-wooact-component.sh 컴포넌트 이름
 ```
 
 ex) create-wooact-component.sh `App`
+
+## Run dev server
+
+```bash
+cd hkb-2/client
+npm run dev
+cd hkb-2/server
+npm run dev
+```
+> client의 경우 9000번 port에서 webpack-dev-server가 돌아갑니다.  
+
+> server의 경우 3000번 port에서 nodemone이 돌아갑니다.
+
+## 
+
 
 
 
