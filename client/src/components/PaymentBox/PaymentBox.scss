@@ -1,0 +1,22 @@
+@import '../../styles/_variables.scss';
+
+.payments-box{
+    width: 30%;
+    max-width: 300px;
+    background-color: #F4F6F9;
+    height: fit-content;
+    
+    p{
+        text-align: center;
+        margin-top : 40px;
+        font-weight : bold;
+    }
+}
+.selected-payments{
+    @extend .payments-box;
+    color: blue;
+}
+.unselected-payments{
+    @extend .payments-box;
+    color : red;
+}
