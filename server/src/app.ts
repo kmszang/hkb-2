@@ -26,6 +26,9 @@ app.use(
     store: new NedbStore({
       filename: "sessionStore.db",
     }),
+    cookie: {
+      httpOnly: false,
+    },
   })
 );
 app.use(passport.initialize());
