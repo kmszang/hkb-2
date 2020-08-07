@@ -1,0 +1,17 @@
+@import '../../styles/_variables.scss';
+.paymentitem-container{
+    width: 70%;
+    height: 8vw;
+    margin: 0 auto;
+    margin-top: 65px;
+    margin-bottom: 65px;
+    background-color: red;
+    border-radius: 10px;
+    display:flex;
+    align-items: center;
+    p{
+        width: 100%;
+        text-align: center;
+        margin : 0
+    }
+}
