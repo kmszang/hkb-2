@@ -50,8 +50,8 @@ export const updateTransaction = async (args: IUpdateTransaction) => {
 }
 
 export const deleteTransaction = async (id: number) => {
-  return await fetchWrapper<ITransactionResponse, IUpdateTransaction>(
-    'PUT',
+  return await fetchWrapper<number, IUpdateTransaction>(
+    'DELETE',
     TRANSACTION + `/${id}`
   )
 }

@@ -3,6 +3,7 @@ import { div, p, i } from '../../utils/wooact/defaultElements'
 import { ITransactionResponse } from '../../api/transaction'
 import { getCSVNumber } from '../../utils/getCSVNumber'
 import { ICon } from '../ICon'
+import { DELETE_TRANSACTION } from '../../stores/TransactionStore'
 
 interface IProps {
   transaction: ITransactionResponse
@@ -14,7 +15,23 @@ class TransactionItem extends Component<IProps, IState> {
     super(props)
 
     Object.setPrototypeOf(this, TransactionItem.prototype)
+    this.connectAction('transaction')
     this.init()
+  }
+
+  renderHandler() {
+    const { dispatch } = this.store.transaction
+    const { id } = this.props.transaction
+
+    return [
+      new ICon({
+        isSelected: false,
+        onClickHandler: async () =>
+          await this.store.transaction.dispatch(DELETE_TRANSACTION, id),
+        iconName: 'trash',
+        name: '삭제',
+      }),
+    ]
   }
 
   render() {
@@ -52,7 +69,13 @@ class TransactionItem extends Component<IProps, IState> {
       div({
         className: `price ${isIncome ? 'income' : 'outcome'}`,
         textContent: getCSVNumber(price),
-      })
+      }),
+      div(
+        {
+          className: 'item-handler-container',
+        },
+        ...this.renderHandler()
+      )
     )
   }
 }
