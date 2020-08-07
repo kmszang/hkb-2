@@ -1,4 +1,4 @@
-import { ICategoryResponse, fetchAllCategories } from '../api/Category'
+import { ICategoryResponse, fetchAllCategories } from '../api/category'
 import { Store } from '../utils/Store'
 
 // actions

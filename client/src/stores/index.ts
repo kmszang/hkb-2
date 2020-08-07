@@ -1,6 +1,6 @@
 import { Store } from '../utils/Store'
 import { TransactionStore } from './TransactionStore'
-import { IVisible, VisibleStore } from './visibleStore'
+import { IVisible, VisibleStore } from './VisibleStore'
 import { CategoryStore } from './CategoryStore'
 import { DateInfo, DateStore } from './DateStore'
 import { IPayment, PaymentStore } from './PaymentStore'
@@ -22,11 +22,6 @@ const initialDate = {
   year: today.getFullYear(),
 }
 
-const transactionStore = new TransactionStore()
-const visibleStore = new VisibleStore({ income: true, outcome: true })
-const categoryStore = new CategoryStore()
-const dateStore = new DateStore(initialDate)
-
 export const combinedStore: ICombinedStore = {
   transaction: new TransactionStore(),
   visible: new VisibleStore({ income: true, outcome: true }),
@@ -34,3 +29,5 @@ export const combinedStore: ICombinedStore = {
   date: new DateStore(initialDate),
   payment: new PaymentStore(),
 }
+
+console.log(combinedStore)

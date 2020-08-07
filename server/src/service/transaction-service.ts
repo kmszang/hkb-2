@@ -32,6 +32,7 @@ export const getAllTransactions = async (req: Request, res: Response) => {
 	if (fetchError) {
 		throw new DatabaseError(fetchError);
 	}
+	console.log(allTransactions);
 	res.json(allTransactions);
 };
 
