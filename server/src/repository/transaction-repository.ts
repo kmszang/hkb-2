@@ -26,6 +26,7 @@ export interface ITransaction {
 	createdAt: Date;
 	isIncome: boolean;
 	iconName: string;
+	categoryId: number;
 }
 
 export class Transaction {
@@ -42,7 +43,8 @@ export class Transaction {
 		const selectOneTransactionQuery = `
 		SELECT
 			T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
-			C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName
+			C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName,
+			C.id as categoryId
 		FROM
 			Transaction as T
 		JOIN
@@ -62,7 +64,8 @@ export class Transaction {
 		const selectAllTransactionQuery = `
 			SELECT
 				T.id, T.price, T.content, T.created_at as createdAt, P.name as paymentName,
-				C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName
+				C.name as categoryName, C.is_income as isIncome, C.icon_name as iconName,
+				C.id as categoryId
 			FROM
 				Transaction as T
 			JOIN

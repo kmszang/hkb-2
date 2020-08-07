@@ -14,8 +14,17 @@
 	border: none;
 	border-radius: 6px;
 
-	transition: opacity 200ms ease;
+	transition: opacity 400ms ease;
 
+	.overlap {
+		display: none;
+		width: 98%;
+		height: 100%;
+		background-color: $hkb-white;
+		z-index: 3;
+		opacity: 0;
+		transition: all 400ms ease;
+	}
 
 	i{
 		width: 36px;
@@ -61,13 +70,24 @@
 	}
 
 	.item-handler-container {
+		position: absolute;
+		display: flex;
+		right: 10px;
+		top: 25px;
 		opacity: 0;
 	}
 
 	&:hover {
 		backdrop-filter: blur(2px);
 
-		.item-handler-container {
+		.overlap {
+			position: absolute;
+			display: flex;
+			backdrop-filter: blur(1px);
+			opacity: 0.8;
+		}
+
+		.item-handler-container{
 			opacity: 1;
 		}
 	}

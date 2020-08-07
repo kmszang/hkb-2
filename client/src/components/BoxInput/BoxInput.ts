@@ -8,6 +8,7 @@ interface IProps {
   type?: string
   validateHandler: (target: HTMLInputElement) => boolean
   errMessage: string
+  initialValue?: string | number
 }
 
 interface IState {}
@@ -40,7 +41,14 @@ class BoxInput extends Component<IProps, IState> {
   }
 
   render() {
-    const { iconName, placeholder, errMessage, name, type } = this.props
+    const {
+      iconName,
+      placeholder,
+      errMessage,
+      name,
+      type,
+      initialValue,
+    } = this.props
 
     return div(
       { className: 'box-input-container' },
@@ -55,6 +63,7 @@ class BoxInput extends Component<IProps, IState> {
           type: type || 'text',
           iconName: iconName,
           oninput: (e) => this.onChagneHandler(e),
+          value: initialValue || '',
         })
       ),
       p({ textContent: errMessage, className: 'error' })

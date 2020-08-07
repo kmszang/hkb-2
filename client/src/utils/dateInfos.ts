@@ -81,3 +81,12 @@ export const getDate = (transactions: ITransactionResponse[]): CustomDate => {
     dayName: DAY_IN_ENG[dateInfo.getDay()],
   }
 }
+
+export const dateForMiniCalendar = (date: string) => {
+  if (date === '') {
+    return ''
+  }
+
+  const [year, month, day] = date.toString().split('T')[0].split('-')
+  return `${+year}-${+month}-${+day}`
+}

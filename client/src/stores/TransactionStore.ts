@@ -67,7 +67,7 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
       return console.error(updateError)
     }
 
-    return updateTransaction
+    return updatedTransaction
   }
 
   protected updateStore(action: string, result: any) {
@@ -85,6 +85,7 @@ export class TransactionStore extends Store<ITransactionResponse[]> {
         this._data = this.data.map((transaction) =>
           transaction.id === result.id ? result : transaction
         )
+        break
     }
   }
 }
