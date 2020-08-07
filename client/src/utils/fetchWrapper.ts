@@ -1,11 +1,12 @@
 import { promiseHandler } from './promiseHandler'
-
+import { localUrl, deployUrl } from '../../config/url'
 export type MethodType = 'GET' | 'POST' | 'DELETE' | 'PATCH' | 'PUT'
 
-const baseUrl = 'http://localhost:3000/api'
-// const header = {
-//   'Access-Control-Allow-Credentials': true,
-// }
+// const baseUrl = localUrl
+const baseUrl = deployUrl
+
+// const baseUrl = process.env.mode === 'production' ? localUrl : deployUrl
+
 export const fetchWrapper = async <T, B>(
   method: MethodType,
   url: string,

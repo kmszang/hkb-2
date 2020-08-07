@@ -10,6 +10,7 @@ import {
 import { logIn, githubLogIn } from '../../api/user'
 import { BoxInput } from '../BoxInput'
 import { Button } from '../Button'
+import { localUrl, deployUrl } from '../../../config/url'
 import {
   validateId,
   validatePassword,
@@ -18,7 +19,11 @@ import {
 import { router } from '../App/App'
 import { TRANSACTION, SIGN_IN } from '../../pages/Router'
 
-const githubLoginuUrl = 'http://localhost:3000/api/github-login'
+// const baseUrl = localUrl
+const baseUrl = deployUrl
+// const baseUrl = process.env.mode === 'production' ? localUrl : deployUrl
+
+const githubLoginuUrl = `${baseUrl}/api/github-login`
 
 interface IProps {}
 interface IState {}
