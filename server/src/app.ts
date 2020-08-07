@@ -12,10 +12,10 @@ const NedbStore = require("nedb-session-store")(session);
 const app = express();
 
 app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
+	cors({
+		origin: true,
+		credentials: true,
+	})
 );
 app.use(bodyParser.json());
 
@@ -36,7 +36,6 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-
 	if (err instanceof CustomError) {
 		res.status(err.statusCode);
 		res.json(err.message);
@@ -47,8 +46,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 	res.json("");
 });
 
-app.get("/*", (req, res) => {
+app.get("/", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+app.get("/*", (req, res) => {
+	res.redirect("/");
 });
 
 export default app;
