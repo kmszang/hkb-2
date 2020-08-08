@@ -9,7 +9,7 @@
     "connect:server": "ssh -i ~/Downloads/aws_pem/hkb-2.pem ubuntu@52.78.221.38 \"bash /home/ubuntu/scripts/deploy.sh\"",
     "prebuild": "cd ../client && npm run build",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "pm2 start dist/index.js"
   },
   "keywords": [],
   "author": "박지환, 남현우",
