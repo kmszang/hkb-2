@@ -22,7 +22,7 @@ export type IAttribute = Partial<HTMLElementTagType & CustomAttribute>
 export const createElement = (
   tagName: HTMLELementTagName,
   attributes: IAttribute,
-  ...childNodes: (HTMLElement | Component<any, any> | null)[]
+  ...childNodes: (HTMLElement | Component<any, any> | null | SVGElement)[]
 ): HTMLElement => {
   const newElement = document.createElement(tagName)
 
