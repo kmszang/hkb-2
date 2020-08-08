@@ -46,12 +46,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 	res.json("");
 });
 
-app.get("/", (req, res) => {
+app.get("/*", (req, res) => {
 	res.sendFile(path.join(__dirname, "../public/index.html"));
 });
-
-// app.get("/*", (req, res) => {
-// 	res.redirect("/");
-// });
 
 export default app;
