@@ -1,6 +1,10 @@
 import { fetchWrapper } from '../utils/fetchWrapper'
-import { GITHUBLOGIN, LOGIN, SIGN_UP } from './apiRoutes'
+import { GITHUBLOGIN, SIGN_UP, CURRENT_USER, LOGOUT } from './apiRoutes'
 import { localUrl, deployUrl } from '../../config/url'
+export interface ICurrentUser {
+  id: number
+}
+
 export interface ILogInResponse {
   status: number
 }
@@ -14,6 +18,14 @@ export interface ISignUpBody {
   name: string
   userId: string
   password: string
+}
+
+export const getCurrentUser = async () => {
+  return await fetchWrapper<ICurrentUser, undefined>('GET', CURRENT_USER)
+}
+
+export const logout = async () => {
+  return await fetchWrapper<undefined, undefined>('GET', LOGOUT)
 }
 
 export const logIn = async (body: ILogInBody) => {
