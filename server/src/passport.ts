@@ -42,7 +42,6 @@ const githubOption = {
 };
 
 const githubCallback = async (accessToken, refreshToken, profile, done) => {
-	console.log(accessToken, refreshToken, profile);
 	[profile] = await accessGithubApi({ token: accessToken });
 	const [[user, _], err] = await User.getWithSocialId(profile.id);
 	if (user) {
