@@ -11,7 +11,7 @@ export interface IPayment {
 }
 
 export interface IUserPayment {
-	userId?: number;
+	userId: number;
 	paymentId: number;
 }
 
@@ -39,7 +39,7 @@ export class Payment {
 			JOIN
 				User as U ON U.id = R.user_id
 			WHERE
-				U.id=${78} AND P.id=${paymentId} AND R.is_active=true
+				U.id=${userId} AND P.id=${paymentId} AND R.is_active=true
 			;`;
 		return await selectQueryExecuter<IPayment>(selectUsersPayment);
 	}
@@ -55,7 +55,7 @@ export class Payment {
 			JOIN
 				User as U ON U.id = R.user_id
 			WHERE
-				U.id=${78} AND R.is_active=true
+				U.id=${userId} AND R.is_active=true
 			;`;
 		return await selectQueryExecuter<IPayment>(selectUsersPayment);
 	}
@@ -66,7 +66,7 @@ export class Payment {
 			INSERT INTO
 				User_Payment_Method(payment_id, user_id)
 			VALUES
-				("${paymentId}", "${78}")
+				("${paymentId}", "${userId}")
 			;`;
 		return await insertQueryExecuter(insertUsersPayment);
 	}
@@ -79,7 +79,7 @@ export class Payment {
 			SET
 				is_active=false
 		 	WHERE
-				user_id=${78} AND payment_id=${paymentId}
+				user_id=${userId} AND payment_id=${paymentId}
 		 	;`;
 		return await updateOrDeleteQueryExecuter(deleteUserPayment);
 	}
