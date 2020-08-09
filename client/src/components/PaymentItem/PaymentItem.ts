@@ -28,22 +28,18 @@ class PaymentItem extends Component<IProps, IState> {
 
     await this.store.payment.dispatch(ADD_ONE_PAYMENT, {
       paymentId: payment.id,
-      // userId: 78,
     })
   }
 
   async onClickDeleteHandler() {
     const { payment } = this.props
-
-    this.store.payment.dispatch(DELETE_PAYMENT, {
+    await this.store.payment.dispatch(DELETE_PAYMENT, {
       paymentId: payment.id,
-      // userId: 78,
     })
   }
 
   render() {
     const { payment, buttonContent, mode } = this.props
-
     const onClickHandler = () =>
       mode === '추가' ? this.onClickAddHandler() : this.onClickDeleteHandler()
 
@@ -56,7 +52,6 @@ class PaymentItem extends Component<IProps, IState> {
         isIncome: mode === '추가',
         iconName: mode === '추가' ? 'plus' : 'minus',
       })
-      // button({ textContent: buttonContent, onclick: onClickHandler })
     )
   }
 }
