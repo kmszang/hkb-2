@@ -22,12 +22,20 @@ class SignIn extends Component<IProps, IState> {
     this.init()
   }
 
+  toggleMode() {
+    this.setState('isLoginMode', !this.getState('isLoginMode'))
+  }
   render() {
     const isLoginMode = this.getState('isLoginMode')
 
     return div(
       { className: 'sign-in-container' },
-      isLoginMode ? new Login() : new Signup()
+      isLoginMode ? new Login() : new Signup(),
+      div({
+        className: 'mode-selector',
+        textContent: isLoginMode ? '회원가입' : '로그인',
+        onclick: () => this.toggleMode(),
+      })
     )
   }
 }
