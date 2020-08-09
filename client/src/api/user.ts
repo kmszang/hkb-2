@@ -31,7 +31,6 @@ export const logIn = async (body: ILogInBody) => {
     credentials: 'include',
     body: JSON.stringify(body),
   })
-  // return await fetchWrapper<ILogInResponse, ILogInBody>('POST', LOGIN, body)
 }
 
 export const githubLogIn = async (body: ILogInBody) => {
