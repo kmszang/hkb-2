@@ -17,10 +17,9 @@ export interface ISignUpBody {
 }
 
 export const logIn = async (body: ILogInBody) => {
-  // const baseUrl = process.env.mode === 'production' ? deployUrl : localUrl
+  const baseUrl = process.env.NODE_ENV === 'production' ? deployUrl : localUrl
 
   // const baseUrl = localUrl
-  const baseUrl = deployUrl
   const loginUrl = '/api/login'
   return await fetch(`${baseUrl}${loginUrl}`, {
     method: 'post',
@@ -32,7 +31,6 @@ export const logIn = async (body: ILogInBody) => {
     credentials: 'include',
     body: JSON.stringify(body),
   })
-  // return await fetchWrapper<ILogInResponse, ILogInBody>('POST', LOGIN, body)
 }
 
 export const githubLogIn = async (body: ILogInBody) => {

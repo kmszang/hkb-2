@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll --runInBand --detectOpenHandles",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "NODE_ENV=development ts-node-dev --respawn --transpile-only src/index.ts",
     "connect:server": "ssh -i ~/Downloads/aws_pem/hkb-2.pem ubuntu@52.78.221.38 \"bash /home/ubuntu/scripts/deploy.sh\"",
     "prebuild": "cd ../client && npm run build",
     "build": "tsc",
-    "start": "pm2 start dist/index.js"
+    "start": "NODE_ENV=production pm2 start dist/index.js"
   },
   "keywords": [],
   "author": "박지환, 남현우",

@@ -1,1 +1,8 @@
 @import '../../styles/_variables.scss';
+
+.mode-selector{
+	text-align: center;
+	width: 100%;
+	color: $hkb-blue;
+	cursor: pointer;
+}

@@ -49,13 +49,14 @@ class AddNewTransaction extends Component<IProps, IState> {
         selectedCategoryId: categoryId,
         isIncomeMode: isIncome ? 1 : 0,
         isAddMode: true,
-        date: createdAt.toString(),
+        date: dateForMiniCalendar(createdAt.toString()),
       }
     }
     super(props, state)
 
     Object.setPrototypeOf(this, AddNewTransaction.prototype)
-    this.connectStore('date', 'transaction', 'category', 'payment')
+    this.connectStore('date', 'transaction', 'category')
+    this.connectAction('payment')
     this.init()
   }
 
@@ -203,18 +204,20 @@ class AddNewTransaction extends Component<IProps, IState> {
 
   renderPayment() {
     const payments = this.store.payment
-
     if (!payments.data || payments.data.length === 0) {
       return null
     }
 
+    const selectedPayment = payments.data.filter(({ selected }) => selected)
+
+    if (!selectedPayment) {
+      return select({ className: 'payments-input' })
+    }
     return select(
       { className: 'payments-input' },
-      ...payments.data
-        .filter(({ selected }) => selected)
-        .map(({ id, name }) =>
-          option({ className: 'option', value: id, textContent: name })
-        )
+      ...selectedPayment.map(({ id, name }) =>
+        option({ className: 'option', value: id, textContent: name })
+      )
     )
   }
 

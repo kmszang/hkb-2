@@ -35,7 +35,7 @@ class App extends Component<IProps, IState> {
     this.store.category.dispatch(FETCH_ALL_CATEGORIES)
     this.store.payment.dispatch(FETCH_ALL_PAYMENT)
     // TODO
-    this.store.payment.dispatch(FETCH_USERS_PAYMENT, 78)
+    this.store.payment.dispatch(FETCH_USERS_PAYMENT)
   }
 
   render() {

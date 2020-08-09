@@ -28,7 +28,6 @@ class Payment extends Component<IProps, IState> {
 
   render() {
     const [selectedPayments, unSelectedPayments] = this.filterPayment()
-    console.log('rerender', [selectedPayments, unSelectedPayments])
     return div(
       { className: 'payment-container' },
       new PaymentBox({

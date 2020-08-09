@@ -26,7 +26,6 @@ class Signup extends Component<IProps, IState> {
     ) as HTMLInputElement[]
 
     const signupBody = checkAndmakeInputData(inputs)
-    console.log(signupBody)
     if (!signupBody) return
 
     const [signUpResponse, signUpError] = await signUp(signupBody)
@@ -43,7 +42,7 @@ class Signup extends Component<IProps, IState> {
             name: 'userId',
             type: 'text',
             validateHandler: validateId,
-            iconName: '아이디',
+            iconName: 'person_alt_circle',
             errMessage: '아이디를 입력해주세요',
           }),
           new BoxInput({
@@ -51,7 +50,7 @@ class Signup extends Component<IProps, IState> {
             name: 'password',
             type: 'password',
             validateHandler: validatePassword,
-            iconName: '비밀번호',
+            iconName: 'lock',
             errMessage: '비밀번호를 입력해주세요',
           }),
           new BoxInput({
@@ -59,7 +58,7 @@ class Signup extends Component<IProps, IState> {
             name: 'passwordCheck',
             type: 'password',
             validateHandler: validatePasswordOverlap,
-            iconName: '비밀번호 확인',
+            iconName: 'lock',
             errMessage: '비밀번호가 맞지 않습니다.',
           }),
           new BoxInput({
@@ -67,7 +66,7 @@ class Signup extends Component<IProps, IState> {
             name: 'name',
             type: 'text',
             validateHandler: validateName,
-            iconName: '이름',
+            iconName: 'tag',
             errMessage: '이름을 입력해주세요',
           }),
           new Button({

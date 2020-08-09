@@ -61,7 +61,6 @@ export class PaymentStore extends Store<IPayment[]> {
 
   async deletePayment(inputs: IPaymentCreateBody) {
     const [removedPaymentCount, removeError] = await deletePayment(inputs)
-
     if (removeError) {
       return console.error(removeError)
     }
@@ -89,11 +88,12 @@ export class PaymentStore extends Store<IPayment[]> {
         }))
         break
       case DELETE_PAYMENT:
-        this._data = this.data.map((payment) => ({
-          ...payment,
-          selected: payment.id === result ? false : true,
-        }))
-        console.log(this._data)
+        this._data = this.data.map((payment) => {
+          if (payment.id === result) {
+            return { ...payment, selected: false }
+          }
+          return payment
+        })
         break
     }
   }

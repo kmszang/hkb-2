@@ -20,8 +20,7 @@ import { router } from '../App/App'
 import { TRANSACTION, SIGN_IN } from '../../pages/Router'
 
 // const baseUrl = localUrl
-const baseUrl = deployUrl
-// const baseUrl = process.env.mode === 'production' ? localUrl : deployUrl
+const baseUrl = process.env.NODE_ENV === 'production' ? deployUrl : localUrl
 
 const githubLoginuUrl = `${baseUrl}/api/github-login`
 
@@ -75,7 +74,7 @@ class Login extends Component<IProps, IState> {
             name: 'userId',
             type: 'text',
             validateHandler: validateId,
-            iconName: '아이디',
+            iconName: 'person_alt_circle',
             errMessage: '아이디를 입력해주세요',
           }),
           new BoxInput({
@@ -83,7 +82,7 @@ class Login extends Component<IProps, IState> {
             name: 'password',
             type: 'password',
             validateHandler: validatePassword,
-            iconName: '비밀번호',
+            iconName: 'lock',
             errMessage: '비밀번호를 입력해주세요',
           }),
           new Button({
