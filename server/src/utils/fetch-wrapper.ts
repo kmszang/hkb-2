@@ -2,7 +2,6 @@ import { promiseHandler } from "./promise-handler";
 export type MethodType = "GET" | "POST" | "DELETE" | "PATCH" | "PUT";
 const fetch = require("node-fetch");
 
-// const baseUrl = "http://localhost:3000/api";
 const headers = {};
 
 export const nodeGetFetchWrapper = async <T>(

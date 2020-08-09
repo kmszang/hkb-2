@@ -20,8 +20,7 @@ import { router } from '../App/App'
 import { TRANSACTION, SIGN_IN } from '../../pages/Router'
 
 // const baseUrl = localUrl
-const baseUrl = deployUrl
-// const baseUrl = process.env.mode === 'production' ? localUrl : deployUrl
+const baseUrl = process.env.NODE_ENV === 'production' ? deployUrl : localUrl
 
 const githubLoginuUrl = `${baseUrl}/api/github-login`
 
