@@ -42,6 +42,8 @@ class SideBar extends Component<IProps, IState> {
 
     if (loggedInUser && loggedInUser.id > 0) {
       this.setState('isLoggedIn', true)
+    } else {
+      this.props.routing.pushTo(SIGN_IN)
     }
   }
 
